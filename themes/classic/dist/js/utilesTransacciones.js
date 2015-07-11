@@ -100,6 +100,7 @@ function obtenerNroBoleta(modulo,idNroComp,idserie){
 
 
 
+
     function obtenerParamGeneral(idParametro,idcampo){
          $.ajax({
         url: 'index.php?r=utilitarios/AjaxObtenerParametroGeneral',

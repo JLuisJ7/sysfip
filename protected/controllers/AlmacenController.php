@@ -1,6 +1,39 @@
 <?php
 class AlmacenController extends Controller{
 
+
+public function actionAjaxListarServicios(){
+		$idProducto=$_POST['idProducto'];
+		$servicios = TBLServicio::model()->listarServicio($idProducto);
+
+		Util::renderJSON($servicios);
+	}
+
+
+public function actionAjaxLlenarS_Productos(){
+		// Condicion de empleados = 18
+
+		$productos = TBLProducto::model()->listarProductos();
+
+		Util::renderJSON($productos);
+	}
+
+
+	public function actionProducto(){
+
+		$this->render("Producto");
+	}
+
+	public function actionServicio(){
+
+		$this->render("Servicio");
+	}
+
+	public function actionCotizacion(){
+
+		$this->render("Cotizacion");
+	}
+
 	public function actionAjaxListarProductos(){
 	
 		

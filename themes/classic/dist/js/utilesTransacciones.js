@@ -240,7 +240,6 @@ $("#msg"+idcampo+"").hide();
 
 $(document).ready(function(){
 
-
 $.ajax({
             type: "POST",
             url: 'index.php?r=compras/AjaxListarProveedores',

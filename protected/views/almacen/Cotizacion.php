@@ -46,7 +46,7 @@ $this->breadcrumbs=array(
                         <!-- <th style="vertical-align: middle;" >Empleado</th> -->
                         <th style="vertical-align: middle;" >Metodologia</th>
                         <th style="vertical-align: middle;" >Tarifa</th>                        
-                        <th style="vertical-align: middle;" >&nbsp;</th>
+                        <th style="vertical-align: middle;" ><input type="checkbox"  id="Todoscheckbox"> </th>
                       </tr>
                     </thead>                 
                   </table>
@@ -57,7 +57,7 @@ $this->breadcrumbs=array(
     <label class="sr-only" for="exampleInputAmount"></label>
     <div class="input-group">
       <div class="input-group-addon">$</div>
-      <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
+      <input type="text" class="form-control" id="txtCosto" placeholder="0.00" value="0.00">
     
     </div>
   </div>
@@ -74,7 +74,6 @@ $this->breadcrumbs=array(
        
              
 </section><!-- /.content -->
-
 
 
 
@@ -143,19 +142,33 @@ function Servicios_x_Producto(idProducto){
                     "bFilterable": false,
                      "mRender": function (data, type, row) {
                   /*return row.nroSerie +', '+ row.nroFact;*/
-                  return '<input type="checkbox" class="check_Servicio" data-id="' + row.idServicio + '" data-precio="' + row.precio + '"> ';
+                  return '<input type="checkbox"  class="check_Servicio" data-id="' + row.idServicio + '" value="' + row.precio + '"> ';
                 
                 }
                 }
             ],
             fnDrawCallback: function() {
-                
-                $('.verDetalle').click(function() {
-                    me.obtenerDetalle($(this).attr('data-nroSerie'),$(this).attr('data-nroOrden'));
-                    
-                });
 
-            }             
+                $('.check_Servicio')
+.change(function() {
+    
+    if ($(this).is(':checked')) {
+       costo=$("#txtCosto").val();
+        precio= $(this).val();
+       
+       suma=parseFloat(costo)+parseFloat(precio);
+      $("#txtCosto").val(suma.toFixed(2));
+      
+    } else {
+        costo=$("#txtCosto").val();
+        precio= $(this).val();
+       
+       resta=parseFloat(costo)-parseFloat(precio);
+      $("#txtCosto").val(resta.toFixed(2));
+    }
+}).change();
+              $("#txtCosto").val('0.00')  
+            }            
             } );
         })
         .fail(function() {
@@ -163,13 +176,36 @@ function Servicios_x_Producto(idProducto){
         })
         .always(function() {
             console.log("complete");
+           
         });
         
 
 
     };
 
+
+
  $(document).ready(function($) {
+
+               $('#Todoscheckbox')
+.change(function() {
+  var sumarPrecio=0;
+      if ($("#Todoscheckbox").is(':checked')) {
+          
+            $(".check_Servicio").each(function () {
+                $(this).prop("checked", true);
+                sumarPrecio=parseFloat(sumarPrecio)+parseFloat($(this).val());
+            });
+
+        } else {
+            $(".check_Servicio").each(function () {
+                $(this).prop("checked", false);
+            });
+        }
+         $("#txtCosto").val(sumarPrecio.toFixed(2));
+}).change();
+
+
 
     $( "#s_listarProd" )
   .change(function () {
@@ -183,7 +219,15 @@ if(idProducto!=""){
   })
   .change();
   
+
+
+
+
+
+
  });
+
+
 
 </script>
  

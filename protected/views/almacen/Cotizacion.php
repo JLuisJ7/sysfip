@@ -25,7 +25,7 @@ $this->breadcrumbs=array(
                   <!-- Date range -->
   <div class="form-group col-md-12">
       <label class="" for="">Nombre del Cliente: </label>
-       <input type="text" class="form-control" id="txtCliente" >
+       <input type="text" class="form-control" id="txtNomCliente" >
     </div>
     <div class="form-group col-md-12">
       <label class="" for="">Direccion: </label>
@@ -34,13 +34,13 @@ $this->breadcrumbs=array(
  <div class="form-group col-md-6">
       <label class="" for="">Telefono: </label>
       
-       <input type="text" class="form-control col-md-12" id="txtTelfono" >
+       <input type="text" class="form-control col-md-12" id="txtTelefono" >
     
     </div>
     <div class="form-group col-md-6">
       <label class="" for="">E-mail: </label>
      
-       <input type="text" class="form-control col-md-12" id="txtEmai" >
+       <input type="text" class="form-control col-md-12" id="txtEmail" >
      
     </div>
     <div class="form-group col-md-12">
@@ -82,41 +82,22 @@ $this->breadcrumbs=array(
 
        </div><!-- /.box-body -->
 
-              
-              </div><!-- /.box -->
+<div class="alert alert-success alert-dismissable" id="Success" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>  <i class="icon fa fa-check"></i> Alert!</h4>
+                    Cotización Guardada Correctamente
+                  </div>                  
+</div><!-- /.box -->
           <!--end contadores-->
        
-             
+         
 </section><!-- /.content -->
 
 
 
 <script>
 
- function listarProductos(){
-   $.ajax({
-            type: "POST",
-            url: 'index.php?r=almacen/AjaxLlenarS_Productos',
-            //sync:false,           
-            success: function(data) {
-                var html = "";
-
-                //$(".listaProveedores").find("option").remove();
-                 
-                $.each(data, function(index, value) {
-                 
-                   
-                     html += '<option value="'+value.idProducto+'">'+value.descProd+'</option>';
-
-                });
-                          
-                $("#s_listarProd").append(html);  
-                
-            },
-            dataType: 'json'
-
-        });
- };
+ 
  listarProductos();
 
 function Servicios_x_Producto(idProducto){
@@ -227,6 +208,25 @@ var nombre=$("#txtNomCliente").val();
 var direccion=$("#txtDireccion").val();
 var telefono=$("#txtTelefono").val();
 var email=$("#txtEmail").val();
+var idCliente;
+$.ajax({
+  url: 'index.php?r=almacen/AjaxRegistrarCliente',
+  type: 'POST',
+  data: {
+    nombre:nombre,
+    direccion:direccion,
+    telefono:telefono,
+    email:email
+  },
+})
+.done(function(response) {
+  idCliente=response.idGenerado;
+  console.log(idCliente);
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
 var idProducto=$("#s_listarProd").val();
 var total=$("#txtCosto").val();
 var idCotizacion=$("#NroCotizacion").attr('data-nro');
@@ -237,7 +237,7 @@ $.ajax({
   type: 'POST',  
   data: {
     idCotizacion:idCotizacion,  
-    idCliente:1,
+    idCliente:idCliente,
     idProducto:idProducto,  
     total:total
 },
@@ -272,6 +272,14 @@ $.ajax({
 })
 .done(function() {
   console.log("success");
+   $("#Success").show('medium');
+
+   setTimeout(function() {
+
+   location.reload();
+  }, 2000);
+ 
+   
 })
 .fail(function() {
   console.log("error");
@@ -279,6 +287,9 @@ $.ajax({
 .always(function() {
   console.log("complete");
 });
+});
+
+
 
 });
 

@@ -1,3 +1,27 @@
+function listarProductos(){
+   $.ajax({
+            type: "POST",
+            url: 'index.php?r=almacen/AjaxLlenarS_Productos',
+            //sync:false,           
+            success: function(data) {
+                var html = "";
+
+                //$(".listaProveedores").find("option").remove();
+                 
+                $.each(data, function(index, value) {
+                 
+                   
+                     html += '<option value="'+value.idProducto+'">'+value.descProd+'</option>';
+
+                });
+                          
+                $("#s_listarProd").append(html);  
+                
+            },
+            dataType: 'json'
+
+        });
+ };
  
   function obtenerNroComprobante(modulo,idNroComp,idserie){
     var nroSerie=$("#"+idserie+"").attr('data-param');

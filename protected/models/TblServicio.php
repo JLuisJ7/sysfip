@@ -17,6 +17,31 @@
 class TblServicio extends CActiveRecord
 {
 
+public function RegistrarServicio($idProducto,$descServ,$metodo,$stock,$precio){
+
+	$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
+
+		
+		$servicio=new TblServicio;
+		$servicio->idProducto=$idProducto;
+$servicio->descServ=$descServ;
+$servicio->metodo=$metodo;
+$servicio->stock=$stock;
+$servicio->precio=$precio;
+		
+		
+
+      		
+if(!$servicio->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido realizar su solicitud, intentelo nuevamente');
+
+}
+
+		return $resultado;
+	}
+
+
 	public function listarServicio($idProducto){
 
 

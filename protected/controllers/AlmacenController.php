@@ -1,22 +1,44 @@
 <?php
 class AlmacenController extends Controller{
 
-public function actionAjaxRegistrarCotizacion(){
+public function actionAjaxRegistrarServicio(){
 
-
-	
-$idCotizacion=$_POST['idCotizacion'];
-//$idCliente=$_POST['idCliente'];
-$idCliente=1;
 $idProducto=$_POST['idProducto'];
-$total=$_POST['total'];
+$descServ=$_POST['descServ'];
+$metodo=$_POST['metodo'];
+$stock=$_POST['stock'];
+$precio=$_POST['precio'];	
 
 
-
-
-		$respuesta = TBLCotizacion::model() -> RegistrarCotizacion($idCotizacion,$idCliente,$idProducto,$total);
+		$respuesta = TBLServicio::model() -> RegistrarServicio($idProducto,$descServ,$metodo,$stock,$precio);
 
 		header('Content-Type: application/json; charset="UTF-8"');
+    	  Util::renderJSON(array( 'success' => $respuesta));
+	}
+
+public function actionAjaxRegistrarCliente(){
+$nombre=$_POST['nombre'];
+$direccion=$_POST['direccion'];
+$telefono=$_POST['telefono'];
+$email=$_POST['email'];
+
+
+		$respuesta = TBLCliente::model() -> RegistrarCliente($nombre,$direccion,$telefono,$email);
+
+		header('Content-Type: application/json; charset="UTF-8"');
+    	  Util::renderJSON(array( 'success' => $respuesta,'idGenerado'=>Yii::app()->db->getLastInsertID('tbl_cliente')));
+	}
+
+
+public function actionAjaxRegistrarCotizacion(){	
+$idCotizacion=$_POST['idCotizacion'];
+//$idCliente=$_POST['idCliente'];
+$idCliente=$_POST['idCliente'];
+$idProducto=$_POST['idProducto'];
+$total=$_POST['total'];
+$respuesta = TBLCotizacion::model() -> RegistrarCotizacion($idCotizacion,$idCliente,$idProducto,$total);
+
+header('Content-Type: application/json; charset="UTF-8"');
     	  Util::renderJSON(array( 'success' => $respuesta ));
 	}
 

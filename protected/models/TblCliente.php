@@ -13,6 +13,29 @@
  */
 class TblCliente extends CActiveRecord
 {
+
+public function RegistrarCliente($nombre,$direccion,$telefono,$email){
+
+	$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
+
+		
+		$cliente=new TblCliente;
+		$cliente->nombre=$nombre;
+		$cliente->direccion=$direccion;
+		$cliente->telefono=$telefono;
+		//$cliente->email=$email;
+		
+
+      		
+if(!$cliente->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido realizar su solicitud, intentelo nuevamente');
+
+}
+
+		return $resultado;
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */

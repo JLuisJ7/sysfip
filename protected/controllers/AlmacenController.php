@@ -1,6 +1,13 @@
 <?php
 class AlmacenController extends Controller{
 
+public function actionAjaxListadoServicios(){
+		
+		$servicio = TBLServicio::model()->ListarServicios();
+
+		Util::renderJSON($servicio);
+	}
+
 public function actionAjaxRegistrarServicio(){
 
 $idProducto=$_POST['idProducto'];

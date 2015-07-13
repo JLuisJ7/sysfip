@@ -63,20 +63,16 @@ $this->breadcrumbs=array(
 
     
 
-                  <table id="listaInventario" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
+                  <table id="listaServicio" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
                     <thead>
                       <tr>
                         <!--th style="vertical-align: middle;">#</th-->
-                        <th style="vertical-align: middle;" ></th>
-                        <th style="vertical-align: middle;" >Documento</th>
-                        <th style="vertical-align: middle;" >Serie</th>
-                        <th style="vertical-align: middle;" >Nro.</th>
-                        <th style="vertical-align: middle;" >Fecha</th>
-                        <th style="vertical-align: middle;" >Tipo</th>
+                        <th style="vertical-align: middle;" >IdServicio</th>
                         <th style="vertical-align: middle;" >Producto</th>
-                        <th style="vertical-align: middle;" >Cantidad</th>
-                        <th style="vertical-align: middle;" >Precio</th>
-                        <th style="vertical-align: middle;" >Importe</th>                      
+                        <th style="vertical-align: middle;" >Descripcion</th>
+                        <th style="vertical-align: middle;" >Metodo</th>
+                        <th style="vertical-align: middle;" >Stock</th>
+                        <th style="vertical-align: middle;" >Precio</th>                    
                         
                       </tr>
                     </thead>                 
@@ -92,7 +88,7 @@ $this->breadcrumbs=array(
        <script>
         listarProductos();
     window.onload=function(){
-        InventCore.initListadoInventario();
+        InventCore.initServicio();
     };
 
 $(document).ready(function() {

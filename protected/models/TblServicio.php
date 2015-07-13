@@ -17,6 +17,13 @@
 class TblServicio extends CActiveRecord
 {
 
+public function ListarServicios(){
+$sql = "select * from tbl_Servicio";
+	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+
+}
 public function RegistrarServicio($idProducto,$descServ,$metodo,$stock,$precio){
 
 	$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');

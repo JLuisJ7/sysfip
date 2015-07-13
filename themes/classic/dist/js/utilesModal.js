@@ -97,6 +97,31 @@ var InventCore = {
 
         });
     },
+    loadServicio: function(){
+        var me = this;
+        
+        Util.createGrid('#listaServicio',{
+            toolButons:'',
+            url:'index.php?r=almacen/AjaxListadoServicios',
+            //"order": [[ 0, 'desc' ]],
+            columns:[
+               
+                {"mData": "idServicio", "sClass": "alignCenter"},
+                {"mData": "idProducto", "sClass": "alignCenter"},
+                {"mData": "descServ", "sClass": "alignCenter"},
+                {"mData": "metodo", "sClass": "alignCenter"},
+                {"mData": "stock", "sClass": "alignCenter"},
+                {"mData": "precio", "sClass": "alignCenter"},                
+                                
+            ]
+
+        });
+    },
+    initServicio: function() {       
+        
+        this.loadServicio();
+
+    },
     initListadoInventario: function() {       
         
         this.loadInventario();

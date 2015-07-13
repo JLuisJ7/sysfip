@@ -5,12 +5,12 @@
 //Titulo de la pagina
 $this->pageTitle=Yii::app()->name;
 // Titulo del modulo
-$this->moduleTitle="Minimarket Mariana";
+$this->moduleTitle="CERTIPETRO";
 // Subtitulo del modulo
 $this->moduleSubTitle="Sistema integrado";
 // Breadcrumbs
 $this->breadcrumbs=array(
-	'Productos',
+	'',
 );?>
 
 <!-- row -->

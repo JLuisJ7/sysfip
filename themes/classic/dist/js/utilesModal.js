@@ -117,7 +117,38 @@ var InventCore = {
 
         });
     },
-    initServicio: function() {       
+    loadCotizaciones: function(){
+        var me = this;
+        
+        Util.createGrid('#listaCotizaciones',{
+            toolButons:'',
+            url:'index.php?r=almacen/AjaxListadoCotizaciones',
+            //"order": [[ 0, 'desc' ]],
+            columns:[
+               
+                {"mData": "idCotizacion", "sClass": "alignCenter"},
+                {"mData": "idCliente", "sClass": "alignCenter"},
+                {"mData": "idProducto", "sClass": "alignCenter"},
+                {"mData": "total", "sClass": "alignCenter"},
+                {"mData": "aprobado", "sClass": "alignCenter"},                   
+                {
+                    "mData": null,
+                    "bSortable": false,
+                    "bFilterable": false,
+                     "mRender": function (data, type, row) {
+                  /*return row.nroSerie +', '+ row.nroFact;*/
+                  return '<a href="#" style="margin-left:5px;margin-right:0px" data-nroSerie="' + row.idCotizacion + '" data-nroOrden="' + row.idCotizacion + '" class="btn btn-default btn-sm verDetalle"><i class="fa fa-eye"></i> Ver Detalle</a>  <a href="#" style="margin-left:5px;margin-right:0px"data-nroSerie="' + row.idCotizacion + '" data-nroFact="' + row.idCotizacion + '" class="btn btn-danger btn-sm suspenderOrden"><i class="fa fa-trash-o"></i></a>';
+                }
+                }                
+            ]
+
+        });
+    },
+    initCotizacion: function() {       
+        
+        this.loadCotizaciones();
+
+    },initServicio: function() {       
         
         this.loadServicio();
 

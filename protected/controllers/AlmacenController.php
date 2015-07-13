@@ -1,7 +1,14 @@
 <?php
 class AlmacenController extends Controller{
 
-public function actionAjaxListadoServicios(){
+public function actionAjaxListadoCotizaciones(){
+		
+		$Cotizacion = TBLCotizacion::model()->ListarCotizaciones();
+
+		Util::renderJSON($Cotizacion);
+	}
+
+	public function actionAjaxListadoServicios(){
 		
 		$servicio = TBLServicio::model()->ListarServicios();
 
@@ -106,6 +113,10 @@ public function actionAjaxLlenarS_Productos(){
 	public function actionCotizacion(){
 
 		$this->render("Cotizacion");
+	}
+	public function actionCotizaciones(){
+
+		$this->render("Cotizaciones");
 	}
 
 	public function actionAjaxListarProductos(){

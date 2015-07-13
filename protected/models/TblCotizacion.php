@@ -14,6 +14,14 @@
 class TblCotizacion extends CActiveRecord
 {
 
+
+public function ListarCotizaciones(){
+$sql = "select * from tbl_cotizacion";
+	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+
+}
 public function RegistrarCotizacion($idCotizacion,$idCliente,$idProducto,$total){
 
 		$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');

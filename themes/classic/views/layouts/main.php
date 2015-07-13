@@ -41,7 +41,7 @@ max-width: 180px!important;
       
       <header class="main-header">
         <!-- Logo -->
-        <a href="<?php echo Yii::app()->createAbsoluteUrl("/");?>" class="logo"><b>SISMIMA</b></a>
+        <a href="<?php echo Yii::app()->createAbsoluteUrl("/");?>" class="logo"><b>CERTIPETRO</b></a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->

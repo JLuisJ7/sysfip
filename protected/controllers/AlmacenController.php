@@ -1,6 +1,51 @@
 <?php
 class AlmacenController extends Controller{
 
+public function actionAjaxRegistrarCotizacion(){
+
+
+	
+$idCotizacion=$_POST['idCotizacion'];
+//$idCliente=$_POST['idCliente'];
+$idCliente=1;
+$idProducto=$_POST['idProducto'];
+$total=$_POST['total'];
+
+
+
+
+		$respuesta = TBLCotizacion::model() -> RegistrarCotizacion($idCotizacion,$idCliente,$idProducto,$total);
+
+		header('Content-Type: application/json; charset="UTF-8"');
+    	  Util::renderJSON(array( 'success' => $respuesta ));
+	}
+
+public function actionAjaxRegistrarDetalleCotizacion(){
+
+
+ $json=$_POST['idServicio'];
+$array = json_decode($json);
+
+$idCotizacion=$_POST['idCotizacion'];
+$idProducto=$_POST['idProducto'];
+
+foreach($array as $obj){
+			$idServicio=$obj->idServicio;
+					
+ TBLDetalleCotizacion::model() -> RegistrarDetalleCotizacion($idCotizacion,$idServicio);
+
+ 
+}
+
+}
+
+public function actionAjaxObtenerNroCotizacion(){
+		$Cotizacion = TBLCotizacion::model()->ObtenerNroCotizacion();
+		header('Content-Type: application/json; charset="UTF-8"');
+    	echo CJSON::encode(array('output'=>$Cotizacion[0]));
+		
+	}
+
 
 public function actionAjaxListarServicios(){
 		$idProducto=$_POST['idProducto'];

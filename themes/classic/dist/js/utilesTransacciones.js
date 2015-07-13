@@ -22,6 +22,7 @@
         //console.log("complete");
     });
  };
+ 
 function obtenerNroBoleta(modulo,idNroComp,idserie){
     var nroSerie=$("#"+idserie+"").attr('data-param');
          $.ajax({

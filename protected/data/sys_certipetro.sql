@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2015 a las 08:19:30
--- Versión del servidor: 5.6.21
--- Versión de PHP: 5.6.3
+-- Tiempo de generación: 16-07-2015 a las 01:44:50
+-- Versión del servidor: 5.6.24
+-- Versión de PHP: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `admcatalogo` (
-`ide_elemento` int(10) unsigned NOT NULL,
+  `ide_elemento` int(10) unsigned NOT NULL,
   `ide_grupo` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL,
   `ide_estado` char(1) NOT NULL,
@@ -90,7 +90,7 @@ INSERT INTO `admcatalogo` (`ide_elemento`, `ide_grupo`, `des_nombre`, `ide_estad
 --
 
 CREATE TABLE IF NOT EXISTS `admgrcatalogo` (
-`ide_grupo` int(10) unsigned NOT NULL,
+  `ide_grupo` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
@@ -115,7 +115,7 @@ INSERT INTO `admgrcatalogo` (`ide_grupo`, `des_nombre`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `admopcion` (
-`ide_opcion` int(10) unsigned NOT NULL,
+  `ide_opcion` int(10) unsigned NOT NULL,
   `ide_modulo` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL,
   `des_ruta` varchar(250) DEFAULT NULL,
@@ -177,7 +177,7 @@ INSERT INTO `admopcion` (`ide_opcion`, `ide_modulo`, `des_nombre`, `des_ruta`, `
 --
 
 CREATE TABLE IF NOT EXISTS `admrol` (
-`ide_rol` int(10) unsigned NOT NULL,
+  `ide_rol` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
@@ -200,10 +200,10 @@ INSERT INTO `admrol` (`ide_rol`, `des_nombre`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `admrolopcion` (
-`ide_rolopcion` int(10) unsigned NOT NULL,
+  `ide_rolopcion` int(10) unsigned NOT NULL,
   `ide_opcion` int(10) unsigned NOT NULL,
   `ide_rol` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `admrolopcion`
@@ -211,11 +211,13 @@ CREATE TABLE IF NOT EXISTS `admrolopcion` (
 
 INSERT INTO `admrolopcion` (`ide_rolopcion`, `ide_opcion`, `ide_rol`) VALUES
 (45, 30, 1),
-(46, 31, 1),
 (47, 32, 1),
 (48, 33, 1),
 (49, 7, 1),
-(50, 34, 1);
+(50, 34, 1),
+(51, 34, 2),
+(52, 30, 2),
+(53, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -250,7 +252,7 @@ INSERT INTO `boleta` (`nroSerie`, `nroBol`, `idCliente`, `idEmpleado`, `fechEmic
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
-`idCategoria` int(11) NOT NULL,
+  `idCategoria` int(11) NOT NULL,
   `nomCategoria` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
@@ -276,7 +278,7 @@ INSERT INTO `categoria` (`idCategoria`, `nomCategoria`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `cliente` (
-`idCliente` int(11) NOT NULL,
+  `idCliente` int(11) NOT NULL,
   `RazSoc_Cli` varchar(250) NOT NULL,
   `tipoPersona_Cli` char(1) NOT NULL,
   `ruc_Cli` char(11) NOT NULL,
@@ -469,12 +471,12 @@ INSERT INTO `detallefactura` (`nroSerie`, `nroFact`, `idProducto`, `cantidad`, `
 --
 -- Disparadores `detallefactura`
 --
-DELIMITER //
+DELIMITER $$
 CREATE TRIGGER `ActualizarStock` AFTER INSERT ON `detallefactura`
  FOR EACH ROW UPDATE Producto 
      SET stock = stock - NEW.cantidad
    WHERE idProducto = NEW.idProducto
-//
+$$
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -559,12 +561,12 @@ INSERT INTO `detalleordencompra` (`nroSerie`, `nroOrden`, `idProducto`, `cantida
 --
 -- Disparadores `detalleordencompra`
 --
-DELIMITER //
+DELIMITER $$
 CREATE TRIGGER `ActualizarStockCompra` AFTER INSERT ON `detalleordencompra`
  FOR EACH ROW UPDATE Producto 
      SET stock = stock + NEW.cantidad
    WHERE idProducto = NEW.idProducto
-//
+$$
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -574,7 +576,7 @@ DELIMITER ;
 --
 
 CREATE TABLE IF NOT EXISTS `empleado` (
-`idEmpleado` int(10) unsigned NOT NULL,
+  `idEmpleado` int(10) unsigned NOT NULL,
   `apePat` varchar(50) DEFAULT NULL,
   `apeMat` varchar(50) DEFAULT NULL,
   `nombres` varchar(50) DEFAULT NULL,
@@ -675,7 +677,7 @@ INSERT INTO `factura` (`nroSerie`, `nroFact`, `idCliente`, `idEmpleado`, `fechEm
 --
 
 CREATE TABLE IF NOT EXISTS `inventario` (
-`idMovimiento` int(10) unsigned NOT NULL,
+  `idMovimiento` int(10) unsigned NOT NULL,
   `tipo_documento` char(1) DEFAULT NULL,
   `serie` char(3) DEFAULT NULL,
   `nro_documento` int(10) unsigned DEFAULT NULL,
@@ -849,7 +851,7 @@ INSERT INTO `inventario` (`idMovimiento`, `tipo_documento`, `serie`, `nro_docume
 --
 
 CREATE TABLE IF NOT EXISTS `marca` (
-`idMarca` int(11) NOT NULL,
+  `idMarca` int(11) NOT NULL,
   `nomMarca` varchar(100) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
@@ -941,7 +943,7 @@ INSERT INTO `ordencompra` (`nroSerie`, `nroOrden`, `idProveedor`, `idEmpleado`, 
 --
 
 CREATE TABLE IF NOT EXISTS `parametrogeneral` (
-`idParametro` int(10) unsigned NOT NULL,
+  `idParametro` int(10) unsigned NOT NULL,
   `desc_Param` varchar(150) NOT NULL,
   `valor_Param` varchar(10) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -963,7 +965,7 @@ INSERT INTO `parametrogeneral` (`idParametro`, `desc_Param`, `valor_Param`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `producto` (
-`idProducto` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL,
   `desc_Prod` varchar(100) NOT NULL,
   `presentacion` varchar(20) NOT NULL,
   `idProveedor` int(11) DEFAULT NULL,
@@ -1032,7 +1034,7 @@ INSERT INTO `producto` (`idProducto`, `desc_Prod`, `presentacion`, `idProveedor`
 --
 
 CREATE TABLE IF NOT EXISTS `proveedor` (
-`idProveedor` int(11) NOT NULL,
+  `idProveedor` int(11) NOT NULL,
   `RazSoc_Prov` varchar(250) NOT NULL,
   `tipoPersona_Prov` char(1) NOT NULL,
   `ruc_Prov` char(11) NOT NULL,
@@ -1105,7 +1107,7 @@ INSERT INTO `proveedor` (`idProveedor`, `RazSoc_Prov`, `tipoPersona_Prov`, `ruc_
 --
 
 CREATE TABLE IF NOT EXISTS `sispersona` (
-`ide_persona` int(10) unsigned NOT NULL,
+  `ide_persona` int(10) unsigned NOT NULL,
   `des_nombres` varchar(250) DEFAULT NULL,
   `des_apepat` varchar(250) DEFAULT NULL,
   `des_apemat` varchar(250) DEFAULT NULL,
@@ -1138,7 +1140,7 @@ INSERT INTO `sispersona` (`ide_persona`, `des_nombres`, `des_apepat`, `des_apema
 --
 
 CREATE TABLE IF NOT EXISTS `sisusuario` (
-`ide_usuario` int(10) unsigned NOT NULL,
+  `ide_usuario` int(10) unsigned NOT NULL,
   `des_usuario` varchar(50) NOT NULL,
   `des_password` varchar(50) NOT NULL,
   `ide_rol` int(10) unsigned NOT NULL,
@@ -1153,11 +1155,11 @@ CREATE TABLE IF NOT EXISTS `sisusuario` (
 
 INSERT INTO `sisusuario` (`ide_usuario`, `des_usuario`, `des_password`, `ide_rol`, `ide_persona`, `correo`, `estado`) VALUES
 (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 1, 1, 'luisayala@hotmail.com', '1'),
-(2, 'cesarrojas', 'e10adc3949ba59abbe56e057f20f883e', 5, 15, 'cesarrojas@gmail.com', '0'),
-(3, 'cristian', 'b08c8c585b6d67164c163767076445d6', 2, 16, 'cristian@sismima.com', '0'),
-(4, 'carlosmore', 'e10adc3949ba59abbe56e057f20f883e', 1, 25, 'carlosmore@gmail.com', '0'),
-(5, 'freddy', 'e10adc3949ba59abbe56e057f20f883e', 6, 26, 'freddy@gmail.com', '0'),
-(6, 'oswaldo', '202cb962ac59075b964b07152d234b70', 6, 27, 'oswaldo@gmail.com', '');
+(2, 'admin2', 'e10adc3949ba59abbe56e057f20f883e', 2, 15, 'cesarrojas@gmail.com', '1'),
+(3, 'cristian', 'b08c8c585b6d67164c163767076445d6', 3, 16, 'cristian@sismima.com', '0'),
+(4, 'carlosmore', 'e10adc3949ba59abbe56e057f20f883e', 3, 25, 'carlosmore@gmail.com', '0'),
+(5, 'freddy', 'e10adc3949ba59abbe56e057f20f883e', 3, 26, 'freddy@gmail.com', '0'),
+(6, 'oswaldo', '202cb962ac59075b964b07152d234b70', 3, 27, 'oswaldo@gmail.com', '0');
 
 -- --------------------------------------------------------
 
@@ -1166,13 +1168,13 @@ INSERT INTO `sisusuario` (`ide_usuario`, `des_usuario`, `des_password`, `ide_rol
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_cliente` (
-`idCliente` int(11) NOT NULL,
+  `idCliente` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `direccion` varchar(100) DEFAULT NULL,
   `telefono` char(9) DEFAULT NULL,
   `dni` char(8) DEFAULT NULL,
   `estado` char(1) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tbl_cliente`
@@ -1189,7 +1191,14 @@ INSERT INTO `tbl_cliente` (`idCliente`, `nombre`, `direccion`, `telefono`, `dni`
 (8, 'asd', 'asd', 'sad', NULL, NULL),
 (9, 'aa', 'aaaa', 'aa', NULL, NULL),
 (10, 'Jose Luis Ayala Benito', 'Av. Los Olivos', '944659233', NULL, NULL),
-(11, 'ayala Benito Jose Luis', 'asd', '944659233', NULL, NULL);
+(11, 'ayala Benito Jose Luis', 'asd', '944659233', NULL, NULL),
+(12, 'asd', 'asd', 'sad', NULL, NULL),
+(13, 'Jose Luis Ayala', 'Mi casa', '123456789', NULL, NULL),
+(14, 'A', 'as', 'as', NULL, NULL),
+(15, 'sad', 'sad', 'sa', NULL, NULL),
+(16, 'David', 'UNI', '999999999', NULL, NULL),
+(17, '', '', '', NULL, NULL),
+(18, 'Carlos', 'lima', '1565985', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1247,7 +1256,14 @@ INSERT INTO `tbl_cotizacion` (`idCotizacion`, `idCliente`, `idProducto`, `total`
 (34, 1, 1, '454.00', NULL, NULL),
 (35, 9, 1, '867.00', NULL, NULL),
 (36, 10, 1, '867.00', NULL, NULL),
-(37, 11, 1, '973.00', NULL, NULL);
+(37, 11, 1, '973.00', NULL, NULL),
+(38, 12, 1, '973.00', NULL, NULL),
+(39, 13, 1, '454.00', NULL, NULL),
+(40, 14, 1, '973.00', NULL, NULL),
+(41, 15, 1, '973.00', NULL, NULL),
+(42, 16, 1, '973.00', NULL, NULL),
+(43, 17, 1, '603.00', NULL, NULL),
+(44, 18, 1, '867.00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1341,35 @@ INSERT INTO `tbl_detallecotizacion` (`idCotizacion`, `idServicio`, `precio`) VAL
 (37, 2, NULL),
 (37, 3, NULL),
 (37, 4, NULL),
-(37, 5, NULL);
+(37, 5, NULL),
+(38, 1, NULL),
+(38, 2, NULL),
+(38, 3, NULL),
+(38, 4, NULL),
+(38, 5, NULL),
+(39, 1, NULL),
+(39, 2, NULL),
+(39, 5, NULL),
+(40, 1, NULL),
+(40, 2, NULL),
+(40, 3, NULL),
+(40, 4, NULL),
+(40, 5, NULL),
+(41, 1, NULL),
+(41, 2, NULL),
+(41, 3, NULL),
+(41, 4, NULL),
+(41, 5, NULL),
+(42, 1, NULL),
+(42, 2, NULL),
+(42, 3, NULL),
+(42, 4, NULL),
+(43, 2, NULL),
+(43, 3, NULL),
+(44, 1, NULL),
+(44, 2, NULL),
+(44, 3, NULL),
+(44, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -1334,7 +1378,7 @@ INSERT INTO `tbl_detallecotizacion` (`idCotizacion`, `idServicio`, `precio`) VAL
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_producto` (
-`idProducto` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL,
   `descProd` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -1353,7 +1397,7 @@ INSERT INTO `tbl_producto` (`idProducto`, `descProd`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_servicio` (
-`idServicio` int(11) NOT NULL,
+  `idServicio` int(11) NOT NULL,
   `idProducto` int(11) DEFAULT NULL,
   `descServ` varchar(30) DEFAULT NULL,
   `metodo` varchar(30) DEFAULT NULL,
@@ -1380,151 +1424,151 @@ INSERT INTO `tbl_servicio` (`idServicio`, `idProducto`, `descServ`, `metodo`, `s
 -- Indices de la tabla `admcatalogo`
 --
 ALTER TABLE `admcatalogo`
- ADD PRIMARY KEY (`ide_elemento`);
+  ADD PRIMARY KEY (`ide_elemento`);
 
 --
 -- Indices de la tabla `admgrcatalogo`
 --
 ALTER TABLE `admgrcatalogo`
- ADD PRIMARY KEY (`ide_grupo`);
+  ADD PRIMARY KEY (`ide_grupo`);
 
 --
 -- Indices de la tabla `admopcion`
 --
 ALTER TABLE `admopcion`
- ADD PRIMARY KEY (`ide_opcion`);
+  ADD PRIMARY KEY (`ide_opcion`);
 
 --
 -- Indices de la tabla `admrol`
 --
 ALTER TABLE `admrol`
- ADD PRIMARY KEY (`ide_rol`);
+  ADD PRIMARY KEY (`ide_rol`);
 
 --
 -- Indices de la tabla `admrolopcion`
 --
 ALTER TABLE `admrolopcion`
- ADD PRIMARY KEY (`ide_rolopcion`), ADD KEY `ide_opcion` (`ide_opcion`), ADD KEY `ide_rol` (`ide_rol`);
+  ADD PRIMARY KEY (`ide_rolopcion`), ADD KEY `ide_opcion` (`ide_opcion`), ADD KEY `ide_rol` (`ide_rol`);
 
 --
 -- Indices de la tabla `boleta`
 --
 ALTER TABLE `boleta`
- ADD PRIMARY KEY (`nroSerie`,`nroBol`), ADD KEY `fk_Bol_Cli` (`idCliente`);
+  ADD PRIMARY KEY (`nroSerie`,`nroBol`), ADD KEY `fk_Bol_Cli` (`idCliente`);
 
 --
 -- Indices de la tabla `categoria`
 --
 ALTER TABLE `categoria`
- ADD PRIMARY KEY (`idCategoria`), ADD UNIQUE KEY `nomCategoria` (`nomCategoria`);
+  ADD PRIMARY KEY (`idCategoria`), ADD UNIQUE KEY `nomCategoria` (`nomCategoria`);
 
 --
 -- Indices de la tabla `cliente`
 --
 ALTER TABLE `cliente`
- ADD PRIMARY KEY (`idCliente`);
+  ADD PRIMARY KEY (`idCliente`);
 
 --
 -- Indices de la tabla `detalleboleta`
 --
 ALTER TABLE `detalleboleta`
- ADD KEY `fk_Bol_detFac` (`nroSerie`,`nroBol`), ADD KEY `fk_DetBol_Prod` (`idProducto`);
+  ADD KEY `fk_Bol_detFac` (`nroSerie`,`nroBol`), ADD KEY `fk_DetBol_Prod` (`idProducto`);
 
 --
 -- Indices de la tabla `detallefactura`
 --
 ALTER TABLE `detallefactura`
- ADD KEY `fk_Fac_detFac` (`nroSerie`,`nroFact`), ADD KEY `fk_DetFac_Prod` (`idProducto`);
+  ADD KEY `fk_Fac_detFac` (`nroSerie`,`nroFact`), ADD KEY `fk_DetFac_Prod` (`idProducto`);
 
 --
 -- Indices de la tabla `detalleordencompra`
 --
 ALTER TABLE `detalleordencompra`
- ADD KEY `fk_ord_detord` (`nroSerie`,`nroOrden`), ADD KEY `fk_Detord_Prod` (`idProducto`);
+  ADD KEY `fk_ord_detord` (`nroSerie`,`nroOrden`), ADD KEY `fk_Detord_Prod` (`idProducto`);
 
 --
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
- ADD PRIMARY KEY (`idEmpleado`);
+  ADD PRIMARY KEY (`idEmpleado`);
 
 --
 -- Indices de la tabla `factura`
 --
 ALTER TABLE `factura`
- ADD PRIMARY KEY (`nroSerie`,`nroFact`), ADD KEY `fk_Fac_Cli` (`idCliente`);
+  ADD PRIMARY KEY (`nroSerie`,`nroFact`), ADD KEY `fk_Fac_Cli` (`idCliente`);
 
 --
 -- Indices de la tabla `inventario`
 --
 ALTER TABLE `inventario`
- ADD PRIMARY KEY (`idMovimiento`), ADD KEY `fk_Inv_Prod` (`idproducto`);
+  ADD PRIMARY KEY (`idMovimiento`), ADD KEY `fk_Inv_Prod` (`idproducto`);
 
 --
 -- Indices de la tabla `marca`
 --
 ALTER TABLE `marca`
- ADD PRIMARY KEY (`idMarca`), ADD UNIQUE KEY `nomMarca` (`nomMarca`);
+  ADD PRIMARY KEY (`idMarca`), ADD UNIQUE KEY `nomMarca` (`nomMarca`);
 
 --
 -- Indices de la tabla `ordencompra`
 --
 ALTER TABLE `ordencompra`
- ADD PRIMARY KEY (`nroSerie`,`nroOrden`), ADD KEY `fk_ord_Prov` (`idProveedor`);
+  ADD PRIMARY KEY (`nroSerie`,`nroOrden`), ADD KEY `fk_ord_Prov` (`idProveedor`);
 
 --
 -- Indices de la tabla `parametrogeneral`
 --
 ALTER TABLE `parametrogeneral`
- ADD PRIMARY KEY (`idParametro`);
+  ADD PRIMARY KEY (`idParametro`);
 
 --
 -- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
- ADD PRIMARY KEY (`idProducto`), ADD KEY `fk_producto_categoria` (`idCategoria`), ADD KEY `fk_producto_marca` (`idMarca`), ADD KEY `fk_prod_prov` (`idProveedor`);
+  ADD PRIMARY KEY (`idProducto`), ADD KEY `fk_producto_categoria` (`idCategoria`), ADD KEY `fk_producto_marca` (`idMarca`), ADD KEY `fk_prod_prov` (`idProveedor`);
 
 --
 -- Indices de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
- ADD PRIMARY KEY (`idProveedor`);
+  ADD PRIMARY KEY (`idProveedor`);
 
 --
 -- Indices de la tabla `sispersona`
 --
 ALTER TABLE `sispersona`
- ADD PRIMARY KEY (`ide_persona`);
+  ADD PRIMARY KEY (`ide_persona`);
 
 --
 -- Indices de la tabla `sisusuario`
 --
 ALTER TABLE `sisusuario`
- ADD PRIMARY KEY (`ide_usuario`), ADD KEY `pk_user_rol` (`ide_rol`), ADD KEY `pk_user_persona` (`ide_persona`);
+  ADD PRIMARY KEY (`ide_usuario`), ADD KEY `pk_user_rol` (`ide_rol`), ADD KEY `pk_user_persona` (`ide_persona`);
 
 --
 -- Indices de la tabla `tbl_cliente`
 --
 ALTER TABLE `tbl_cliente`
- ADD PRIMARY KEY (`idCliente`);
+  ADD PRIMARY KEY (`idCliente`);
 
 --
 -- Indices de la tabla `tbl_cotizacion`
 --
 ALTER TABLE `tbl_cotizacion`
- ADD PRIMARY KEY (`idCotizacion`);
+  ADD PRIMARY KEY (`idCotizacion`);
 
 --
 -- Indices de la tabla `tbl_producto`
 --
 ALTER TABLE `tbl_producto`
- ADD PRIMARY KEY (`idProducto`);
+  ADD PRIMARY KEY (`idProducto`);
 
 --
 -- Indices de la tabla `tbl_servicio`
 --
 ALTER TABLE `tbl_servicio`
- ADD PRIMARY KEY (`idServicio`), ADD KEY `fk_prod_Serv` (`idProducto`);
+  ADD PRIMARY KEY (`idServicio`), ADD KEY `fk_prod_Serv` (`idProducto`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -1534,92 +1578,92 @@ ALTER TABLE `tbl_servicio`
 -- AUTO_INCREMENT de la tabla `admcatalogo`
 --
 ALTER TABLE `admcatalogo`
-MODIFY `ide_elemento` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+  MODIFY `ide_elemento` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT de la tabla `admgrcatalogo`
 --
 ALTER TABLE `admgrcatalogo`
-MODIFY `ide_grupo` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `ide_grupo` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `admopcion`
 --
 ALTER TABLE `admopcion`
-MODIFY `ide_opcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+  MODIFY `ide_opcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT de la tabla `admrol`
 --
 ALTER TABLE `admrol`
-MODIFY `ide_rol` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `ide_rol` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `admrolopcion`
 --
 ALTER TABLE `admrolopcion`
-MODIFY `ide_rolopcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
+  MODIFY `ide_rolopcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-MODIFY `idEmpleado` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `idEmpleado` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-MODIFY `idMovimiento` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=151;
+  MODIFY `idMovimiento` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=151;
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-MODIFY `idMarca` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `idMarca` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `parametrogeneral`
 --
 ALTER TABLE `parametrogeneral`
-MODIFY `idParametro` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idParametro` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT de la tabla `sispersona`
 --
 ALTER TABLE `sispersona`
-MODIFY `ide_persona` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+  MODIFY `ide_persona` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `sisusuario`
 --
 ALTER TABLE `sisusuario`
-MODIFY `ide_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `ide_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tbl_cliente`
 --
 ALTER TABLE `tbl_cliente`
-MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT de la tabla `tbl_producto`
 --
 ALTER TABLE `tbl_producto`
-MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `tbl_servicio`
 --
 ALTER TABLE `tbl_servicio`
-MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- Restricciones para tablas volcadas
 --

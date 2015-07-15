@@ -6,8 +6,10 @@ public function actionAjaxObtenerDetalle(){
 
     	
 		$idCotizacion = $_POST['idCotizacion'];
+		$cliente= TBLCotizacion::model()->obtenerCotizacion($idCotizacion);
 		$detalle = TBLDetalleCotizacion::model()->obtenerDetallexId($idCotizacion);
-			Util::renderJSON($detalle);
+			Util::renderJSON(array('detalle'=>$detalle,'Cotizacion' => $cliente, ));
+			//Util::renderJSON(array( 'success' => $respuesta));
 		
 	}
 public function actionAjaxListadoCotizaciones(){

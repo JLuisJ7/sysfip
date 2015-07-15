@@ -107,8 +107,8 @@ var InventCore = {
             columns:[
                
                 {"mData": "idServicio", "sClass": "alignCenter"},
-                {"mData": "idProducto", "sClass": "alignCenter"},
-                {"mData": "descServ", "sClass": "alignCenter"},
+                {"mData": "Producto", "sClass": "alignCenter"},
+                {"mData": "Servicio", "sClass": "alignCenter"},
                 {"mData": "metodo", "sClass": "alignCenter"},
                 {"mData": "stock", "sClass": "alignCenter"},
                 {"mData": "precio", "sClass": "alignCenter"},                
@@ -168,13 +168,15 @@ var InventCore = {
             
                 
             console.log(response);
+            console.log(response.Cotizacion[0].idCotizacion);
+               $("#nroCotizacion").text(response.Cotizacion[0].idCotizacion); 
              var table = $('#DetalleCotizacion').DataTable( {
                 destroy: true,
                 "paging":   false,
         "ordering": false,
         "info":     false,
         "bFilter": false,
-        "data": response,
+        "data": response.detalle,
 
                 "columns": [
                    

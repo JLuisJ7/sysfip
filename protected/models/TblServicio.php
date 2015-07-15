@@ -18,7 +18,7 @@ class TblServicio extends CActiveRecord
 {
 
 public function ListarServicios(){
-$sql = "select * from tbl_Servicio";
+$sql = "select idServicio,prod.descProd as Producto,descServ as Servicio,metodo,stock,precio from tbl_servicio as serv inner join tbl_producto as prod ON prod.idProducto=serv.idProducto";
 	
 
 		return Yii::app()->db->createCommand($sql)->queryAll();

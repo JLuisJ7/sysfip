@@ -26,7 +26,7 @@ $this->breadcrumbs=array(
                   <table id="listaCotizaciones" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
                     <thead>
                       <tr>                        
-                        <th style="vertical-align: middle;" >Cotizacion</th>
+                        <th style="vertical-align: middle;" >ID</th>
                         <th style="vertical-align: middle;" >Cliente.</th>
                         <th style="vertical-align: middle;" >Producto</th>
                         <!-- <th style="vertical-align: middle;" >Empleado</th> -->
@@ -50,10 +50,11 @@ $this->breadcrumbs=array(
               <!-- Cabecera -->
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" onclick="$('#myModalDetalleCotizacion').modal('hide');" ><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalDetalleCotizacionLabel">Detalle de la Cotizacion : <b><span id="serie-factura"></span></b><img class="loading-small-precarga" style="display: none;" src="<?php echo Yii::app()->theme->baseUrl;?>/dist/img/loading.gif" /></h4>
+                <h4 class="modal-title" id="myModalDetalleCotizacionLabel">Cotizacion Nro. <b><span id="nroCotizacion"></span></b><img class="loading-small-precarga" style="display: none;" src="<?php echo Yii::app()->theme->baseUrl;?>/dist/img/loading.gif" /></h4>
               </div>
               
               <div class="modal-body" style="background-color:#fff;">
+
                 
         <table  class="table table-striped table-bordered" cellspacing="0" width="100%" id="DetalleCotizacion" style="">
                 <thead>

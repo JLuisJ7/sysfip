@@ -67,12 +67,13 @@ $this->breadcrumbs=array(
                     <thead>
                       <tr>
                         <!--th style="vertical-align: middle;">#</th-->
-                        <th style="vertical-align: middle;" >IdServicio</th>
+                        <th style="vertical-align: middle;" >Id</th>
                         <th style="vertical-align: middle;" >Producto</th>
                         <th style="vertical-align: middle;" >Descripcion</th>
                         <th style="vertical-align: middle;" >Metodo</th>
                         <th style="vertical-align: middle;" >Stock</th>
-                        <th style="vertical-align: middle;" >Precio</th>                    
+                        <th style="vertical-align: middle;" >Precio</th>
+                                           
                         
                       </tr>
                     </thead>                 

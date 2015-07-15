@@ -44,29 +44,29 @@ $this->breadcrumbs=array(
           </div><!-- /.row -->
         </section><!-- /.content -->
 
-        <div class="modal fade" id="myModalFacturaDetallada" tabindex="-1" role="dialog" aria-labelledby="myModalFacturaDetalladaLabel" aria-hidden="true">
+        <div class="modal fade" id="myModalDetalleCotizacion" tabindex="-1" role="dialog" aria-labelledby="myModalDetalleCotizacionLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <!-- Cabecera -->
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" onclick="$('#myModalFacturaDetallada').modal('hide');" ><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalFacturaDetalladaLabel">Detalle de la Factura : <b><span id="serie-factura"></span></b><img class="loading-small-precarga" style="display: none;" src="<?php echo Yii::app()->theme->baseUrl;?>/dist/img/loading.gif" /></h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="$('#myModalDetalleCotizacion').modal('hide');" ><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalDetalleCotizacionLabel">Detalle de la Cotizacion : <b><span id="serie-factura"></span></b><img class="loading-small-precarga" style="display: none;" src="<?php echo Yii::app()->theme->baseUrl;?>/dist/img/loading.gif" /></h4>
               </div>
               
               <div class="modal-body" style="background-color:#fff;">
                 
-        <table  class="table table-striped table-bordered" cellspacing="0" width="100%" id="detalleCotizacion" style="">
+        <table  class="table table-striped table-bordered" cellspacing="0" width="100%" id="DetalleCotizacion" style="">
                 <thead>
                   <tr>
                     <!--th style="vertical-align: middle;">#</th-->
                     <!-- <th style="vertical-align: middle;" >Codigo</th> -->
-                    <th style="vertical-align: middle;" >Descripcion</th>
-                    <th style="vertical-align: middle;" >Cantidad</th>
-                    <th style="vertical-align: middle;" >Precio</th>
-                    <th style="vertical-align: middle;" >Importe</th>                                  
+                    <th style="vertical-align: middle;" >id</th>
+                    <th style="vertical-align: middle;" >Servicio</th>
+                    <th style="vertical-align: middle;" >Metodo</th>
+                    <th style="vertical-align: middle;" >Precio</th>                                  
                   </tr>
                 </thead>
-             </table>
+        </table>
              
               
 

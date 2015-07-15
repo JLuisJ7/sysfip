@@ -1,6 +1,15 @@
 <?php
 class AlmacenController extends Controller{
 
+public function actionAjaxObtenerDetalle(){
+		
+
+    	
+		$idCotizacion = $_POST['idCotizacion'];
+		$detalle = TBLDetalleCotizacion::model()->obtenerDetallexId($idCotizacion);
+			Util::renderJSON($detalle);
+		
+	}
 public function actionAjaxListadoCotizaciones(){
 		
 		$Cotizacion = TBLCotizacion::model()->ListarCotizaciones();

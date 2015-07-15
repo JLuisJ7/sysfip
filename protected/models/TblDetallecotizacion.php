@@ -11,7 +11,13 @@
 class TblDetallecotizacion extends CActiveRecord
 {
 
+public function obtenerDetallexId($idCotizacion){
 
+		$sql = "select serv.idServicio,serv.descServ,serv.metodo,serv.precio from tbl_detalleCotizacion as dcot inner join tbl_Servicio as serv ON serv.idServicio=dcot.idServicio where idCotizacion=".$idCotizacion;
+	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	}
 	public function RegistrarDetalleCotizacion($idCotizacion,$idServicio){
 
 		$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');

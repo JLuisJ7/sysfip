@@ -127,8 +127,8 @@ var InventCore = {
             columns:[
                
                 {"mData": "idCotizacion", "sClass": "alignCenter"},
-                {"mData": "idCliente", "sClass": "alignCenter"},
-                {"mData": "idProducto", "sClass": "alignCenter"},
+                {"mData": "Cliente", "sClass": "alignCenter"},
+                {"mData": "Producto", "sClass": "alignCenter"},
                 {"mData": "total", "sClass": "alignCenter"},
                 {"mData": "aprobado", "sClass": "alignCenter"},                   
                 {
@@ -137,12 +137,62 @@ var InventCore = {
                     "bFilterable": false,
                      "mRender": function (data, type, row) {
                   /*return row.nroSerie +', '+ row.nroFact;*/
-                  return '<a href="#" style="margin-left:5px;margin-right:0px" data-nroSerie="' + row.idCotizacion + '" data-nroOrden="' + row.idCotizacion + '" class="btn btn-default btn-sm verDetalle"><i class="fa fa-eye"></i> Ver Detalle</a>  <a href="#" style="margin-left:5px;margin-right:0px"data-nroSerie="' + row.idCotizacion + '" data-nroFact="' + row.idCotizacion + '" class="btn btn-danger btn-sm suspenderOrden"><i class="fa fa-trash-o"></i></a>';
+                  return '<a href="#" style="margin-left:5px;margin-right:0px" data-idCot="' + row.idCotizacion + '" class="btn btn-default btn-sm verDetalle"><i class="fa fa-eye"></i> Ver Detalle</a>  <a href="#" style="margin-left:5px;margin-right:0px" data-idCot="' + row.idCotizacion + '" class="btn btn-danger btn-sm suspenderOrden"><i class="fa fa-trash-o"></i></a>';
                 }
                 }                
-            ]
+            ],fnDrawCallback: function() {
+                
+                $('.verDetalle').click(function() {
+                    me.obtenerDetalle($(this).attr('data-idCot'));
+                });
+
+            }
 
         });
+    }
+    ,    
+    obtenerDetalle : function(idCot){
+        var table = $('#DetalleCotizacion').DataTable();
+ 
+            
+            table.destroy();
+        //$("#serie-OrdenC").text(nroSerie+'-'+nroOrden);
+        $.ajax({
+            url: 'index.php?r=almacen/AjaxObtenerDetalle',
+            type: 'POST',            
+            data: {
+                idCotizacion: idCot,               
+            },
+        })
+        .done(function(response) {
+            
+                
+            console.log(response);
+             var table = $('#DetalleCotizacion').DataTable( {
+                destroy: true,
+                "paging":   false,
+        "ordering": false,
+        "info":     false,
+        "bFilter": false,
+        "data": response,
+
+                "columns": [
+                   
+                    { "data": "idServicio" },
+                    { "data": "descServ" },
+                    { "data": "metodo" },
+                    { "data": "precio" }
+                ]               
+            } );
+            
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+           $('#myModalDetalleCotizacion').modal('show');
+        });
+        
     },
     initCotizacion: function() {       
         

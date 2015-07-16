@@ -2897,22 +2897,17 @@ var ProdCore = {
                 });
 
     },
-
     loadListadoProductos: function(){
+        //alert("hola");
         var me = this;
         
-        Util.createGrid('#listaProductos',{
+        Util.createGrid('#listarProductos',{
             toolButons:'<a style="display:inline-block;margin:-1px 0px 0px 0px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalNuevoProducto">Nuevo Producto</a>',
-            url:'index.php?r=almacen/ajaxListadoProductos',
+            url:'index.php?r=producto/ajaxListarProductos',
             columns:[
-                {"mData": "desc_Prod", "sClass": "alignCenter"},
-                {"mData": "presentacion", "sClass": "alignCenter"},
-                {"mData": "tipoProd", "sClass": "alignCenter"},             
-                {"mData": "stock", "sClass": "alignCenter"},
-                {"mData": "nomMarca", "sClass": "alignCenter"},
-                {"mData": "nomCategoria", "sClass": "alignCenter"},
-                {"mData": "precio", "sClass": "alignCenter"},
-               
+                {"mData": "idProducto", "sClass": "alignCenter"},
+                {"mData": "descripcion", "sClass": "alignCenter"},
+                {"mData": "estado", "sClass": "alignCenter"},            
                 {
                     "mData": 'idProducto',
                     "bSortable": false,

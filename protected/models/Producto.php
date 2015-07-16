@@ -15,6 +15,14 @@
  */
 class Producto extends CActiveRecord
 {
+	public function listarProductos(){
+
+		$sql = "select * from Producto";	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */

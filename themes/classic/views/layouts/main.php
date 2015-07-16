@@ -198,7 +198,7 @@ max-width: 180px!important;
         <div class="pull-right hidden-xs">
           <b>Version</b> 1.0
         </div>
-        <strong>Copyright &copy; 2014-2015 <a onclick="javascript:;">INDES GROUP Solution</a>.</strong> Todos los derechos reservados.
+        <strong>Created by <a onclick="javascript:;"> Umayux Group </a>.</strong>  Copyright &copy; 2015 Todos los derechos reservados.
       </footer>
     </div><!-- ./wrapper -->
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/bootstrap-select.js"></script>

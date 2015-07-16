@@ -4,122 +4,22 @@
  * This is the model class for table "cliente".
  *
  * The followings are the available columns in table 'cliente':
- * @property integer $idCliente
- * @property string $RazSoc_Cli
- * @property string $tipoPersona_Cli
- * @property string $ruc_Cli
- * @property string $direccion_Cli
- * @property string $telefono_Cli
- * @property string $email_Cli
- * @property string $fec_reg_Cli
- * @property string $estado_Cli
+ * @property string $idCliente
+ * @property string $dni
+ * @property string $nombres
+ * @property string $atencion
+ * @property string $direccion
+ * @property string $telefono
+ * @property string $correo
+ * @property string $referencia
+ * @property string $fecha_registro
+ * @property string $estado
+ *
+ * The followings are the available model relations:
+ * @property Cotizacion[] $cotizacions
  */
 class Cliente extends CActiveRecord
 {
-
-
-public function ObtenerNroClientes(){
-
-$sql = "select count(*) as Clientes from Cliente ";
-	
-
-
-		return Yii::app()->db->createCommand($sql)->queryAll();
-}
-
-	public function BuscarCliente($query){
-
-$sql = "SELECT idCliente,RazSoc_Cli FROM Cliente WHERE RazSoc_Cli LIKE '%".$query."%'";
-	
-
-
-		return Yii::app()->db->createCommand($sql)->queryAll();
-	}
-	public function ListarClientesCombo(){
-
-$sql = "SELECT idCliente as ide,RazSoc_Cli as descripcion FROM Cliente order by RazSoc_Cli asc";
-	
-
-
-		return Yii::app()->db->createCommand($sql)->queryAll();
-	}
-
-	/**
-	* Se listan las personas por catalogo
-	**/
-	public function listadoClientes(){
-
-$sql = "SELECT * FROM Cliente ";
-	
-
-		return $this->findAllBySql($sql);
-	}
-
-public function obtenerClientexId($idCliente){		
-		$sql = "SELECT * FROM Cliente  WHERE idCLiente=".$idCliente;
-	
-
-		return $this->findAllBySql($sql);
-	}
-public function actualizarCliente($idCliente,$RazSoc_Cli,$tipoPersona_Cli,$ruc_Cli,$direccion_Cli,$telefono_Cli,$email_Cli,$estado_Cli){
-		$resultado = array('valorupd'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
-
-		$cliente = Cliente::model()->findByPk($idCliente);
-
-		
-			
-
-				$cliente->RazSoc_Cli=$RazSoc_Cli;
-				$cliente->tipoPersona_Cli=$tipoPersona_Cli;
-				$cliente->ruc_Cli=$ruc_Cli;
-				$cliente->direccion_Cli=$direccion_Cli;
-				$cliente->telefono_Cli=$telefono_Cli;
-				$cliente->email_Cli=$email_Cli;
-				$cliente->estado_Cli=$estado_Cli;
-			if(!$cliente->save()){
-				$resultado = array('valorupd'=>0, 'message'=>'No hemos podido realizar su solicitud, intentelo nuevamente');
-			}
-		
-
-		return $resultado;
-	}
-	public function agregarCliente($RazSoc_Cli,$tipoPersona_Cli,$ruc_Cli,$direccion_Cli,$telefono_Cli,$email_Cli){
-		$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
-
-		$cliente=new Cliente;
-
-		
-		$cliente->RazSoc_Cli=$RazSoc_Cli;
-		$cliente->tipoPersona_Cli=$tipoPersona_Cli;
-		$cliente->ruc_Cli=$ruc_Cli;
-		$cliente->direccion_Cli=$direccion_Cli;
-		$cliente->telefono_Cli=$telefono_Cli;
-		$cliente->email_Cli=$email_Cli;
-		
-		
-			if(!$cliente->save()){
-				$resultado = array('valor'=>0, 'message'=>'No hemos podido realizar su solicitud, intentelo nuevamente');
-			}
-		
-
-		return $resultado;
-	}
-
-public function actualizarEstadoCliente($idCliente, $estado_Cli){
-		$resultado = array('data'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
-
-		$cliente = Cliente::model()->findByPk($idCliente);
-
-	
-			$cliente->estado_Cli=$estado_Cli;
-		
-			if(!$cliente->save()){
-				$resultado = array('data'=>0, 'message'=>'No hemos podido realizar su solicitud, intentelo nuevamente');
-			}
-		
-
-		return $resultado;
-	}
 	/**
 	 * @return string the associated database table name
 	 */
@@ -136,16 +36,16 @@ public function actualizarEstadoCliente($idCliente, $estado_Cli){
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('RazSoc_Cli, tipoPersona_Cli, ruc_Cli, direccion_Cli, telefono_Cli, ', 'required'),
-			array('RazSoc_Cli', 'length', 'max'=>250),
-			array('tipoPersona_Cli, estado_Cli', 'length', 'max'=>1),
-			array('ruc_Cli', 'length', 'max'=>11),
-			array('direccion_Cli', 'length', 'max'=>150),
-			array('telefono_Cli', 'length', 'max'=>9),
-			array('email_Cli', 'length', 'max'=>50),
+			array('idCliente, fecha_registro', 'required'),
+			array('idCliente', 'length', 'max'=>10),
+			array('dni', 'length', 'max'=>11),
+			array('nombres, atencion, direccion, referencia', 'length', 'max'=>100),
+			array('telefono', 'length', 'max'=>15),
+			array('correo', 'length', 'max'=>20),
+			array('estado', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idCliente, RazSoc_Cli, tipoPersona_Cli, ruc_Cli, direccion_Cli, telefono_Cli, email_Cli, fec_reg_Cli, estado_Cli', 'safe', 'on'=>'search'),
+			array('idCliente, dni, nombres, atencion, direccion, telefono, correo, referencia, fecha_registro, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -157,6 +57,7 @@ public function actualizarEstadoCliente($idCliente, $estado_Cli){
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'cotizacions' => array(self::HAS_MANY, 'Cotizacion', 'idCliente'),
 		);
 	}
 
@@ -167,14 +68,15 @@ public function actualizarEstadoCliente($idCliente, $estado_Cli){
 	{
 		return array(
 			'idCliente' => 'Id Cliente',
-			'RazSoc_Cli' => 'Raz Soc Cli',
-			'tipoPersona_Cli' => 'Tipo Persona Cli',
-			'ruc_Cli' => 'Ruc Cli',
-			'direccion_Cli' => 'Direccion Cli',
-			'telefono_Cli' => 'Telefono Cli',
-			'email_Cli' => 'Email Cli',
-			'fec_reg_Cli' => 'Fec Reg Cli',
-			'estado_Cli' => 'Estado Cli',
+			'dni' => 'Dni',
+			'nombres' => 'Nombres',
+			'atencion' => 'Atencion',
+			'direccion' => 'Direccion',
+			'telefono' => 'Telefono',
+			'correo' => 'Correo',
+			'referencia' => 'Referencia',
+			'fecha_registro' => 'Fecha Registro',
+			'estado' => 'Estado',
 		);
 	}
 
@@ -196,15 +98,16 @@ public function actualizarEstadoCliente($idCliente, $estado_Cli){
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idCliente',$this->idCliente);
-		$criteria->compare('RazSoc_Cli',$this->RazSoc_Cli,true);
-		$criteria->compare('tipoPersona_Cli',$this->tipoPersona_Cli,true);
-		$criteria->compare('ruc_Cli',$this->ruc_Cli,true);
-		$criteria->compare('direccion_Cli',$this->direccion_Cli,true);
-		$criteria->compare('telefono_Cli',$this->telefono_Cli,true);
-		$criteria->compare('email_Cli',$this->email_Cli,true);
-		$criteria->compare('fec_reg_Cli',$this->fec_reg_Cli,true);
-		$criteria->compare('estado_Cli',$this->estado_Cli,true);
+		$criteria->compare('idCliente',$this->idCliente,true);
+		$criteria->compare('dni',$this->dni,true);
+		$criteria->compare('nombres',$this->nombres,true);
+		$criteria->compare('atencion',$this->atencion,true);
+		$criteria->compare('direccion',$this->direccion,true);
+		$criteria->compare('telefono',$this->telefono,true);
+		$criteria->compare('correo',$this->correo,true);
+		$criteria->compare('referencia',$this->referencia,true);
+		$criteria->compare('fecha_registro',$this->fecha_registro,true);
+		$criteria->compare('estado',$this->estado,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

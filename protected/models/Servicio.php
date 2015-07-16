@@ -1,26 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "producto".
+ * This is the model class for table "servicio".
  *
- * The followings are the available columns in table 'producto':
+ * The followings are the available columns in table 'servicio':
+ * @property string $idServicio
  * @property string $idProducto
  * @property string $descripcion
+ * @property string $metodo
+ * @property integer $tiempo_entrega
+ * @property integer $cant_muestra
+ * @property string $precio
  * @property string $fecha_registro
+ * @property string $detalle
  * @property string $estado
  *
  * The followings are the available model relations:
  * @property Detallecotizacion[] $detallecotizacions
- * @property Servicio[] $servicios
+ * @property Producto $idProducto0
  */
-class Producto extends CActiveRecord
+class Servicio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'producto';
+		return 'servicio';
 	}
 
 	/**
@@ -32,11 +38,16 @@ class Producto extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha_registro', 'required'),
-			array('descripcion', 'length', 'max'=>30),
+			array('tiempo_entrega, cant_muestra', 'numerical', 'integerOnly'=>true),
+			array('idServicio, idProducto', 'length', 'max'=>10),
+			array('descripcion', 'length', 'max'=>50),
+			array('metodo', 'length', 'max'=>30),
+			array('precio', 'length', 'max'=>8),
+			array('detalle', 'length', 'max'=>200),
 			array('estado', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProducto, descripcion, fecha_registro, estado', 'safe', 'on'=>'search'),
+			array('idServicio, idProducto, descripcion, metodo, tiempo_entrega, cant_muestra, precio, fecha_registro, detalle, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +59,8 @@ class Producto extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'detallecotizacions' => array(self::HAS_MANY, 'Detallecotizacion', 'idProducto'),
-			'servicios' => array(self::HAS_MANY, 'Servicio', 'idProducto'),
+			'detallecotizacions' => array(self::HAS_MANY, 'Detallecotizacion', 'idServicio'),
+			'idProducto0' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
 		);
 	}
 
@@ -59,9 +70,15 @@ class Producto extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'idServicio' => 'Id Servicio',
 			'idProducto' => 'Id Producto',
 			'descripcion' => 'Descripcion',
+			'metodo' => 'Metodo',
+			'tiempo_entrega' => 'Tiempo Entrega',
+			'cant_muestra' => 'Cant Muestra',
+			'precio' => 'Precio',
 			'fecha_registro' => 'Fecha Registro',
+			'detalle' => 'Detalle',
 			'estado' => 'Estado',
 		);
 	}
@@ -84,9 +101,15 @@ class Producto extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('idServicio',$this->idServicio,true);
 		$criteria->compare('idProducto',$this->idProducto,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('metodo',$this->metodo,true);
+		$criteria->compare('tiempo_entrega',$this->tiempo_entrega);
+		$criteria->compare('cant_muestra',$this->cant_muestra);
+		$criteria->compare('precio',$this->precio,true);
 		$criteria->compare('fecha_registro',$this->fecha_registro,true);
+		$criteria->compare('detalle',$this->detalle,true);
 		$criteria->compare('estado',$this->estado,true);
 
 		return new CActiveDataProvider($this, array(
@@ -98,7 +121,7 @@ class Producto extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Producto the static model class
+	 * @return Servicio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

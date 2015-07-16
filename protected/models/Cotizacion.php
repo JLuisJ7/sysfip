@@ -1,26 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "producto".
+ * This is the model class for table "cotizacion".
  *
- * The followings are the available columns in table 'producto':
- * @property string $idProducto
- * @property string $descripcion
+ * The followings are the available columns in table 'cotizacion':
+ * @property string $idCotizacion
  * @property string $fecha_registro
+ * @property string $idCliente
+ * @property string $total
+ * @property string $fecha_entrega
+ * @property string $registrado_por
  * @property string $estado
+ * @property string $eliminado
  *
  * The followings are the available model relations:
+ * @property Cliente $idCliente0
  * @property Detallecotizacion[] $detallecotizacions
- * @property Servicio[] $servicios
  */
-class Producto extends CActiveRecord
+class Cotizacion extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'producto';
+		return 'cotizacion';
 	}
 
 	/**
@@ -31,12 +35,14 @@ class Producto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_registro', 'required'),
-			array('descripcion', 'length', 'max'=>30),
-			array('estado', 'length', 'max'=>1),
+			array('idCotizacion, fecha_registro', 'required'),
+			array('idCotizacion, idCliente, registrado_por, estado', 'length', 'max'=>10),
+			array('total', 'length', 'max'=>8),
+			array('eliminado', 'length', 'max'=>1),
+			array('fecha_entrega', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProducto, descripcion, fecha_registro, estado', 'safe', 'on'=>'search'),
+			array('idCotizacion, fecha_registro, idCliente, total, fecha_entrega, registrado_por, estado, eliminado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +54,8 @@ class Producto extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'detallecotizacions' => array(self::HAS_MANY, 'Detallecotizacion', 'idProducto'),
-			'servicios' => array(self::HAS_MANY, 'Servicio', 'idProducto'),
+			'idCliente0' => array(self::BELONGS_TO, 'Cliente', 'idCliente'),
+			'detallecotizacions' => array(self::HAS_MANY, 'Detallecotizacion', 'idCotizacion'),
 		);
 	}
 
@@ -59,10 +65,14 @@ class Producto extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idProducto' => 'Id Producto',
-			'descripcion' => 'Descripcion',
+			'idCotizacion' => 'Id Cotizacion',
 			'fecha_registro' => 'Fecha Registro',
+			'idCliente' => 'Id Cliente',
+			'total' => 'Total',
+			'fecha_entrega' => 'Fecha Entrega',
+			'registrado_por' => 'Registrado Por',
 			'estado' => 'Estado',
+			'eliminado' => 'Eliminado',
 		);
 	}
 
@@ -84,10 +94,14 @@ class Producto extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idProducto',$this->idProducto,true);
-		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('idCotizacion',$this->idCotizacion,true);
 		$criteria->compare('fecha_registro',$this->fecha_registro,true);
+		$criteria->compare('idCliente',$this->idCliente,true);
+		$criteria->compare('total',$this->total,true);
+		$criteria->compare('fecha_entrega',$this->fecha_entrega,true);
+		$criteria->compare('registrado_por',$this->registrado_por,true);
 		$criteria->compare('estado',$this->estado,true);
+		$criteria->compare('eliminado',$this->eliminado,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +112,7 @@ class Producto extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Producto the static model class
+	 * @return Cotizacion the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

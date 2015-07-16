@@ -72,7 +72,6 @@ $this->breadcrumbs=array(
     <div class="input-group">
       <div class="input-group-addon">Total S/.</div>
       <input type="text" class="form-control" id="txtCosto" placeholder="0.00" value="0.00" disabled>
-    
     </div>
   </div>
   <button type="button" class="btn btn-primary" id="btn_GuardarCotizacion">Guardar Cotización</button>

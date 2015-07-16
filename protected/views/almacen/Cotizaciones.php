@@ -54,8 +54,15 @@ $this->breadcrumbs=array(
               </div>
               
               <div class="modal-body" style="background-color:#fff;">
-
-                
+  <div class="form-group col-md-12">
+      <label class="" for="">Cliente: </label>
+       <input type="text" class="form-control" id="txtNomCliente" >
+    </div>
+    <div class="form-group col-md-12">
+      <label class="" for="">Producto: </label>
+       <input type="text" class="form-control" id="txtProducto" >
+    </div>   
+     <hr style="border:1px solid;">    
         <table  class="table table-striped table-bordered" cellspacing="0" width="100%" id="DetalleCotizacion" style="">
                 <thead>
                   <tr>
@@ -68,7 +75,16 @@ $this->breadcrumbs=array(
                   </tr>
                 </thead>
         </table>
-             
+        <hr style="border:1px solid;">
+        <button type="button" class="btn btn-primary" id="btn_GuardarCotizacion">Guardar Cotización</button> 
+            <div class="form-group col-md-6">
+    <label class="sr-only" for="exampleInputAmount"></label>
+    <div class="input-group">
+      <div class="input-group-addon">Total S/.</div>
+      <input type="text" class="form-control" id="txtTotal" placeholder="0.00" value="0.00" disabled>
+    </div>
+  </div>
+  
               
 
               </div><!-- /.modal-body -->             

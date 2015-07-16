@@ -16,7 +16,7 @@ class TblCotizacion extends CActiveRecord
 
 public function obtenerCotizacion($idCotizacion){
 
-	$sql = "select * from tbl_cotizacion where idCotizacion=".$idCotizacion;
+	$sql = "select idCotizacion,cli.nombre as Cliente,prod.descProd as Producto,total,aprobado from tbl_cotizacion as cot inner join tbl_cliente as cli ON cli.idCliente=cot.idCliente inner join tbl_producto as prod ON prod.idProducto=cot.idProducto and idCotizacion=".$idCotizacion;
 	
 
 		return Yii::app()->db->createCommand($sql)->queryAll();

@@ -169,7 +169,10 @@ var InventCore = {
                 
             console.log(response);
             console.log(response.Cotizacion[0].idCotizacion);
-               $("#nroCotizacion").text(response.Cotizacion[0].idCotizacion); 
+               $("#nroCotizacion").text(response.Cotizacion[0].idCotizacion);
+               $("#txtNomCliente").val(response.Cotizacion[0].Cliente);
+               $("#txtProducto").val(response.Cotizacion[0].Producto); 
+               $("#txtTotal").val(response.Cotizacion[0].total); 
              var table = $('#DetalleCotizacion').DataTable( {
                 destroy: true,
                 "paging":   false,

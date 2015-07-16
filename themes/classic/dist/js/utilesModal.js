@@ -3024,6 +3024,78 @@ var ProdCore = {
     }
 
 }
+
+/*END PRODUCTO*/
+
+
+/*
+    INICIO Fn ProdCore
+*/
+var ServicioCore = {
+
+    closeWin: function(id) {
+
+        $('#' + id).modal('hide');
+
+    },
+    loadListadoServicios: function(){
+        //alert("hola");
+        var me = this;
+        
+        Util.createGrid('#listarServicios',{
+            toolButons:'<a style="display:inline-block;margin:-1px 0px 0px 0px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalNuevoProducto">Nuevo Producto</a>',
+            url:'index.php?r=servicio/AjaxListarServicios',
+            columns:[
+                {"mData": "idServicio", "sClass": "alignCenter"},
+                {"mData": "idProducto", "sClass": "alignCenter"},
+                {"mData": "descripcion", "sClass": "alignCenter"},
+                {"mData": "metodo", "sClass": "alignCenter"},
+                {"mData": "tiempo_entrega", "sClass": "alignCenter"},
+                {"mData": "cant_muestra", "sClass": "alignCenter"},
+                 {"mData": "cant_muestra", "sClass": "alignCenter"},            
+                {
+                    "mData": 'idServicio',
+                    "bSortable": false,
+                    "bFilterable": false,
+                    //"width": "150px",
+                    "mRender": function(o) {
+                        return '<a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-warning btn-sm editarProducto"><i class="fa fa-pencil"></i></a> <a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-danger btn-sm suspenderProducto"><i class="fa fa-trash-o"></i></a>';
+                    }
+                }
+            ],
+            fnDrawCallback: function() {
+                $('.suspenderProducto').click(function() {
+                    me.confirmSuspenderProducto($(this).attr('lang'));
+                });
+                $('.editarProducto').click(function() {
+                    me.obtenerProducto($(this).attr('lang'));
+                    
+                });
+
+            }
+        });
+    },
+    initListadoServicios: function() {
+        var me = this;
+         /*$('#myModalNuevoProducto').on('show.bs.modal', function(e) {
+         
+                       
+        });*/
+         $('#myModalNuevoProducto').on('hidden.bs.modal', function() {
+         
+             $('#ProductoForm').bootstrapValidator('resetForm', true);            
+        });
+         $('#myModalEditarProducto').on('hidden.bs.modal', function() {
+         
+             $('#updateProductoForm').bootstrapValidator('resetForm', true);            
+        });
+        
+        
+        this.loadListadoServicios();
+
+    }
+
+}
 /*
     END - FnCore
 */

@@ -21,6 +21,14 @@
  */
 class Servicio extends CActiveRecord
 {
+
+	public function listarServicios(){
+
+		$sql = "select * from Servicio";	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	
+	}
 	/**
 	 * @return string the associated database table name
 	 */

@@ -29,6 +29,14 @@ class Servicio extends CActiveRecord
 		return Yii::app()->db->createCommand($sql)->queryAll();
 	
 	}
+
+	public function ListarServiciosxProducto($idProducto){
+
+		$sql = "select * from Servicio where idProducto=".$idProducto;	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	
+	}
 	/**
 	 * @return string the associated database table name
 	 */

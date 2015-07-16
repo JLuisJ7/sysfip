@@ -1,3 +1,63 @@
+/*
+==========================================================
+*/
+
+function select_productos(){
+ $.ajax({
+            type: "POST",
+            url: 'index.php?r=producto/AjaxListarProductos',
+            //sync:false,           
+            success: function(data) {
+                var html = "";
+                //$(".listaProveedores").find("option").remove();                 
+                $.each(data, function(index, value) { 
+                                                
+                     html += '<option value="'+value.idProducto+'">'+value.descripcion+'</option>';
+
+                });
+                          
+                $("#s_listarProducto").append(html);  
+               
+            },
+            dataType: 'json'
+
+        });
+
+}
+
+function Servicios_x_Producto(idProducto){
+ 
+     $('#s_listarServicio').selectpicker('deselectAll');
+      $('#s_listarServicio').find("option").remove();  
+ $.ajax({
+            type: "POST",
+            url: 'index.php?r=servicio/AjaxListarServiciosxProducto',
+            data:{
+              idProducto:idProducto
+            },
+            //sync:false,           
+            success: function(data) {
+                var html = "";
+                $('#s_listarServicio').append('<option value="">Seleccione</option>');                  
+                $.each(data, function(index, value) { 
+
+                     html += '<option value="'+value.idServicio+'" data-prod="'+value.idProducto+'">'+value.descripcion+'</option>';
+
+                });
+                       
+                $("#s_listarServicio").append(html);  
+                 $('#s_listarServicio').selectpicker('refresh');
+            },
+            dataType: 'json'
+
+        });
+
+}  
+
+/*
+==========================================================
+*/
+
 function listarProductos(){
    $.ajax({
             type: "POST",

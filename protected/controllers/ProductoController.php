@@ -14,4 +14,6 @@ class ProductoController extends Controller
 		Util::renderJSON($productos);
 	}
 
+	
+
 }

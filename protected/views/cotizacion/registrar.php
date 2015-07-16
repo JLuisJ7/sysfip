@@ -148,8 +148,8 @@ $( "#s_listarProducto" )
 $( "#s_listarServicio" )
   .change(function () {
     var  idServicio=$(this).val();
-    var  idProducto=$(this).attr('data-prod');
-	alert(idProducto);
+    var  idProducto=$("#s_listarServicio option:selected").attr("data-prod");
+	
 		obtenerServicioxID(idServicio,idProducto);
 	
 }).change();

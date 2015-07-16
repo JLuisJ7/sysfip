@@ -65,10 +65,10 @@ $.ajax({
             },
 })
 .done(function(response) {
-  console.log(response);
-$("#txtTiempo").val('');
-$("#txtCantEnsayo").val('');
-$("#txtTarifa").val('');
+  console.log(response.tiempo_entrega);
+$("#txtTiempo").val(response[0].tiempo_entrega);
+$("#txtCantEnsayo").val(response[0].cant_muestra);
+$("#txtTarifa").val(response[0].precio);
 
 })
 .fail(function() {

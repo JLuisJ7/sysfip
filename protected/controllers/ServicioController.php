@@ -14,6 +14,15 @@ class ServicioController extends Controller
 		Util::renderJSON($servicios);
 	}
 
+	public function actionAjaxObtenerServicio(){
+		$idServicio=$_POST['idServicio'];
+		$idProducto=$_POST['idProducto'];
+
+		$servicios = Servicio::model()->ObtenerServicio($idServicio,$idProducto);
+
+		Util::renderJSON($servicios);
+	}
+
 	public function actionAjaxListarServiciosxProducto(){
 		$idProducto=$_POST['idProducto'];
 		$servicios = Servicio::model()->ListarServiciosxProducto($idProducto);

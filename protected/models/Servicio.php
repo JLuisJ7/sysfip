@@ -32,7 +32,14 @@ class Servicio extends CActiveRecord
 
 	public function ListarServiciosxProducto($idProducto){
 
-		$sql = "select * from Servicio where idProducto=".$idProducto;	
+		$sql = "select idServicio,idProducto,descripcion from Servicio where idProducto=".$idProducto;	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	
+	}
+	public function ObtenerServicio($idServicio,$idProducto){
+
+		$sql = "select * from Servicio where idServicio=".$idServicio." and "."idProducto=".$idProducto;	
 
 		return Yii::app()->db->createCommand($sql)->queryAll();
 	

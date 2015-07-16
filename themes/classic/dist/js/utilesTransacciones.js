@@ -54,6 +54,31 @@ function Servicios_x_Producto(idProducto){
 
 }  
 
+function obtenerServicioxID(idServicio,idProducto){
+
+$.ajax({
+ type: "POST",
+            url: 'index.php?r=servicio/AjaxObtenerServicio',
+            data:{
+              idServicio:idServicio,
+              idProducto:idProducto
+            },
+})
+.done(function(response) {
+  console.log(response);
+$("#txtTiempo").val('');
+$("#txtCantEnsayo").val('');
+$("#txtTarifa").val('');
+
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
+  console.log("complete");
+});
+
+}
 /*
 ==========================================================
 */

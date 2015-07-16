@@ -70,37 +70,26 @@ $this->breadcrumbs=array(
 	</select>
 
 	</div>
-	<div class="form-group">
-                    <label>Minimal</label>
-                    <select class="form-control select2">
-                      <option selected="selected">Alabama</option>
-                      <option>Alaska</option>
-                      <option>California</option>
-                      <option>Delaware</option>
-                      <option>Tennessee</option>
-                      <option>Texas</option>
-                      <option>Washington</option>
-                    </select>
-                  </div><!-- /.form-group -->
+
 		<div class="form-group col-md-2">
             <label for="">Tiempo Entrega</label><br>
-            <input type="text" class="form-control" id="fac_Precio" disabled>         
+            <input type="text" class="form-control" id="txtTiempo" disabled>         
           </div>
           <div class="form-group col-md-2">
             <label for="">cantidad x ensayo</label><br>
-            <input type="text" class="form-control" id="fac_Precio" disabled>         
+            <input type="text" class="form-control" id="txtCantEnsayo" disabled>         
           </div>
           <div class="form-group col-md-2">
             <label for="">Tarifa</label><br>
-            <input type="text" class="form-control" id="fac_CantProd" disabled>         
+            <input type="text" class="form-control" id="txtTarifa" disabled>         
           </div>
           <div class="form-group col-md-2">
             <label for="">Cantidad</label><br>
-            <input type="number" class="form-control" id="fac_valorVenta" >         
+            <input type="number" class="form-control" id="txtCantidad" >         
           </div>
           <div class="form-group col-md-2">
             <label for="">Importe</label><br>
-            <input type="text" class="form-control" id="fac_valorVenta" disabled>         
+            <input type="text" class="form-control" id="txtImporte" disabled>         
           </div>
           <div class="form-group">
             <label for="" style="color:transparent;">Agregar</label><br>
@@ -154,6 +143,15 @@ $( "#s_listarProducto" )
 	if(idProducto!=""){ 
 		Servicios_x_Producto(idProducto);
 	}
+}).change();
+
+$( "#s_listarServicio" )
+  .change(function () {
+    var  idServicio=$(this).val();
+    var  idProducto=$(this).attr('data-prod');
+	alert(idProducto);
+		obtenerServicioxID(idServicio,idProducto);
+	
 }).change();
 
 

@@ -1,3 +1,6 @@
 framework/
 .htaccess
 protected/runtime/application.log
+sisfip/framework/
+sisfip/.htaccess
+sisfip/protected/runtime/application.log

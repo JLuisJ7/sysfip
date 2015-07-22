@@ -20,9 +20,39 @@
 class Servicio extends CActiveRecord
 {
 
+	public function actualizarServicio($idServicio,$descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle){
+		$resultado = array('valor'=>1,'message'=>'Servicio actualizado correctamente.');
+
+		$servicio = servicio::model()->findByPk($idServicio);
+
+$servicio->idServicio=$idServicio;
+$servicio->descripcion=$descripcion;
+$servicio->metodo=$metodo;
+$servicio->tiempo_entrega=$tiempo_entrega;
+$servicio->cantM_x_ensayo=$cantM_x_ensayo;
+$servicio->tarifa=$tarifa;
+$servicio->detalle=$detalle;		
+			
+			
+		
+			if(!$servicio->save()){
+				$resultado = array('valor'=>0, 'message'=>'No hemos podido Actualizar el Servicio');
+			}
+		
+
+		return $resultado;
+	}
+
+public function ObtenerServicio($idServicio){
+
+		$sql = "select * from Servicio where idServicio=".$idServicio;	
+
+		return $this->findAllBySql($sql);
+
+}
 public function registrarServicio($descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle){
 
-		$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
+		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
 
 		
 		$servicio=new Servicio;
@@ -31,12 +61,12 @@ $servicio->metodo=$metodo;
 $servicio->tiempo_entrega=$tiempo_entrega;
 $servicio->cantM_x_ensayo=$cantM_x_ensayo;
 $servicio->tarifa=$tarifa;
-$servicio->detallecotizacionse=$detalle;
+$servicio->detalle=$detalle;
 
       		
-if(!$Boleta->save()){
+if(!$servicio->save()){
 	
-	$resultado = array('valor'=>0, 'message'=>'No hemos podido realizar su solicitud, intentelo nuevamente');
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar el servicio, intentelo nuevamente');
 
 }
 			
@@ -44,6 +74,7 @@ if(!$Boleta->save()){
 		return $resultado;
 	}
 
+	
 	public function listarServicios(){
 
 		$sql = "select * from Servicio";	

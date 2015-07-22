@@ -16,9 +16,8 @@ class ServicioController extends Controller
 
 	public function actionAjaxObtenerServicio(){
 		$idServicio=$_POST['idServicio'];
-		$idProducto=$_POST['idProducto'];
-
-		$servicios = Servicio::model()->ObtenerServicio($idServicio,$idProducto);
+		
+		$servicios = Servicio::model()->ObtenerServicio($idServicio);
 
 		Util::renderJSON($servicios);
 	}
@@ -30,19 +29,27 @@ class ServicioController extends Controller
 		Util::renderJSON($servicios);
 	}
 
-	public function actionAjaxRegistrarServicio(){
-
+	public function actionAjaxAccionMantenimiento(){
+		$Accion=$_POST['Accion'];
+		
+		$descripcion=$_POST['descripcion'];
 		$descripcion=$_POST['descripcion'];
 		$metodo=$_POST['metodo'];
 		$tiempo_entrega=$_POST['tiempo_entrega'];
 		$cantM_x_ensayo=$_POST['cantM_x_ensayo'];
 		$tarifa=$_POST['tarifa'];
-		$detalle=$_POST['detalle'];	
+		$detalle=$_POST['detalle'];
+		if ($Accion=='Registrar') {
+			$respuesta = Servicio::model() -> registrarServicio($descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle);
+		}elseif ($Accion=='Actualizar') {
+			$idServicio=$_POST['idServicio'];
+			$respuesta = Servicio::model() -> actualizarServicio($idServicio,$descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle);
+		}
 
-		$respuesta = Servicio::model() -> registrarServicio($descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle);
-
+		
 		Util::renderJSON(array( 'success' => $respuesta ));
 	}
+	
 
 
 }

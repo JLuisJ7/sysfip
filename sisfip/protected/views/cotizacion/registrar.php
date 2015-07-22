@@ -29,8 +29,8 @@ $this->breadcrumbs=array(
 	<input type="text" class="form-control" id="txtNomCliente" >
 	</div>
 	<div class="form-group col-md-4">
-	<label class="" for="">DNI : </label>
-	<input type="text" class="form-control" id="txtAtencion" >
+	<label class="" for="">DNI o RUC: </label>
+	<input type="text" class="form-control" id="txtDocumento" >
 	</div>
 	<div class="form-group col-md-12">
 	<label class="" for="">Atencion a : </label>
@@ -50,17 +50,21 @@ $this->breadcrumbs=array(
 	</div>
 	<div class="form-group col-md-12">
 	<label class="" for="">Comunicación de Referencia : </label>
-	<input type="text" class="form-control" id="txtNomCliente" >
+	<input type="text" class="form-control" id="txtRefCliente" >
 	</div>
 
 	<div class="form-group col-md-12">
-	<label class="" for="s_listarProd">Seleccione Producto : </label>
+	<label class="" for="s_listarProd">Seleccione Muestra : </label>
 
 	<select id="s_listarProducto" class="selectpicker form-control" data-live-search="true" title="Productos " style="display:none;">
 	<option value="">Seleccione </option>
 	</select>
-
 	</div>
+	<div class="form-group col-md-12">
+	<label class="" for="">Muestra : </label>
+	<input type="text" class="form-control" id="txtMuestra" >
+	</div>
+
 
 	<div class="form-group col-md-12">
 	<label class="" for="s_listarServicio">Seleccione Servicio : </label>

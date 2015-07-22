@@ -19,15 +19,17 @@ $this->breadcrumbs=array(
     <div class="col-xs-12">
       <div class="box">
         <div class='box-header with-border'>
-          <h3 class='box-title'><i class="fa fa-user"></i> <b>Agregar</b> Servicio</h3>
+          <h3 class='box-title'><i class="fa fa-user"></i> <b id="text-Accion">Registrar</b> Servicio</h3>
         </div>
         <div class="box-body">
           <div class="row">
 
     <form action="" method="post" name="ServicioForm" id="ServicioForm"  onclick="ServicioCore.validarServicio();" >
+          
+
       <div class="form-group col-md-6">
         <label class="" for="txtServicio">Servicio: </label>
-         <input type="text" class="form-control" id="txtServicio" >
+         <input type="text" class="form-control" id="txtServicio" data-id="">
       </div>
       <div class="form-group col-md-6">
         <label class="" for="txtMetodo">Metodo: </label>
@@ -51,14 +53,22 @@ $this->breadcrumbs=array(
          </textarea>
       </div>
       <div class="form-group col-md-6 ">
-        <input class="btn btn-primary col-md-12" type="submit" value="Guardar">
+        <input class="btn btn-primary col-md-12" type="submit" id="btn-Accion-M" value="Registrar" >
       </div>
       <div class="form-group col-md-6">
-        <input class="btn btn-danger col-md-12" type="reset" value="Cancelar">
+        <input class="btn btn-danger col-md-12" type="reset" id="btn-Cancelar-M" value="Cancelar">
       </div>
     </form>
 
     </div><!--end row  -->
+    
+<div class="row">
+  <div class="alert alert-success alert-dismissable" id="alert-message" style="display:none;">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+<h4>  <i class="icon fa fa-check"></i> Alert!</h4>
+<span id="text-message"></span>
+</div> 
+</div>
     
 
 
@@ -81,8 +91,7 @@ $this->breadcrumbs=array(
             <thead>
               <tr>
                 <!--th style="vertical-align: middle;">#</th-->
-                <th style="vertical-align: middle;" >ID</th>
-                <th style="vertical-align: middle;" >Producto</th>
+                <th style="vertical-align: middle;" >ID</th>                
                 <th style="vertical-align: middle;" >Servicio</th>
                 <th style="vertical-align: middle;" >Metodo</th>
                 <th style="vertical-align: middle;" >Tiempo</th>
@@ -104,4 +113,13 @@ $this->breadcrumbs=array(
     window.onload=function(){
         ServicioCore.initListadoServicios();
     };
+    jQuery(document).ready(function($) {
+      $("#btn-Cancelar-M").click(function(event) {        
+        $("#txtServicio").attr('data-id', '');
+        $("#text-Accion").text('Registrar');
+        $("#btn-Accion-M").val('Registrar');
+        //event.preventDefault(); 
+
+      });
+    });
 </script>

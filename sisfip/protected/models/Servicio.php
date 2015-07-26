@@ -20,6 +20,25 @@
 class Servicio extends CActiveRecord
 {
 
+	public function eliminarServicio($idServicio){
+		$resultado = array('valor'=>1,'message'=>'Servicio actualizado correctamente.');
+
+		$servicio = servicio::model()->findByPk($idServicio);
+
+		$servicio->idServicio=$idServicio;
+		$servicio->estado=1;
+
+			
+			
+		
+			if(!$servicio->save()){
+				$resultado = array('valor'=>0, 'message'=>'No hemos podido Actualizar el Servicio');
+			}
+		
+
+		return $resultado;
+	}
+
 	public function actualizarServicio($idServicio,$descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle){
 		$resultado = array('valor'=>1,'message'=>'Servicio actualizado correctamente.');
 
@@ -77,7 +96,7 @@ if(!$servicio->save()){
 	
 	public function listarServicios(){
 
-		$sql = "select * from Servicio";	
+		$sql = "select * from Servicio where estado=0";	
 
 		return Yii::app()->db->createCommand($sql)->queryAll();
 	

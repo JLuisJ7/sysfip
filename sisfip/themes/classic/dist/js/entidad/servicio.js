@@ -2,7 +2,85 @@
     INICIO Fn ProdCore
 */
 var ServicioCore = {
-    
+
+    loadListadoServicios: function(){
+        //alert("hola");
+        var me = this;
+        
+        Util.createGrid('#listarServicios',{
+            toolButons:'',
+            url:'index.php?r=servicio/AjaxListarServicios',
+            columns:[
+                {"mData": "idServicio", "sClass": "alignCenter"},
+                {"mData": "descripcion", "sClass": "alignCenter"},                
+                {"mData": "metodo", "sClass": "alignCenter"},
+                {"mData": "tiempo_entrega", "sClass": "alignCenter"},
+                {"mData": "cantM_x_ensayo", "sClass": "alignCenter"},
+                 {"mData": "tarifa", "sClass": "alignCenter"},            
+                {
+                    "mData": 'idServicio',
+                    "bSortable": false,
+                    "bFilterable": false,
+                    //"width": "150px",
+                    "mRender": function(o) {
+                        return '<a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-warning btn-sm editarServicio"><i class="fa fa-pencil"></i></a> <a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-danger btn-sm eliminarServicio"><i class="fa fa-trash-o"></i></a>';
+                    }
+                }
+            ],
+            fnDrawCallback: function() {
+                $('.eliminarServicio').click(function() {
+                    me.alertEliminarServicio($(this).attr('lang'));
+                });
+                $('.editarServicio').click(function() {
+                    me.obtenerServicio($(this).attr('lang'));
+                    $("#btn-Accion-M").attr('value', 'Actualizar');
+                    $("#text-Accion").text('Actualizar');
+
+                });
+
+            }
+        });
+    },
+     alertEliminarServicio: function(idServicio){
+        var me = this;
+        bootbox.dialog({
+            message: "¿Estas seguro de eliminar el servicio. ?",
+            title: "Eliminar Servicio",
+            buttons: {
+                main: {
+                    label: "Aceptar",
+                    className: "btn btn-primary",
+                    callback: function() {
+                        console.log('Eliminando Servicio');
+
+                        $.ajax({
+                            type: "POST",
+                            url: 'index.php?r=servicio/AjaxEliminarServicio',
+                            data: {
+                                idServicio: idServicio
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                
+                                    me.loadListadoServicios();
+                                    bootbox.hideAll();
+                                
+                            }
+                        });
+
+                        return false;
+                    }
+                },
+                danger: {
+                    label: "Cancelar",
+                    className: "btn-danger",
+                    callback: function() {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+    },    
     validarServicio: function(){
         //console.log("VAMOS A VALIDAR");
         var me = this;
@@ -114,44 +192,6 @@ var ServicioCore = {
            }
                 });
 
-    },
-    loadListadoServicios: function(){
-        //alert("hola");
-        var me = this;
-        
-        Util.createGrid('#listarServicios',{
-            toolButons:'',
-            url:'index.php?r=servicio/AjaxListarServicios',
-            columns:[
-                {"mData": "idServicio", "sClass": "alignCenter"},
-                {"mData": "descripcion", "sClass": "alignCenter"},                
-                {"mData": "metodo", "sClass": "alignCenter"},
-                {"mData": "tiempo_entrega", "sClass": "alignCenter"},
-                {"mData": "cantM_x_ensayo", "sClass": "alignCenter"},
-                 {"mData": "tarifa", "sClass": "alignCenter"},            
-                {
-                    "mData": 'idServicio',
-                    "bSortable": false,
-                    "bFilterable": false,
-                    //"width": "150px",
-                    "mRender": function(o) {
-                        return '<a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-warning btn-sm editarServicio"><i class="fa fa-pencil"></i></a> <a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-danger btn-sm suspenderServicio"><i class="fa fa-trash-o"></i></a>';
-                    }
-                }
-            ],
-            fnDrawCallback: function() {
-                $('.suspenderServicio').click(function() {
-                    me.confirmSuspenderProducto($(this).attr('lang'));
-                });
-                $('.editarServicio').click(function() {
-                    me.obtenerServicio($(this).attr('lang'));
-                    $("#btn-Accion-M").attr('value', 'Actualizar');
-                    $("#text-Accion").text('Actualizar');
-
-                });
-
-            }
-        });
     },
     obtenerServicio: function(idServicio){
         $.ajax({

@@ -2,6 +2,26 @@
 ==========================================================
 */
 
+function listarServicios(){
+ $.ajax({
+            type: "POST",
+            url: 'index.php?r=servicio/AjaxListarServicios_S',
+            //sync:false,           
+            success: function(data) {
+                var html = "";
+                //$(".listaProveedores").find("option").remove();                 
+                $.each(data, function(index, value) {                                                 
+                     html += '<option value="'+value.idServicio+'">'+value.descripcion+' - <span style="color:red;">Metodo :</span>'+ value.metodo+'</option>';
+                });
+                          
+                $("#listarServicio").append(html);  
+               
+            },
+            dataType: 'json'
+
+        });
+
+}
 function select_productos(){
  $.ajax({
             type: "POST",

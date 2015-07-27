@@ -41,7 +41,7 @@ $this->breadcrumbs=array(
 			    <div class="input-group">	
           <span class="input-group-btn">
                     <button class="btn btn-default desbloquearParametro" type="button" data-input="IGV"><i class="fa fa-lock"></i></button>
-                  </span>	      
+            </span>	      
 			      <input type="text" class="form-control" id="IGV" placeholder="" data-block="1" disabled>
 			      <span class="input-group-btn">
 			        <button class="btn btn-default ActualizarParametro" type="button" data-input="IGV">Actualizar</button>

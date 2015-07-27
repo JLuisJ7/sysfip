@@ -102,6 +102,14 @@ if(!$servicio->save()){
 	
 	}
 
+	public function listarServicios_S(){
+
+		$sql = "select idServicio,descripcion,metodo from Servicio where estado=0";	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */

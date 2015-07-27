@@ -13,6 +13,12 @@ class ServicioController extends Controller
 
 		Util::renderJSON($servicios);
 	}
+	public function actionAjaxListarServicios_S(){
+		
+		$servicios = Servicio::model()->listarServicios_S();
+
+		Util::renderJSON($servicios);
+	}
 
 	public function actionAjaxObtenerServicio(){
 		$idServicio=$_POST['idServicio'];

@@ -23,6 +23,7 @@ $this->breadcrumbs=array(
 	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
 </div>
 <div class="box-body">
+
 	<!-- Date range -->
 	<div class="form-group col-md-3">	
 		<label class="" for="">DNI o RUC: </label>
@@ -73,7 +74,7 @@ $this->breadcrumbs=array(
 
 
 	<div class="form-group col-md-8">
-	<label class="" for="s_listarServicio">Servicio : </label>
+	<label class="" for="s_listarServicio">Servicio : <span id="repeatServicio" class="text-danger"></span></label>
 	<select id="listarServicio" class="selectpicker form-control" data-live-search="true" title="Seleccione Servicio" style="display:none;">
 	<option value="">Seleccione Servicio</option>
 	</select>
@@ -84,6 +85,7 @@ $this->breadcrumbs=array(
             <label for="" style="color:transparent;">Agregar</label><br>
             <button id="agregarServicio" type="button" class="btn btn-default"><i class="fa fa-cart-plus" ></i> Agregar</button>         
     </div>
+
 	<table id="DetalleCotizacion" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
 	<thead>
 	<tr>                        
@@ -101,6 +103,8 @@ $this->breadcrumbs=array(
 
 
 
+	
+<div class="row">
 	<div class="form-group col-md-4">
 	<label class="sr-only" for="exampleInputAmount"></label>
 	<div class="input-group">
@@ -108,9 +112,16 @@ $this->breadcrumbs=array(
 	<input type="text" class="form-control" id="txtTotal" placeholder="0.00" value="0.00" disabled>
 	</div>
 	</div>
+	<div class="form-group col-md-4">
+	<label class="sr-only" for="exampleInputAmount"></label>
+	<div class="input-group">
+	<div class="input-group-addon">Tiempo</div>
+	<input type="text" class="form-control" id="txtTiempo" placeholder="0.00" value="0" disabled>
+	</div>
+	</div>
 	<button type="button" class="btn btn-primary" id="btn_GuardarCotizacion">Guardar </button>
 <button type="button" class="btn btn-primary" id="btn_GuardarCotizacion">Guardar e Imprimir </button>
-
+</div>
 
 
 </div><!-- /.box-body -->
@@ -149,24 +160,46 @@ $('#agregarServicio').on( 'click', function () {
         data: {idServicio:parseInt(idServicio)},
     })
     .done(function(response) {
-        console.log(response);
-	    $('#DetalleCotizacion').DataTable().row.add([
-	           response[0].idServicio,
-	           response[0].descripcion,
-	           response[0].metodo,
-	           response[0].tiempo_entrega,
-	           response[0].cantM_x_ensayo+' ml',
-	           response[0].tarifa,
-	           '<input type="checkbox" id="Todoscheckbox">'
-	    ]).draw();
+        //console.log(response);
+     	var detalle = $('#DetalleCotizacion').tableToJSON();
+      	var repeat=false;
+		$.each(detalle,function(index, value){  
 
+	    	if(value.id===response[0].idServicio){
+	      		//console.log('repetido');    
+	    		repeat=true;       
+	      		//console.log(detalle);
+	     		return false;  
+	    	}
+    	
+		});
+
+	 	if(repeat===false){
+	    	$('#DetalleCotizacion').DataTable().row.add([
+		           response[0].idServicio,
+		           response[0].descripcion,
+		           response[0].metodo,
+		           response[0].tiempo_entrega,
+		           response[0].cantM_x_ensayo+' ml',
+		           response[0].tarifa,
+		           '<input type="checkbox" id="Todoscheckbox">'
+		    ]).draw();
+   		 }else if(repeat===true){
+    		//alert("el servicio ya esta agregado al detalle");
+    		$("#repeatServicio").text('El servicio ya esta agregado en el detalle');
+   		 }   
+   		 
     })
         .fail(function() {
-        console.log("error");
+        //console.log("error");
     })
     .always(function() {
-        console.log("complete");
+        //console.log("complete");
         calcularTotal();
+        setTimeout(function(){
+        	$("#repeatServicio").text('');
+        },5000);
+        calcularFechaEntrega();
     });
         
 
@@ -205,8 +238,10 @@ $(document).ready(function() {
 	      
 	    if(table.column(5).data().length==0){
 	    	$("#txtTotal").val('0.00'); 
+	    	$("#txtTiempo").val(0); 
 	    }else{
-	      calcularTotal();  
+	      calcularTotal();
+	      calcularFechaEntrega();  
 	    }        
 
 
@@ -224,11 +259,23 @@ function calcularTotal(){
       //console.log(a+"->"+b );
         return parseFloat(a) + parseFloat(b);
     } );
-
-
- 
    $("#txtTotal").val(parseFloat(total).toFixed(2)); 
-
-
 }   
+function calcularFechaEntrega(){
+
+  var detalle = $('#DetalleCotizacion').tableToJSON();
+      	var mayor=0;
+		$.each(detalle,function(index, value){  
+
+	    	if(value.Tiempo>=mayor){
+	      		
+	     		 mayor=value.Tiempo;
+	     		 console.log(value.Tiempo);
+	    	}
+    	
+	});
+   $("#txtTiempo").val(mayor); 
+}   
+
+
 </script>

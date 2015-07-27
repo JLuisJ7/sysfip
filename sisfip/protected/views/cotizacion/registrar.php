@@ -12,7 +12,12 @@ $this->moduleSubTitle="Cotización de Servicios para Ensayos";
 $this->breadcrumbs=array(
 	'Cotización de Servicios para Ensayos',
 );?>
+<style>
+	tbody {
+    text-align:center;
+}
 
+</style>
 <!-- Main content -->
 <section class="content">
 
@@ -86,7 +91,7 @@ $this->breadcrumbs=array(
             <button id="agregarServicio" type="button" class="btn btn-default"><i class="fa fa-cart-plus" ></i> Agregar</button>         
     </div>
 
-	<table id="DetalleCotizacion" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
+	<table id="DetalleCotizacion" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%" style="border-bottom:2px solid;">
 	<thead>
 	<tr>                        
 	<th style="vertical-align: middle;" >id</th>                        
@@ -95,7 +100,7 @@ $this->breadcrumbs=array(
 	<th style="vertical-align: middle;" >Tiempo </th>
 	<th style="vertical-align: middle;" >Cantidad </th> 
 	<th style="vertical-align: middle;" >Tarifa</th>                        
-	<th style="vertical-align: middle;" >Acred</th>
+	<th style="vertical-align: middle;" >Acreditado</th>
 	<th style="vertical-align: middle;" >DEL</th>
 	</tr>
 	</thead>                 
@@ -104,23 +109,53 @@ $this->breadcrumbs=array(
 
 
 	
-<div class="row">
+<div class="row" >
+	
+	<div class="form-group col-md-4">	
+		<label class="" for="">Fecha de Entrega de los Resultados : </label>
+		<div class="input-group">
+			<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+			<input type="date" class="form-control" id="txtTiempo" >			
+		</div>	
+	</div>
+	<div class="form-group col-md-4">	
+		<label class="" for="">Cantidad de Muestra Necesaria : </label>
+		<div class="input-group">
+			<div class="input-group-addon">NRO</div>
+			<input type="text" class="form-control" id="txtCantidad" >
+			
+		</div>	
+	</div>	
+
 	<div class="form-group col-md-4">
-	<label class="sr-only" for="exampleInputAmount"></label>
+	<label class="" for="">Valor total de los servicios : </label>
 	<div class="input-group">
 	<div class="input-group-addon">Total S/.</div>
 	<input type="text" class="form-control" id="txtTotal" placeholder="0.00" value="0.00" disabled>
 	</div>
 	</div>
-	<div class="form-group col-md-4">
-	<label class="sr-only" for="exampleInputAmount"></label>
-	<div class="input-group">
-	<div class="input-group-addon">Tiempo</div>
-	<input type="text" class="form-control" id="txtTiempo" placeholder="0.00" value="0" disabled>
+	<div class="form-group col-md-12">
+        <label class="" for="">Condiciones Técnicas Especiales Aplicables a los servicios: </label>       
+         <textarea id="txtCondTecnicas" class="form-control col-md-12"  rows="2">       
+         </textarea>
+      </div>
+    <div class="form-group col-md-12">
+        <label class="" for="">Detalle sobre los Servicios Ofrecido: </label>       
+         <textarea id="txtDetalles" class="form-control col-md-12"  rows="2">       
+         </textarea>
+    </div>
+	<div class="col-md-6">
+		<button type="button" class="btn btn-primary col-md-12" id="btn_GuardarCotizacion">Guardar </button>
 	</div>
+	<div class="col-md-6">
+		<button type="button" class="btn btn-primary col-md-12" id="btn_Guardar_Imprimir_Cotizacion">Guardar e Imprimir </button>
 	</div>
-	<button type="button" class="btn btn-primary" id="btn_GuardarCotizacion">Guardar </button>
-<button type="button" class="btn btn-primary" id="btn_GuardarCotizacion">Guardar e Imprimir </button>
+
+	<div class="col-md-12" style="margin-top:1em;">
+		<button type="button" class="btn btn-primary col-md-12" id="btn_Generar_Solicitud">Generar Solicitud </button>
+	</div>
+	
+
 </div>
 
 
@@ -138,10 +173,86 @@ Cotización Guardada Correctamente
 </section><!-- /.content -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 <script>
-    /*window.onload=function(){
-        ServicioCore.initListadoServicios();
-    };*/
-  
+    
+  $("#btn_GuardarCotizacion").click(function(event) {
+
+
+
+/*cliente */
+var nombres= $("#txtNomCliente").val();
+var doc_ident= $("#txtDocumento").val();
+var atencion_a= $("#txtAtencion").val();
+var direccion= $("#txtDireccion").val();
+var telefono= $("#txtTelefono").val();
+var correo= $("#txtEmail").val();
+var referencia= $("#txtRefCliente").val();
+var cond_tecnica=$("#txtCondTecnicas").val();
+var detalle_servicios=$("#txtDetalles").val();
+var total=$("#txtTotal").val();
+var fecha_Entrega=$("#txtTiempo").val();
+var cant_Muestra_necesaria=$("#txtCantidad").val();
+var nombre=$("#txtMuestra").val();
+
+var idCliente;
+$.ajax({
+	url: 'index.php?r=cliente/AjaxRegistrarCliente',
+	type: 'POST',
+	data: {
+		nombres:nombres,
+		doc_ident:doc_ident,
+		atencion_a:atencion_a,
+		direccion:direccion,
+		telefono:telefono,
+		correo:correo,
+		referencia:referencia
+	},
+})
+.done(function(response) {
+	console.log(response);
+	idCliente=response.idGenerado;
+	console.log(idCliente);
+	var idMuestra;
+	$.ajax({
+		url: 'index.php?r=muestra/AjaxRegistrarMuestra',
+		type: 'POST',	
+		data: {
+			nombre:nombre,
+			idCliente:idCliente
+		},
+	})
+	.done(function(response) {
+		console.log(response);
+		idMuestra=response.idGenerado;
+		$.ajax({
+			url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
+			type: 'POST',
+			data: {
+				idCliente:idCliente,
+				idMuestra,idMuestra,
+				cond_tecnica:cond_tecnica,
+				detalle_servicios:detalle_servicios,
+				total:total,
+				fecha_Entrega:fecha_Entrega,
+				cant_Muestra_necesaria:cant_Muestra_necesaria,
+		
+			},
+		})
+.done(function(response) {
+	console.log(response);
+})
+
+	})
+
+
+})
+
+
+
+
+
+
+
+  });
 </script>
 
 <script>
@@ -277,6 +388,7 @@ function calcularFechaEntrega(){
 	});
    $("#txtTiempo").val(mayor); 
 }   
+
 
 
 </script>

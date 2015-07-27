@@ -51,7 +51,12 @@ $email=$_POST['email'];
 		$respuesta = TBLCliente::model() -> RegistrarCliente($nombre,$direccion,$telefono,$email);
 
 		header('Content-Type: application/json; charset="UTF-8"');
-    	  Util::renderJSON(array( 'success' => $respuesta,'idGenerado'=>Yii::app()->db->getLastInsertID('tbl_cliente')));
+    	  Util::renderJSON(
+    	  	array( 
+    	  		'success' => $respuesta,
+    	  		'idGenerado'=>Yii::app()->db->getLastInsertID('tbl_cliente')
+    	  		)
+    	  	);
 	}
 
 

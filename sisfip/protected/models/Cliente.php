@@ -22,6 +22,32 @@
  */
 class Cliente extends CActiveRecord
 {
+
+public function RegistrarCliente($nombres,$doc_ident,$atencion_a,$direccion,$telefono,$correo,$referencia){
+
+		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
+
+		
+		$cliente=new Cliente;
+$cliente->nombres=$nombres;
+$cliente->doc_ident=$doc_ident;
+$cliente->atencion_a=$atencion_a;
+$cliente->direccion=$direccion;
+$cliente->telefono=$telefono;
+$cliente->correo=$correo;
+$cliente->referencia=$referencia;
+
+      		
+if(!$cliente->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar el servicio, intentelo nuevamente');
+
+}
+			
+
+		return $resultado;
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */

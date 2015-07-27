@@ -18,6 +18,22 @@
  */
 class Muestra extends CActiveRecord
 {
+
+	public function RegistrarMuestra($nombre,$idCliente){
+		$resultado = array('valor'=>1,'message'=>'Muestra Registrado correctamente.');
+		$muestra=new Muestra;
+		$muestra->nombre=$nombre;
+		$muestra->idCliente=$idCliente;
+		$muestra->idMuestra=$idCliente+100;
+		if(!$muestra->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar la muestra, intentelo nuevamente');
+
+}
+			
+
+		return $resultado;
+	}
 	/**
 	 * @return string the associated database table name
 	 */

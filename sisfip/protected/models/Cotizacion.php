@@ -23,6 +23,32 @@
  */
 class Cotizacion extends CActiveRecord
 {
+
+	public function registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$idMuestra){
+
+		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
+
+		
+		$cotizacion=new Cotizacion;
+$cotizacion->idCliente=$idCliente;
+$cotizacion->cond_tecnica=$cond_tecnica;
+$cotizacion->detalle_servicios=$detalle_servicios;
+$cotizacion->total=$total;
+$cotizacion->fecha_Entrega=$fecha_Entrega;
+$cotizacion->cant_Muestra_necesaria=$cant_Muestra_necesaria;
+$cotizacion->Muestra_idMuestra=$idMuestra;
+
+      		
+if(!$cotizacion->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar el servicio, intentelo nuevamente');
+
+}
+			
+
+		return $resultado;
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */

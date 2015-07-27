@@ -199,7 +199,7 @@ $('#agregarServicio').on( 'click', function () {
         setTimeout(function(){
         	$("#repeatServicio").text('');
         },5000);
-        calcularFechaEntrega();
+        
     });
         
 
@@ -241,7 +241,7 @@ $(document).ready(function() {
 	    	$("#txtTiempo").val(0); 
 	    }else{
 	      calcularTotal();
-	      calcularFechaEntrega();  
+	     
 	    }        
 
 
@@ -261,6 +261,7 @@ function calcularTotal(){
     } );
    $("#txtTotal").val(parseFloat(total).toFixed(2)); 
 }   
+
 function calcularFechaEntrega(){
 
   var detalle = $('#DetalleCotizacion').tableToJSON();

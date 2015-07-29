@@ -3,6 +3,16 @@
 class ClienteController extends Controller
 {
 
+public function actionAjaxConsultarClientexDoc(){
+		$doc_ident=$_POST['doc_ident'];
+		
+		/*$cliente = Cliente::model()->consultarClientexDoc($doc_ident);*/
+
+		//$exists=Cliente::model()->exists('doc_ident=:doc_ident', array(':doc_ident'=>$doc_ident));
+		$cliente=Cliente::model()->find('doc_ident=:doc_ident', array(':doc_ident'=>$doc_ident));
+		Util::renderJSON($cliente);
+	}
+
 	public function actionAjaxRegistrarCliente(){
 $nombres=$_POST['nombres'];
 $doc_ident=$_POST['doc_ident'];

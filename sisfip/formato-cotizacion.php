@@ -26,7 +26,9 @@ $total=$_POST['total'];
 	<meta charset="UTF-8">
 	<title>Formato Cotizacion</title>
 	<style>
-	
+	*{
+		font-size: 12px;
+	}
 	.bold{
 		font-weight: bold;
 	}

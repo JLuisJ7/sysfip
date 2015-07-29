@@ -23,6 +23,18 @@
 class Cliente extends CActiveRecord
 {
 
+public function consultarClientexDoc($doc_ident){
+
+		$sql = "select * from Cliente where doc_ident='".$doc_ident."'";
+			
+
+if($c>0){
+return $this->findAllBySql($sql);
+}else{
+	return 0;
+}
+}
+
 public function RegistrarCliente($nombres,$doc_ident,$atencion_a,$direccion,$telefono,$correo,$referencia){
 
 		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');

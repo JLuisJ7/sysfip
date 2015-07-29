@@ -31,38 +31,38 @@ $this->breadcrumbs=array(
 
 	<!-- Date range -->
 	<div class="form-group col-md-3">	
-		<label class="" for="">DNI o RUC: </label>
+		<label class="" for="">DNI o RUC: <span class="text-danger " id="doc_Exist" style="display:none;">El cliente no Existe</span></label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="txtDocumento" >
+			<input type="text" class="form-control" id="txtDocumento" data-id="">
 			<span class="input-group-btn">
-			    <button class="btn btn-default " type="button" ><i class="fa fa-search"></i></button>
+			    <button class="btn btn-default " type="button" id="consultarNro_Doc"><i class="fa fa-search"></i></button>
 			</span>
 		</div>	
 	</div>	
 	<div class="form-group col-md-9">
 	<label class="" for="">Cliente / Solicitante : </label>
-	<input type="text" class="form-control" id="txtNomCliente" >
+	<input type="text" class="form-control cli_block" id="txtNomCliente" >
 	</div>
 	
 	<div class="form-group col-md-12">
 	<label class="" for="">Atencion a : </label>
-	<input type="text" class="form-control" id="txtAtencion" >
+	<input type="text" class="form-control cli_block" id="txtAtencion" >
 	</div>
 	<div class="form-group col-md-12">
 	<label class="" for="">Direccion : </label>
-	<input type="text" class="form-control" id="txtDireccion" >
+	<input type="text" class="form-control cli_block" id="txtDireccion" >
 	</div>
 	<div class="form-group col-md-6">
 	<label class="" for="">Telefono : </label>
-	<input type="text" class="form-control col-md-12" id="txtTelefono" >
+	<input type="text" class="form-control col-md-12 cli_block" id="txtTelefono" >
 	</div>
 	<div class="form-group col-md-6">
 	<label class="" for="">E-mail : </label>
-	<input type="text" class="form-control col-md-12" id="txtEmail" >
+	<input type="text" class="form-control col-md-12 cli_block" id="txtEmail" >
 	</div>
 	<div class="form-group col-md-12">
 	<label class="" for="">Comunicación de Referencia : </label>
-	<input type="text" class="form-control" id="txtRefCliente" >
+	<input type="text" class="form-control cli_block" id="txtRefCliente" >
 	</div>
 
 	<div class="form-group col-md-12">
@@ -174,12 +174,13 @@ Cotización Guardada Correctamente
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 <script>
 
+
 $("#btn_Generar_Solicitud").click(function(event) {
 	var NroCotizacion=$("#NroCotizacion").attr('data-nro');
 	$.ajax({
 		url: 'index.php?r=cotizacion/AjaxImprimirCotizacion',
 		type: 'POST',		
-		data: {NroCotizacion: 6},
+		data: {NroCotizacion: NroCotizacion},
 	})
 	.done(function(data) {
 		console.log(data.Cotizacion);
@@ -241,12 +242,14 @@ $.post('formato-cotizacion.php', {
 
 </script>
 <script>
-    
-  $("#btn_GuardarCotizacion").click(function(event) {
+    $("#consultarNro_Doc").click(function(event) {
+    	var nro_doc= $("#txtDocumento").val();
+    	ClienteCore.consultarCliente(nro_doc);
+    });
 
-
-
+$("#btn_GuardarCotizacion").click(function(event) {
 /*cliente */
+var idCliente;
 var nombres= $("#txtNomCliente").val();
 var doc_ident= $("#txtDocumento").val();
 var atencion_a= $("#txtAtencion").val();
@@ -260,63 +263,17 @@ var total=$("#txtTotal").val();
 var fecha_Entrega=$("#txtTiempo").val();
 var cant_Muestra_necesaria=$("#txtCantidad").val();
 var muestra=$("#txtMuestra").val();
+var idCotizacion=$("#NroCotizacion").attr('data-nro');
+var detalle = $('#DetalleCotizacion').tableToJSON();
+if($("#txtDocumento").attr('data-id')=='Nuevo'	){
 
-var idCliente;
-$.ajax({
-	url: 'index.php?r=cliente/AjaxRegistrarCliente',
-	type: 'POST',
-	data: {
-		nombres:nombres,
-		doc_ident:doc_ident,
-		atencion_a:atencion_a,
-		direccion:direccion,
-		telefono:telefono,
-		correo:correo,
-		referencia:referencia
-	},
-})
-.done(function(response) {
-	console.log(response);
-	idCliente=response.idGenerado;
-	var idCotizacion=$("#NroCotizacion").attr('data-nro');
-	var detalle = $('#DetalleCotizacion').tableToJSON();
-	$.ajax({
-		url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
-		type: 'POST',
-		data: {
-			idCotizacion:idCotizacion,
-			idCliente:idCliente,
-			muestra,muestra,
-			cond_tecnica:cond_tecnica,
-			detalle_servicios:detalle_servicios,
-			total:total,
-			fecha_Entrega:fecha_Entrega,
-			cant_Muestra_necesaria:cant_Muestra_necesaria,
-			json:JSON.stringify(detalle),
-			},
-	})
-.done(function(response) {
-	console.log(response);
-})
-.always(function() {
-	
-/*
----------------guardar detalle
-*/
+ idCliente=ClienteCore.registrarCliente(nombres,doc_ident,atencion_a,direccion,telefono,correo,referencia);
+CotizacionCore.registrarCotizacion(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
+}else{
+	 idCliente= $("#txtDocumento").attr('data-id');
+	 CotizacionCore.registrarCotizacion(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
+}
 });
-
-	
-
-
-})
-
-
-
-
-
-
-
-  });
 
 
 </script>

@@ -4,27 +4,68 @@
 var CotizacionCore = {
     registrarCotizacion: function(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle){
         $.ajax({
-        url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
-        type: 'POST',
-        data: {
-            idCotizacion:idCotizacion,
-            idCliente:idCliente,
-            muestra,muestra,
-            cond_tecnica:cond_tecnica,
-            detalle_servicios:detalle_servicios,
-            total:total,
-            fecha_Entrega:fecha_Entrega,
-            cant_Muestra_necesaria:cant_Muestra_necesaria,
-            json:JSON.stringify(detalle),
-            },
-    })
-.done(function(response) {
-    console.log(response);
-})
-         
-      
-    }
+            url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
+            type: 'POST',
+            data: {
+                idCotizacion:idCotizacion,
+                idCliente:idCliente,
+                muestra,muestra,
+                cond_tecnica:cond_tecnica,
+                detalle_servicios:detalle_servicios,
+                total:total,
+                fecha_Entrega:fecha_Entrega,
+                cant_Muestra_necesaria:cant_Muestra_necesaria,
+                json:JSON.stringify(detalle),
+                },
+        })
+        .done(function(response) {
+            console.log(response);
+        })
+           
+    },
+    imprimirCotizacion:function(NroCotizacion){
+        $.ajax({
+        url: 'index.php?r=cotizacion/AjaxImprimirCotizacion',
+        type: 'POST',       
+        data: {NroCotizacion: NroCotizacion},
+        })
+        .done(function(data) {
+            console.log(data.Cotizacion);
+            console.log(data.Detalle);
 
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function(data) {
+            /*------*/
+            $.post('formato-cotizacion.php', { 
+                        atencion_a:data.Cotizacion[0].atencion_a, 
+                        cant_Muestra_necesaria:data.Cotizacion[0].cant_Muestra_necesaria, 
+                        cond_tecnica:data.Cotizacion[0].cond_tecnica, 
+                        correo:data.Cotizacion[0].correo, 
+                        detalle_servicios:data.Cotizacion[0].detalle_servicios, 
+                        direccion:data.Cotizacion[0].direccion, 
+                        doc_ident:data.Cotizacion[0].doc_ident,
+                        fecha_entrega:data.Cotizacion[0].fecha_entrega, 
+                        fecha_registro:data.Cotizacion[0].fecha_registro, 
+                        idCotizacion:data.Cotizacion[0].idCotizacion, 
+                        muestra:data.Cotizacion[0].muestra, 
+                        nombres:data.Cotizacion[0].nombres, 
+                        referencia:data.Cotizacion[0].referencia, 
+                        telefono:data.Cotizacion[0].telefono, 
+                        total:data.Cotizacion[0].total,
+                        detalle:JSON.stringify(data.Detalle),
+            }, function (result) {
+                    WinId = window.open('', '_blank');//resolucion de la ventana
+                    WinId.document.open();
+                    WinId.document.write(result);
+                    //WinId.document.close();
+            });      
+            /*-------------*/
+
+        });
+    }
 }
 
 

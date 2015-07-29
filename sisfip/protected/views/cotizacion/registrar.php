@@ -176,69 +176,12 @@ Cotización Guardada Correctamente
 
 
 $("#btn_Generar_Solicitud").click(function(event) {
-	var NroCotizacion=$("#NroCotizacion").attr('data-nro');
-	$.ajax({
-		url: 'index.php?r=cotizacion/AjaxImprimirCotizacion',
-		type: 'POST',		
-		data: {NroCotizacion: NroCotizacion},
-	})
-	.done(function(data) {
-		console.log(data.Cotizacion);
-		console.log(data.Detalle);
-
-	})
-	.fail(function() {
-		console.log("error");
-	})
-	.always(function(data) {
-		/*------*/
-			$.post('formato-cotizacion.php', { 
-atencion_a:data.Cotizacion[0].atencion_a, 
-cant_Muestra_necesaria:data.Cotizacion[0].cant_Muestra_necesaria, 
-cond_tecnica:data.Cotizacion[0].cond_tecnica, 
-correo:data.Cotizacion[0].correo, 
-detalle_servicios:data.Cotizacion[0].detalle_servicios, 
-direccion:data.Cotizacion[0].direccion, 
-doc_ident:data.Cotizacion[0].doc_ident,
-fecha_entrega:data.Cotizacion[0].fecha_entrega, 
-fecha_registro:data.Cotizacion[0].fecha_registro, 
-idCotizacion:data.Cotizacion[0].idCotizacion, 
-muestra:data.Cotizacion[0].muestra, 
-nombres:data.Cotizacion[0].nombres, 
-referencia:data.Cotizacion[0].referencia, 
-telefono:data.Cotizacion[0].telefono, 
-total:data.Cotizacion[0].total,
-detalle:JSON.stringify(data.Detalle),
-}, function (result) {
-            WinId = window.open('', '_blank');//resolucion de la ventana
-            WinId.document.open();
-            WinId.document.write(result);
-            //WinId.document.close();
-        });
-  
-		/*---------*/
-
-	});
 	
 });
 $("#btn_Guardar_Imprimir_Cotizacion").click(function(event) {
-		
-	var NroCotizacion=$("#NroCotizacion").attr('data-nro');
- 
-     // window.open('formato-cotizacion.php?idCotizacion=2', '_blank');
-
-
-$.post('formato-cotizacion.php', { 
-	NroCotizacion: 6 	
-}, function (result) {
-            WinId = window.open('', '_blank', 'width=1000px,height=600px');//resolucion de la ventana
-            WinId.document.open();
-            WinId.document.write(result);
-            //WinId.document.close();
-        });
-  
-
-});
+	var NroCotizacion=$("#NroCotizacion").attr('data-nro');	
+	CotizacionCore.imprimirCotizacion(NroCotizacion);
+});	
 
 </script>
 <script>

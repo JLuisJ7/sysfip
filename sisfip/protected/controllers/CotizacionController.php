@@ -2,6 +2,18 @@
 
 class CotizacionController extends Controller
 {
+
+
+
+	public function actionAjaxImprimirCotizacion(){
+		$NroCotizacion=$_POST['NroCotizacion'];
+		
+		$cotizacion = Cotizacion::model()->obtenerCotizacion($NroCotizacion);
+		$detalle = Detallecotizacion::model()->obtenerDetalleCotizacion($NroCotizacion);
+
+		Util::renderJSON(array( 'Cotizacion' => $cotizacion,'Detalle'=>$detalle ));
+	}
+
 	public function actionAjaxObtenerNroCotizacion(){		
 		$cotizacion = Cotizacion::model()->ObtenerNroCotizacion();
 		header('Content-Type: application/json; charset="UTF-8"');
@@ -9,13 +21,9 @@ class CotizacionController extends Controller
 		
 	}
 
-	public function actionAjaxRegistrarCotizacion(){
-	
 
-
-
-
-//cotizacion
+public function actionAjaxRegistrarCotizacion(){
+	//cotizacion
 $idCliente=$_POST['idCliente'];
 $idCotizacion=$_POST['idCotizacion'];
 $muestra=$_POST['muestra'];

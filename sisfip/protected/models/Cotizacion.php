@@ -22,6 +22,17 @@
 class Cotizacion extends CActiveRecord
 {
 
+
+public function obtenerCotizacion($NroCotizacion){
+
+		$sql = "select idCotizacion,DATE_FORMAT(cot.fecha_registro,'%m-%d-%Y') as fecha_registro,cli.nombres,cli.doc_ident,cli.atencion_a,cli.direccion,cli.telefono,cli.correo,cli.referencia,cot.muestra,cot.cond_tecnica,cot.detalle_servicios,cot.total,cot.fecha_entrega,cant_Muestra_necesaria from cotizacion as cot
+inner join cliente as cli ON cli.idCliente=cot.idCliente
+where idCotizacion=".$NroCotizacion;
+	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	}
+
 	public function ObtenerNroCotizacion(){
 
 $sql = "select count(*)+1 as nroCotizacion from cotizacion ";

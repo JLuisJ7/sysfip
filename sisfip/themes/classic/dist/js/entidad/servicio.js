@@ -116,6 +116,7 @@ var ServicioCore = {
                         var tiempo_entrega =$("#txtTiempoEntrega").val();
                         var cantM_x_ensayo =$("#txtCantMuestra").val();
                         var tarifa =$("#txtTarifa").val();
+                        var tarifa_Acred =$("#txtTarifaAcred").val();
                         var detalle =$("#txtDetalle").val();
                        if($("#btn-Accion-M").val()=='Registrar'){
                         $.ajax({
@@ -128,6 +129,7 @@ var ServicioCore = {
                             tiempo_entrega:tiempo_entrega,
                             cantM_x_ensayo:cantM_x_ensayo,
                             tarifa:tarifa,
+                            tarifa_Acred:tarifa_Acred,
                             detalle:detalle
 
                         },
@@ -163,6 +165,7 @@ var ServicioCore = {
                             tiempo_entrega:tiempo_entrega,
                             cantM_x_ensayo:cantM_x_ensayo,
                             tarifa:tarifa,
+                            tarifa_Acred:tarifa_Acred,
                             detalle:detalle
 
                         },
@@ -208,6 +211,7 @@ var ServicioCore = {
             $("#txtTiempoEntrega").val(data[0].tiempo_entrega);
             $("#txtCantMuestra").val(data[0].cantM_x_ensayo);
             $("#txtTarifa").val(data[0].tarifa);
+            $("#txtTarifaAcred").val(data[0].tarifa_Acred);
             $("#txtDetalle").val(data[0].detalle);  
 
             

@@ -4,7 +4,7 @@
  * This is the model class for table "cotizacion".
  *
  * The followings are the available columns in table 'cotizacion':
- * @property integer $idCotizacion
+ * @property string $idCotizacion
  * @property string $fecha_registro
  * @property integer $idCliente
  * @property string $cond_tecnica
@@ -13,18 +13,15 @@
  * @property string $fecha_Entrega
  * @property integer $cant_Muestra_necesaria
  * @property string $estado
- * @property integer $Muestra_idMuestra
+ * @property string $muestra
  * @property string $eliminado
  *
  * The followings are the available model relations:
  * @property Cliente $idCliente0
- * @property Muestra $muestraIdMuestra
- * @property Detallecotizacion[] $detallecotizacions
  */
 class Cotizacion extends CActiveRecord
 {
-
-	public function registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$idMuestra){
+	public function registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$muestra){
 
 		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
 
@@ -36,7 +33,7 @@ $cotizacion->detalle_servicios=$detalle_servicios;
 $cotizacion->total=$total;
 $cotizacion->fecha_Entrega=$fecha_Entrega;
 $cotizacion->cant_Muestra_necesaria=$cant_Muestra_necesaria;
-$cotizacion->Muestra_idMuestra=$idMuestra;
+$cotizacion->muestra=$muestra;
 
       		
 if(!$cotizacion->save()){
@@ -48,7 +45,7 @@ if(!$cotizacion->save()){
 
 		return $resultado;
 	}
-
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -65,16 +62,17 @@ if(!$cotizacion->save()){
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idCotizacion, idCliente, Muestra_idMuestra', 'required'),
-			array('idCotizacion, idCliente, cant_Muestra_necesaria, Muestra_idMuestra', 'numerical', 'integerOnly'=>true),
+			array('idCliente', 'required'),
+			array('idCliente, cant_Muestra_necesaria', 'numerical', 'integerOnly'=>true),
 			array('cond_tecnica, detalle_servicios', 'length', 'max'=>200),
 			array('total', 'length', 'max'=>8),
 			array('estado', 'length', 'max'=>12),
+			array('muestra', 'length', 'max'=>30),
 			array('eliminado', 'length', 'max'=>1),
 			array('fecha_registro, fecha_Entrega', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idCotizacion, fecha_registro, idCliente, cond_tecnica, detalle_servicios, total, fecha_Entrega, cant_Muestra_necesaria, estado, Muestra_idMuestra, eliminado', 'safe', 'on'=>'search'),
+			array('idCotizacion, fecha_registro, idCliente, cond_tecnica, detalle_servicios, total, fecha_Entrega, cant_Muestra_necesaria, estado, muestra, eliminado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,8 +85,6 @@ if(!$cotizacion->save()){
 		// class name for the relations automatically generated below.
 		return array(
 			'idCliente0' => array(self::BELONGS_TO, 'Cliente', 'idCliente'),
-			'muestraIdMuestra' => array(self::BELONGS_TO, 'Muestra', 'Muestra_idMuestra'),
-			'detallecotizacions' => array(self::HAS_MANY, 'Detallecotizacion', 'idCotizacion'),
 		);
 	}
 
@@ -107,7 +103,7 @@ if(!$cotizacion->save()){
 			'fecha_Entrega' => 'Fecha Entrega',
 			'cant_Muestra_necesaria' => 'Cant Muestra Necesaria',
 			'estado' => 'Estado',
-			'Muestra_idMuestra' => 'Muestra Id Muestra',
+			'muestra' => 'Muestra',
 			'eliminado' => 'Eliminado',
 		);
 	}
@@ -130,7 +126,7 @@ if(!$cotizacion->save()){
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idCotizacion',$this->idCotizacion);
+		$criteria->compare('idCotizacion',$this->idCotizacion,true);
 		$criteria->compare('fecha_registro',$this->fecha_registro,true);
 		$criteria->compare('idCliente',$this->idCliente);
 		$criteria->compare('cond_tecnica',$this->cond_tecnica,true);
@@ -139,7 +135,7 @@ if(!$cotizacion->save()){
 		$criteria->compare('fecha_Entrega',$this->fecha_Entrega,true);
 		$criteria->compare('cant_Muestra_necesaria',$this->cant_Muestra_necesaria);
 		$criteria->compare('estado',$this->estado,true);
-		$criteria->compare('Muestra_idMuestra',$this->Muestra_idMuestra);
+		$criteria->compare('muestra',$this->muestra,true);
 		$criteria->compare('eliminado',$this->eliminado,true);
 
 		return new CActiveDataProvider($this, array(

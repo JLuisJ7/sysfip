@@ -52,12 +52,13 @@ class ServicioController extends Controller
 		$tiempo_entrega=$_POST['tiempo_entrega'];
 		$cantM_x_ensayo=$_POST['cantM_x_ensayo'];
 		$tarifa=$_POST['tarifa'];
+		$tarifa_Acred=$_POST['tarifa_Acred'];
 		$detalle=$_POST['detalle'];
 		if ($Accion=='Registrar') {
-			$respuesta = Servicio::model() -> registrarServicio($descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle);
+			$respuesta = Servicio::model() -> registrarServicio($descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$tarifa_Acred,$detalle);
 		}elseif ($Accion=='Actualizar') {
 			$idServicio=$_POST['idServicio'];
-			$respuesta = Servicio::model() -> actualizarServicio($idServicio,$descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$detalle);
+			$respuesta = Servicio::model() -> actualizarServicio($idServicio,$descripcion,$metodo,$tiempo_entrega,$cantM_x_ensayo,$tarifa,$tarifa_Acred,$detalle);
 		}
 
 		

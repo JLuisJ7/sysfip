@@ -35,17 +35,21 @@ $this->breadcrumbs=array(
         <label class="" for="txtMetodo">Metodo: </label>
          <input type="text" class="form-control" id="txtMetodo" >
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label class="" for="txtTiempoEntrega">Tiempo de Entrega: </label>
          <input type="number" class="form-control" id="txtTiempoEntrega" >
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label class="" for="txtCantMuestra">Cantidad de Muestras: </label>
          <input type="number" class="form-control" id="txtCantMuestra" >
       </div>
-      <div class="form-group col-md-4">
-        <label class="" for="txtTarifa">Tarifa: </label>
+      <div class="form-group col-md-3">
+        <label class="" for="txtTarifa">Tarifa Normal: </label>
          <input type="text" class="form-control" id="txtTarifa" >
+      </div>
+      <div class="form-group col-md-3">
+        <label class="" for="txtTarifaAcred">Tarifa Acreditado: </label>
+         <input type="text" class="form-control" id="txtTarifaAcred" >
       </div>
       <div class="form-group col-md-12">
         <label class="" for="">Detalle: </label>       

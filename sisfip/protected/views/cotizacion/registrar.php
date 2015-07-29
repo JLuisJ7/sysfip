@@ -191,7 +191,7 @@ var detalle_servicios=$("#txtDetalles").val();
 var total=$("#txtTotal").val();
 var fecha_Entrega=$("#txtTiempo").val();
 var cant_Muestra_necesaria=$("#txtCantidad").val();
-var nombre=$("#txtMuestra").val();
+var muestra=$("#txtMuestra").val();
 
 var idCliente;
 $.ajax({
@@ -210,38 +210,26 @@ $.ajax({
 .done(function(response) {
 	console.log(response);
 	idCliente=response.idGenerado;
-	console.log(idCliente);
-	var idMuestra;
+	console.log(response);
+	idMuestra=response.idGenerado;
 	$.ajax({
-		url: 'index.php?r=muestra/AjaxRegistrarMuestra',
-		type: 'POST',	
+		url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
+		type: 'POST',
 		data: {
-			nombre:nombre,
-			idCliente:idCliente
-		},
-	})
-	.done(function(response) {
-		console.log(response);
-		idMuestra=response.idGenerado;
-		$.ajax({
-			url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
-			type: 'POST',
-			data: {
-				idCliente:idCliente,
-				idMuestra,idMuestra,
-				cond_tecnica:cond_tecnica,
-				detalle_servicios:detalle_servicios,
-				total:total,
-				fecha_Entrega:fecha_Entrega,
-				cant_Muestra_necesaria:cant_Muestra_necesaria,
-		
+			idCliente:idCliente,
+			muestra,muestra,
+			cond_tecnica:cond_tecnica,
+			detalle_servicios:detalle_servicios,
+			total:total,
+			fecha_Entrega:fecha_Entrega,
+			cant_Muestra_necesaria:cant_Muestra_necesaria
 			},
-		})
+	})
 .done(function(response) {
 	console.log(response);
 })
 
-	})
+	
 
 
 })

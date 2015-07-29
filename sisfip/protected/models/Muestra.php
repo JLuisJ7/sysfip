@@ -27,7 +27,7 @@ class Muestra extends CActiveRecord
 		$muestra->idMuestra=$idCliente+100;
 		if(!$muestra->save()){
 	
-	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar la muestra, intentelo nuevamente');
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar la muestra, intentelo nuevamente','idMuestra');
 
 }
 			

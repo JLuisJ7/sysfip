@@ -1,0 +1,137 @@
+[33mcommit c45977850ad24685b01596447bc034344d17b023[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Mon Jul 27 01:16:37 2015 -0500
+
+    registrar cliente, muestra
+
+[33mcommit 0f65e4a7fdc42bfbdad7fe9a61b6cd381e4400ae[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sun Jul 26 20:22:51 2015 -0500
+
+    sin fecha maxima
+
+[33mcommit 7f3413d54b4045b808dded7d2e9bdd2649c782d0[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sun Jul 26 20:20:32 2015 -0500
+
+    obtener repetido,calcular total,tiempo
+
+[33mcommit fcd679d4f49540e2252b9ebccbd15fc9c1511c66[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sun Jul 26 19:18:37 2015 -0500
+
+    agregar items al detalle Cotizacion
+
+[33mcommit ccd8329d5786e289526c594f4daa476b614de4ab[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sun Jul 26 13:07:24 2015 -0500
+
+    eliminar servicio
+
+[33mcommit c8a0a9a66258cba23900bf95975c45d57ce6c120[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Wed Jul 22 18:19:44 2015 -0500
+
+    registrar y actualizar servicio
+
+[33mcommit 2bf58e1b9d02ad0a21ee21ae6780af8f9e9dfbcf[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Tue Jul 21 18:03:52 2015 -0500
+
+    nuevo inicio
+
+[33mcommit 96fac2573c2c190ab47b28051f86d0d8dda17438[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Thu Jul 16 18:35:43 2015 -0500
+
+    obtener detalle del servicio
+
+[33mcommit ba06743f61023753e0465600d6a6fb4068a78460[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Thu Jul 16 18:16:02 2015 -0500
+
+    obtener servicio x producto
+
+[33mcommit 9a40dd8db241d89bf0d0f7d1038e6c9b906cfc31[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Thu Jul 16 17:56:37 2015 -0500
+
+    listar servicios x producto
+
+[33mcommit 0219e63178f182f35d23c6fc0c027b74464ef0f9[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Thu Jul 16 15:16:35 2015 -0500
+
+    listar servicios
+
+[33mcommit 948bbbca8427ce72df758e934cdb7afbeb39fe82[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Thu Jul 16 14:19:44 2015 -0500
+
+    listar producto
+
+[33mcommit f814e16aca7c9fb4ab48d62d5c8d2854448e6ce2[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Thu Jul 16 13:24:15 2015 -0500
+
+    models generados
+
+[33mcommit 2c9a92460b2588bd3b0ca4c1fcb589ddda121849[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Wed Jul 15 20:34:55 2015 -0500
+
+    guardar cotizacion
+
+[33mcommit 66dfba7ce79d523d504a744bdf69f6a97e91ddeb[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Wed Jul 15 18:45:50 2015 -0500
+
+    nro de cotizacion
+
+[33mcommit ccc035aa0898dceeec3971c4b2d277626a0d588d[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Wed Jul 15 18:01:39 2015 -0500
+
+    detalle de cotizacion
+
+[33mcommit 99ca5b1848b7a16462ebdfdced27855e950376a9[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Mon Jul 13 01:27:36 2015 -0500
+
+    cambio de Nombre
+
+[33mcommit fdab4db73d4bfce47d2f12227e80b2ef756c7f87[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Mon Jul 13 00:46:42 2015 -0500
+
+    listar Servicios
+
+[33mcommit 76c4f6bde7eb46bf15afc6d82e110df7ffbe85ce[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Mon Jul 13 00:17:01 2015 -0500
+
+    registrar cliente,servicio
+
+[33mcommit b37167bc6a5587b4669ad178aba4d7fbf75d5011[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sun Jul 12 19:19:50 2015 -0500
+
+    registrar Cotizacion y detalle
+
+[33mcommit f10b414453aeede58c1a4c4415ddf01e29094dc8[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sun Jul 12 16:43:10 2015 -0500
+
+    sumar checkbox, all checkbox suma
+
+[33mcommit 3e22db38f5fbf0960526d675a4553b1d8066e8fd[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sat Jul 11 16:51:50 2015 -0500
+
+    class tblproducto, tblservicio, cotizacion generado
+
+[33mcommit c8d7b6b9558196b6fc8a6e05df5e6023b7acf791[m
+Author: jluisj7 <jluisjab7@gmail.com>
+Date:   Sat Jul 11 15:21:47 2015 -0500
+
+    inicio certipwtro

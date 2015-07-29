@@ -5,8 +5,8 @@
  *
  * The followings are the available columns in table 'detallecotizacion':
  * @property integer $idServicio
- * @property integer $idCotizacion
- * @property integer $idMuestra
+ * @property string $idCotizacion
+ * @property string $Muestra
  * @property string $recomendado
  * @property string $acreditado
  * @property string $estado
@@ -14,11 +14,29 @@
  *
  * The followings are the available model relations:
  * @property Cotizacion $idCotizacion0
- * @property Muestra $idMuestra0
  * @property Servicio $idServicio0
  */
 class Detallecotizacion extends CActiveRecord
 {
+
+	public function registrarDetalleCotizacion($idCotizacion,$idServicio,$Precio,$muestra){
+
+		$resultado = array('valor'=>1,'message'=>'Su solicitud ha sido procesada correctamente.');
+
+		
+
+
+
+      		$Detalle=new Detallecotizacion;
+      		$Detalle->idCotizacion=$idCotizacion;			
+			$Detalle->idServicio=$idServicio;
+			$Detalle->Muestra=$muestra;
+			$Detalle->precio=$Precio;
+
+			$Detalle->save();
+
+		return $resultado;
+	}
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,14 +53,16 @@ class Detallecotizacion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idServicio, idCotizacion, idMuestra', 'required'),
-			array('idServicio, idCotizacion, idMuestra', 'numerical', 'integerOnly'=>true),
+			array('idServicio', 'required'),
+			array('idServicio', 'numerical', 'integerOnly'=>true),
+			array('idCotizacion', 'length', 'max'=>11),
+			array('Muestra', 'length', 'max'=>30),
 			array('recomendado, estado', 'length', 'max'=>1),
 			array('acreditado', 'length', 'max'=>2),
 			array('precio', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idServicio, idCotizacion, idMuestra, recomendado, acreditado, estado, precio', 'safe', 'on'=>'search'),
+			array('idServicio, idCotizacion, Muestra, recomendado, acreditado, estado, precio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,7 +75,6 @@ class Detallecotizacion extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'idCotizacion0' => array(self::BELONGS_TO, 'Cotizacion', 'idCotizacion'),
-			'idMuestra0' => array(self::BELONGS_TO, 'Muestra', 'idMuestra'),
 			'idServicio0' => array(self::BELONGS_TO, 'Servicio', 'idServicio'),
 		);
 	}
@@ -68,7 +87,7 @@ class Detallecotizacion extends CActiveRecord
 		return array(
 			'idServicio' => 'Id Servicio',
 			'idCotizacion' => 'Id Cotizacion',
-			'idMuestra' => 'Id Muestra',
+			'Muestra' => 'Muestra',
 			'recomendado' => 'Recomendado',
 			'acreditado' => 'Acreditado',
 			'estado' => 'Estado',
@@ -95,8 +114,8 @@ class Detallecotizacion extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('idServicio',$this->idServicio);
-		$criteria->compare('idCotizacion',$this->idCotizacion);
-		$criteria->compare('idMuestra',$this->idMuestra);
+		$criteria->compare('idCotizacion',$this->idCotizacion,true);
+		$criteria->compare('Muestra',$this->Muestra,true);
 		$criteria->compare('recomendado',$this->recomendado,true);
 		$criteria->compare('acreditado',$this->acreditado,true);
 		$criteria->compare('estado',$this->estado,true);

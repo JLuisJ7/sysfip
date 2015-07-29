@@ -150,6 +150,26 @@ function listarProductos(){
     .always(function() {
         //console.log("complete");
     });
+ }; 
+function ObtenerNroCotizacion(){
+ 
+   $.ajax({
+        url: 'index.php?r=Cotizacion/AjaxObtenerNroCotizacion',
+        type: 'POST',          
+    })
+    .done(function(response) {   
+     data=response.output;     
+        //console.log(data.nroComp);
+
+        $("#NroCotizacion").text(data.nroCotizacion);
+        $("#NroCotizacion").attr('data-nro', data.nroCotizacion);      
+    })
+    .fail(function() {
+        //console.log("error");
+    })
+    .always(function() {
+        //console.log("complete");
+    });
  };
  
 function obtenerNroBoleta(modulo,idNroComp,idserie){

@@ -24,7 +24,7 @@ $this->breadcrumbs=array(
 <!--end contadores-->
 <div class="box box-primary">
 <div class="box-header">
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro:<b id="NroCotizacion" data-nro="">     </b></h3>
+	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroCotizacion" data-nro="">     </b></h3>
 	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
 </div>
 <div class="box-body">
@@ -210,24 +210,32 @@ $.ajax({
 .done(function(response) {
 	console.log(response);
 	idCliente=response.idGenerado;
-	console.log(response);
-	idMuestra=response.idGenerado;
+	var idCotizacion=$("#NroCotizacion").attr('data-nro');
+	var detalle = $('#DetalleCotizacion').tableToJSON();
 	$.ajax({
 		url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
 		type: 'POST',
 		data: {
+			idCotizacion:idCotizacion,
 			idCliente:idCliente,
 			muestra,muestra,
 			cond_tecnica:cond_tecnica,
 			detalle_servicios:detalle_servicios,
 			total:total,
 			fecha_Entrega:fecha_Entrega,
-			cant_Muestra_necesaria:cant_Muestra_necesaria
+			cant_Muestra_necesaria:cant_Muestra_necesaria,
+			json:JSON.stringify(detalle),
 			},
 	})
 .done(function(response) {
 	console.log(response);
 })
+.always(function() {
+	
+/*
+---------------guardar detalle
+*/
+});
 
 	
 
@@ -241,11 +249,13 @@ $.ajax({
 
 
   });
+
+
 </script>
 
 <script>
    listarServicios();
-
+ObtenerNroCotizacion();
 </script>
 <script>
 	

@@ -21,6 +21,16 @@
  */
 class Cotizacion extends CActiveRecord
 {
+
+	public function ObtenerNroCotizacion(){
+
+$sql = "select count(*)+1 as nroCotizacion from cotizacion ";
+	
+
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	}
+
 	public function registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$muestra){
 
 		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
@@ -45,7 +55,7 @@ if(!$cotizacion->save()){
 
 		return $resultado;
 	}
-	
+
 	/**
 	 * @return string the associated database table name
 	 */

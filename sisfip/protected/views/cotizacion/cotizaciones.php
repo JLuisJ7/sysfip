@@ -35,7 +35,7 @@ $this->breadcrumbs=array(
 		<div class="input-group">
 			<input type="text" class="form-control" id="txtDocumento" data-id="">
 			<span class="input-group-btn">
-			    <button class="btn btn-default " type="button" id="consultarNro_Doc"><i class="fa fa-search"></i></button>
+			    <button class="btn btn-default " type="button" id="BuscarCliente"><i class="fa fa-search"></i></button>
 			</span>
 		</div>	
 	</div>	
@@ -43,7 +43,21 @@ $this->breadcrumbs=array(
 	<label class="" for="">Cliente / Solicitante : </label>
 	<input type="text" class="form-control cli_block" id="txtNomCliente" >
 	</div>
-	
+	<!-- Cotizaciones por Cliente -->
+	<table id="CotizacionesCliente" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>                        
+                        <th style="vertical-align: middle;" >ID</th>
+                        <th style="vertical-align: middle;" >Muestra</th>
+                        <th style="vertical-align: middle;" >Fecha</th>                        
+                        <th style="vertical-align: middle;" >Fecha Entrega</th>
+                        <th style="vertical-align: middle;" >Cantidad</th>
+                        <th style="vertical-align: middle;" >Total</th>                       
+                        <th style="vertical-align: middle;" >Estado</th>
+                        <th style="vertical-align: middle;" ></th>
+                      </tr>
+                    </thead>                 
+                  </table>
 	<div class="form-group col-md-12">
 	<label class="" for="">Atencion a : </label>
 	<input type="text" class="form-control cli_block" id="txtAtencion" >
@@ -88,7 +102,7 @@ $this->breadcrumbs=array(
 
     <div class="form-group">
             <label for="" style="color:transparent;">Agregar</label><br>
-            <button id="agregarServicio" type="button" class="btn btn-default"><i class="fa fa-cart-plus" ></i> Agregar</button>         
+            <button id="agregarServicio2" type="button" class="btn btn-default"><i class="fa fa-cart-plus" ></i> Agregar</button>         
     </div>
 
 	<table id="DetalleCotizacion" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%" style="border-bottom:2px solid;">
@@ -100,8 +114,8 @@ $this->breadcrumbs=array(
 	<th style="vertical-align: middle;" >Tiempo </th>
 	<th style="vertical-align: middle;" >Cantidad </th> 
 	<th style="vertical-align: middle;" >Tarifa</th>                        
-	<th style="vertical-align: middle;" >Acreditado</th>
-	<th style="vertical-align: middle;" >DEL</th>
+	<th style="vertical-align: middle;" >Acreditado</th>	
+	<th style="vertical-align: middle;" >Eliminar</th>
 	</tr>
 	</thead>                 
 	</table>
@@ -172,68 +186,11 @@ Cotización Guardada Correctamente
 
 </section><!-- /.content -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
-<script>
-
-
-$("#btn_Generar_Solicitud").click(function(event) {
-	
-});
-$("#btn_Guardar_Imprimir_Cotizacion").click(function(event) {
-	var NroCotizacion=$("#NroCotizacion").attr('data-nro');	
-	CotizacionCore.imprimirCotizacion(NroCotizacion);
-});	
-
-</script>
-<script>
-    $("#consultarNro_Doc").click(function(event) {
-    	var nro_doc= $("#txtDocumento").val();
-    	ClienteCore.consultarCliente(nro_doc);
-    });
-
-$("#btn_GuardarCotizacion").click(function(event) {
-/*cliente */
-var idCliente;
-var nombres= $("#txtNomCliente").val();
-var doc_ident= $("#txtDocumento").val();
-var atencion_a= $("#txtAtencion").val();
-var direccion= $("#txtDireccion").val();
-var telefono= $("#txtTelefono").val();
-var correo= $("#txtEmail").val();
-var referencia= $("#txtRefCliente").val();
-var cond_tecnica=$("#txtCondTecnicas").val();
-var detalle_servicios=$("#txtDetalles").val();
-var total=$("#txtTotal").val();
-var fecha_Entrega=$("#txtTiempo").val();
-var cant_Muestra_necesaria=$("#txtCantidad").val();
-var muestra=$("#txtMuestra").val();
-var idCotizacion=$("#NroCotizacion").attr('data-nro');
-var detalle = $('#DetalleCotizacion').tableToJSON();
-if($("#txtDocumento").attr('data-id')=='Nuevo'	){
-
- idCliente=ClienteCore.registrarCliente(nombres,doc_ident,atencion_a,direccion,telefono,correo,referencia);
-CotizacionCore.registrarCotizacion(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
-}else{
-	 idCliente= $("#txtDocumento").attr('data-id');
-	 CotizacionCore.registrarCotizacion(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
-}
-
-setTimeout(function() {
-	var NroCotizacion=$("#NroCotizacion").attr('data-nro');	
-	CotizacionCore.imprimirCotizacion(NroCotizacion);
-}, 1000);
-
-});
-
-
-</script>
 
 <script>
-   listarServicios();
-ObtenerNroCotizacion();
-</script>
-<script>
-	/*********************/
-$('#agregarServicio').on( 'click', function () {
+
+            /*------------*/
+$('#agregarServicio2').on( 'click', function () {
 
     var idServicio=$("#listarServicio").val();
 
@@ -265,7 +222,7 @@ $('#agregarServicio').on( 'click', function () {
                    response[0].tiempo_entrega,
                    response[0].cantM_x_ensayo+' ml',
                    response[0].tarifa,
-                   '<input type="checkbox" id="Todoscheckbox">'
+                   'SI'
             ]).draw();
          }else if(repeat===true){
             //alert("el servicio ya esta agregado al detalle");
@@ -289,11 +246,24 @@ $('#agregarServicio').on( 'click', function () {
 
        
     } );
+	
+</script>	
+<script>
+listarServicios();
+	$(document).ready(function() {
+		$("#BuscarCliente").click(function(event) {
+			var nro_doc= $("#txtDocumento").val();
+			CotizacionCore.CotizacionesxCliente(nro_doc);
+		});
+
+	
+
+	});
 
 
 $(document).ready(function() {
     
-     $('#DetalleCotizacion').dataTable({  
+    /* $('#DetalleCotizacion').dataTable({  
       "language": {
             "lengthMenu": "Display _MENU_ records per page",
             "zeroRecords": " ",
@@ -312,7 +282,7 @@ $(document).ready(function() {
         "bFilter": false
     } );
 /************************/
-$('#DetalleCotizacion tbody').on( 'click', 'button', function () {
+$('#DetalleCotizacion tbody ').on( 'click', 'button', function () {
         
         var table = $('#DetalleCotizacion').DataTable();
         
@@ -330,6 +300,5 @@ $('#DetalleCotizacion tbody').on( 'click', 'button', function () {
     } );
 /*************************/
 } );
-
 
 </script>

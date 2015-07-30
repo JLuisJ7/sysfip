@@ -23,9 +23,19 @@ class Cotizacion extends CActiveRecord
 {
 
 
-public function obtenerCotizacion($NroCotizacion){
+public function CotizacionesxCliente($doc_ident){
 
-		$sql = "select idCotizacion,DATE_FORMAT(cot.fecha_registro,'%m-%d-%Y') as fecha_registro,cli.nombres,cli.doc_ident,cli.atencion_a,cli.direccion,cli.telefono,cli.correo,cli.referencia,cot.muestra,cot.cond_tecnica,cot.detalle_servicios,cot.total,cot.fecha_entrega,cant_Muestra_necesaria from cotizacion as cot
+		$sql = "select idCotizacion,DATE_FORMAT(cot.fecha_registro,'%d-%m-%Y') as fecha_registro ,cot.muestra,cot.total,DATE_FORMAT(cot.fecha_entrega,'%d-%m-%Y') as fecha_entrega,cant_Muestra_necesaria,cot.estado from cotizacion as cot
+inner join cliente as cli ON cli.idCliente=cot.idCliente
+where cli.doc_ident='".$doc_ident."'";
+	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	}
+
+	public function obtenerCotizacion($NroCotizacion){
+
+		$sql = "select idCotizacion,DATE_FORMAT(cot.fecha_registro,'%d-%m-%Y') as fecha_registro,cli.nombres,cli.doc_ident,cli.atencion_a,cli.direccion,cli.telefono,cli.correo,cli.referencia,cot.muestra,cot.cond_tecnica,cot.detalle_servicios,cot.total,cot.fecha_entrega,cant_Muestra_necesaria from cotizacion as cot
 inner join cliente as cli ON cli.idCliente=cot.idCliente
 where idCotizacion=".$NroCotizacion;
 	

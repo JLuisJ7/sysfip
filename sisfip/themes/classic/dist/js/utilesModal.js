@@ -1,4 +1,4 @@
-var Util = {
+ Util = {
     createGrid: function(id, options) {        
         var toolButons = options.toolButons || '';
         var extraOptions = options.extraOptions || {};
@@ -222,54 +222,48 @@ var InventCore = {
        
 
         $.ajax({
-        url: 'index.php?r=reportes/AjaxObtenerInventarioProducto',
-        type: 'POST',
-       
-        data: {
-           
-            idProducto:idProducto
-        },
-    })
+            url: 'index.php?r=reportes/AjaxObtenerInventarioProducto',
+            type: 'POST',       
+            data: {
+               
+                idProducto:idProducto
+            },
+        })
         .done(function(response) {
-            
-                
             console.log(response);
              var table = $('#listaInventario').DataTable( {
                 "paging":   true,
-        "ordering": false,
-        "info":     false,
-        "bFilter": false,
-        "data": response,
-
-                columns:[
-               
-                {"mData": "idMovimiento", "sClass": "alignCenter"},
-                {"mData": "documento", "sClass": "alignCenter"},
-                {"mData": "serie", "sClass": "alignCenter"},
-                {"mData": "nro_documento", "sClass": "alignCenter"},
-                {"mData": "fecha", "sClass": "alignCenter"},
-                {"mData": "Tipo", "sClass": "alignCenter"},                
-                {"mData": "producto", "sClass": "alignCenter"},
-
+                "ordering": false,
+                "info":     false,
+                "bFilter": false,
+                "data": response,
+                columns:[               
+                    {"mData": "idMovimiento", "sClass": "alignCenter"},
+                    {"mData": "documento", "sClass": "alignCenter"},
+                    {"mData": "serie", "sClass": "alignCenter"},
+                    {"mData": "nro_documento", "sClass": "alignCenter"},
+                    {"mData": "fecha", "sClass": "alignCenter"},
+                    {"mData": "Tipo", "sClass": "alignCenter"},                
+                    {"mData": "producto", "sClass": "alignCenter"},
                 //{"mData": "cantidad", "sClass": "alignCenter"},
-                {
-                    "mData": null,
-                    "bSortable": false,
-                    "bFilterable": false,
-                     "mRender": function (data, type, row) {
-                  if(data.Tipo=='Salida'){
-                        return '<i class="fa fa-arrow-up text-primary"></i> <strong class="text-primary">' + data.cantidad + '</strong>';
-                  }else if(data.Tipo=='Entrada'){
-                    return '<i class="fa fa-arrow-up  fa-arrow-down text-danger"></i> <strong class="text-danger "> ' + data.cantidad + '</strong>';
-                  }
+                    {
+                        "mData": null,
+                        "bSortable": false,
+                        "bFilterable": false,
+                         "mRender": function (data, type, row) {
+                          if(data.Tipo=='Salida'){
+                                return '<i class="fa fa-arrow-up text-primary"></i> <strong class="text-primary">' + data.cantidad + '</strong>';
+                          }else if(data.Tipo=='Entrada'){
+                            return '<i class="fa fa-arrow-up  fa-arrow-down text-danger"></i> <strong class="text-danger "> ' + data.cantidad + '</strong>';
+                          }
                   
-                }
-                },
+                        }
+                    },
 
-                {"mData": "valor_unitario", "sClass": "alignCenter"},
-                {"mData": "total", "sClass": "alignCenter"}
-            ]              
-            } );
+                    {"mData": "valor_unitario", "sClass": "alignCenter"},
+                    {"mData": "total", "sClass": "alignCenter"}
+                ]              
+            });
             
         })
         .fail(function() {

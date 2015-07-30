@@ -2,6 +2,67 @@
     INICIO Fn Cotizacion
 */
 var CotizacionCore = {
+    CotizacionesxCliente: function(nroDoc){
+       var me = this;
+       var table = $('#CotizacionesCliente').DataTable();
+        table.destroy();
+        $.ajax({
+            url: 'index.php?r=cotizacion/AjaxCotizacionesxCliente',
+            type: 'POST',       
+            data: {
+               
+                doc_ident:nroDoc
+            },
+        })
+        .done(function(response) {
+            console.log(response);
+             var table = $('#CotizacionesCliente').DataTable( {
+                "paging":   true,
+                "ordering": false,
+                "info":     false,
+                "bFilter": false,
+                "data": response,
+                columns:[               
+                    {"mData": "idCotizacion", "sClass": "alignCenter"},
+                    {"mData": "muestra", "sClass": "alignCenter"},
+                    {"mData": "fecha_registro", "sClass": "alignCenter"},
+                    {"mData": "fecha_entrega", "sClass": "alignCenter"},
+                    {"mData": "cant_Muestra_necesaria", "sClass": "alignCenter"},
+                    {"mData": "total", "sClass": "alignCenter"}, 
+                    {"mData": "estado", "sClass": "alignCenter"},                
+                    {
+                    "mData": 'idCotizacion',
+                    "bSortable": false,
+                    "bFilterable": false,
+                    //"width": "150px",
+                    "mRender": function(o) {
+                        return '<a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-warning btn-sm editarCotizacion"><i class="fa fa-pencil"></i></a> <a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-danger btn-sm eliminarCotizacion"><i class="fa fa-trash-o"></i></a>';
+                    }
+                }
+                   
+                ],
+            fnDrawCallback: function() {
+                $('.eliminarCotizacion').click(function() {
+                    me.imprimirCotizacion($(this).attr('lang'));
+                });
+                $('.editarCotizacion').click(function() {
+                    me.editarCotizacion($(this).attr('lang'));
+                    
+
+                });
+
+            }              
+            });
+            
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+           
+        });
+        
+    },
     registrarCotizacion: function(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle){
         $.ajax({
             url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
@@ -22,6 +83,95 @@ var CotizacionCore = {
             console.log(response);
         })
            
+    },
+    editarCotizacion:function(NroCotizacion){
+        var me = this;
+        $.ajax({
+        url: 'index.php?r=cotizacion/AjaxeditarCotizacion',
+        type: 'POST',       
+        data: {NroCotizacion: NroCotizacion},
+        async:false
+        })
+        .done(function(data) {
+            console.log(data.Cotizacion);
+            
+           me.llenarDetalle(data.Detalle);
+
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function(data) {
+            /*------*/
+             $("#txtNomCliente").val(data.Cotizacion[0].nombres);
+ $("#txtDocumento").val(data.Cotizacion[0].doc_ident);
+ $("#txtAtencion").val(data.Cotizacion[0].atencion_a);
+ $("#txtDireccion").val(data.Cotizacion[0].direccion);
+ $("#txtTelefono").val(data.Cotizacion[0].telefono);
+ $("#txtEmail").val(data.Cotizacion[0].correo);
+ $("#txtRefCliente").val(data.Cotizacion[0].referencia);
+$("#txtCondTecnicas").val(data.Cotizacion[0].cond_tecnica);
+$("#txtDetalles").val(data.Cotizacion[0].detalle_servicios);
+$("#txtTotal").val(data.Cotizacion[0].total);
+$("#txtTiempo").val(data.Cotizacion[0].fecha_entrega);
+$("#txtCantidad").val(data.Cotizacion[0].cant_Muestra_necesaria);
+$("#txtMuestra").val(data.Cotizacion[0].muestra);
+$("#NroCotizacion").attr('data-nro',data.Cotizacion[0].idCotizacion);
+
+
+            /*-------*/
+        });
+
+        
+
+    },
+    llenarDetalle:function(detalle){
+        var table = $('#DetalleCotizacion').DataTable();
+        table.destroy();
+        $('#DetalleCotizacion').dataTable({  
+      "language": {
+            "lengthMenu": "Display _MENU_ records per page",
+            "zeroRecords": " ",
+            "info": "Showing page _PAGE_ of _PAGES_",
+            "infoEmpty": "No records available",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+        },   
+        "columnDefs": [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button class='btn btn-danger'><i class='fa fa-trash-o '></i></button>"
+        } ],
+        "paging":   false,
+        "ordering": false,
+        "info":     false,
+        "bFilter": false
+    } );
+console.log(detalle);
+    $.each(detalle,function(index, value){ 
+        
+          $('#DetalleCotizacion').DataTable().row.add([
+            value.id, value.descripcion, value.metodo, value.tiempo_entrega, value.cantM_X_ensayo, value.precio, value.acreditado
+            ]).draw();
+
+        });
+ /*---- Eliminar Fila---------*/
+ $('#DetalleCotizacion tbody').on( 'click', 'button', function () {
+        
+        var table = $('#DetalleCotizacion').DataTable();
+        
+        table.row( $(this).parents('tr') ).remove().draw( false );         
+          
+        if(table.column(5).data().length==0){
+            $("#txtTotal").val('0.00'); 
+            
+        }else{
+          calcularTotal();
+         
+        }        
+
+
+    } );
+
     },
     imprimirCotizacion:function(NroCotizacion){
         $.ajax({
@@ -143,5 +293,40 @@ $("#txtRefCliente").val(data.referencia);
 
 }
 
+
+
+/*************************/
+    
+
+
+
+function calcularTotal(){
+  var table=$('#DetalleCotizacion').DataTable(); 
+
+  var total = table 
+    .column(5)
+    .data()
+    .reduce( function (a, b) {
+      //console.log(a+"->"+b );
+        return parseFloat(a) + parseFloat(b);
+    } );
+   $("#txtTotal").val(parseFloat(total).toFixed(2)); 
+}   
+
+function calcularFechaEntrega(){
+
+  var detalle = $('#DetalleCotizacion').tableToJSON();
+        var mayor=0;
+        $.each(detalle,function(index, value){  
+
+            if(value.Tiempo>=mayor){
+                
+                 mayor=value.Tiempo;
+                 console.log(value.Tiempo);
+            }
+        
+    });
+   $("#txtTiempo").val(mayor); 
+}   
 
 

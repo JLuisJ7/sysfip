@@ -9,9 +9,24 @@ class CotizacionController extends Controller
 		$NroCotizacion=$_POST['NroCotizacion'];
 		
 		$cotizacion = Cotizacion::model()->obtenerCotizacion($NroCotizacion);
+		$detalle = Detallecotizacion::model()->obtenerDetalleCotizacionImprimir($NroCotizacion);
+
+		Util::renderJSON(array( 'Cotizacion' => $cotizacion,'Detalle'=>$detalle ));
+	}
+	public function actionAjaxeditarCotizacion(){
+		$NroCotizacion=$_POST['NroCotizacion'];
+		
+		$cotizacion = Cotizacion::model()->obtenerCotizacion($NroCotizacion);
 		$detalle = Detallecotizacion::model()->obtenerDetalleCotizacion($NroCotizacion);
 
 		Util::renderJSON(array( 'Cotizacion' => $cotizacion,'Detalle'=>$detalle ));
+	}
+
+	public function actionAjaxCotizacionesxCliente(){	
+		$doc_ident=$_POST['doc_ident'];
+		$cotizacion = Cotizacion::model()->CotizacionesxCliente($doc_ident);
+		Util::renderJSON($cotizacion);
+		
 	}
 
 	public function actionAjaxObtenerNroCotizacion(){		
@@ -57,6 +72,11 @@ foreach($array as $obj){
 	public function actionRegistrar()
 	{
 		$this->render('registrar');
+	}
+
+	public function actionCotizaciones()
+	{
+		$this->render('cotizaciones');
 	}
 	
 }

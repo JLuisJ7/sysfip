@@ -20,6 +20,14 @@ class Detallecotizacion extends CActiveRecord
 {
 	public function obtenerDetalleCotizacion($NroCotizacion){
 
+		$sql = "select  detc.idServicio as id,serv.descripcion,serv.metodo,serv.tiempo_entrega,serv.cantM_X_ensayo,detc.precio,detc.acreditado,detc.estado from detalleCotizacion as detc inner join servicio as serv ON serv.idServicio=detc.idServicio where idCotizacion=".$NroCotizacion;
+	
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	}
+
+	public function obtenerDetalleCotizacionImprimir($NroCotizacion){
+
 		$sql = "select serv.descripcion,serv.metodo,detc.precio from detalleCotizacion as detc
 inner join servicio as serv ON serv.idServicio=detc.idServicio
 where idCotizacion=".$NroCotizacion;

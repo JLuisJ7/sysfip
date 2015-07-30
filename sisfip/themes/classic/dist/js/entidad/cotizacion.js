@@ -64,6 +64,7 @@ var CotizacionCore = {
         
     },
     registrarCotizacion: function(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle){
+        var me = this;
         $.ajax({
             url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
             type: 'POST',
@@ -75,7 +76,23 @@ var CotizacionCore = {
                 detalle_servicios:detalle_servicios,
                 total:total,
                 fecha_Entrega:fecha_Entrega,
-                cant_Muestra_necesaria:cant_Muestra_necesaria,
+                cant_Muestra_necesaria:cant_Muestra_necesaria,               
+                },
+        })
+        .done(function(response) {
+            console.log(response);
+             me.registrarDetalleCotizacion(idCotizacion,muestra,detalle);
+
+        })
+           
+    },
+    registrarDetalleCotizacion: function(idCotizacion,muestra,detalle){
+        $.ajax({
+            url: 'index.php?r=cotizacion/AjaxRegistrarDetalleCotizacion',
+            type: 'POST',
+            data: {
+                idCotizacion:idCotizacion,
+                muestra,muestra,               
                 json:JSON.stringify(detalle),
                 },
         })
@@ -89,8 +106,7 @@ var CotizacionCore = {
         $.ajax({
         url: 'index.php?r=cotizacion/AjaxeditarCotizacion',
         type: 'POST',       
-        data: {NroCotizacion: NroCotizacion},
-        async:false
+        data: {NroCotizacion: NroCotizacion},       
         })
         .done(function(data) {
             console.log(data.Cotizacion);
@@ -116,7 +132,8 @@ $("#txtTotal").val(data.Cotizacion[0].total);
 $("#txtTiempo").val(data.Cotizacion[0].fecha_entrega);
 $("#txtCantidad").val(data.Cotizacion[0].cant_Muestra_necesaria);
 $("#txtMuestra").val(data.Cotizacion[0].muestra);
-$("#NroCotizacion").attr('data-nro',data.Cotizacion[0].idCotizacion);
+$("#Edit_NroCotizacion").attr('data-nro',data.Cotizacion[0].idCotizacion);
+$("#Edit_NroCotizacion").text(data.Cotizacion[0].idCotizacion);
 
 
             /*-------*/

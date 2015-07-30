@@ -47,16 +47,27 @@ $detalle_servicios=$_POST['detalle_servicios'];
 $total=$_POST['total'];
 $fecha_Entrega=$_POST['fecha_Entrega'];
 $cant_Muestra_necesaria=$_POST['cant_Muestra_necesaria'];
+
+
+		$respuesta = Cotizacion::model() -> registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$muestra);
+
+		
+		Util::renderJSON(array( 'success' => $respuesta ));
+	}
+public function actionAjaxRegistrarDetalleCotizacion(){
+
+$idCotizacion=$_POST['idCotizacion'];
+$muestra=$_POST['muestra'];
+
 $json=$_POST['json'];
 $array = json_decode($json);
 
-		$respuesta = Cotizacion::model() -> registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$muestra);
 	
 foreach($array as $obj){
 			$idServicio=$obj->id;			
 			$Precio=$obj->Tarifa;	
 						
- Detallecotizacion::model() -> registrarDetalleCotizacion($idCotizacion,$idServicio,$Precio,$muestra);
+ $respuesta=Detallecotizacion::model() -> registrarDetalleCotizacion($idCotizacion,$idServicio,$Precio,$muestra);
 
 
 
@@ -64,6 +75,8 @@ foreach($array as $obj){
 		
 		Util::renderJSON(array( 'success' => $respuesta ));
 	}
+
+
 
 	public function actionIndex()
 	{

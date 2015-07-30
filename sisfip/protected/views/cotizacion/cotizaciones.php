@@ -24,7 +24,7 @@ $this->breadcrumbs=array(
 <!--end contadores-->
 <div class="box box-primary">
 <div class="box-header">
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroCotizacion" data-nro="">     </b></h3>
+	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="Edit_NroCotizacion" data-nro="">     </b></h3>
 	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
 </div>
 <div class="box-body">

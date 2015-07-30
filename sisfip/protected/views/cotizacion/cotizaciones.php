@@ -121,7 +121,6 @@ $this->breadcrumbs=array(
 	</table>
 
 
-
 	
 <div class="row" >
 	
@@ -162,7 +161,7 @@ $this->breadcrumbs=array(
 		<button type="button" class="btn btn-primary col-md-12" id="btn_GuardarCotizacion">Guardar e Imprimir</button>
 	</div>
 	<div class="col-md-6">
-		<button type="button" class="btn btn-danger col-md-12" id="btn_Guardar_Imprimir_Cotizacion">Cancelar</button>
+		<button type="button" class="btn btn-danger col-md-12" id="btn_Guardar_detalle">Guardar y borrar detalle</button>
 	</div>
 
 	<div class="col-md-12" style="margin-top:1em;">
@@ -188,6 +187,14 @@ Cotización Guardada Correctamente
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 
 <script>
+
+$("#btn_Guardar_detalle").click(function(event) {
+	var NroCotizacion=$("#Edit_NroCotizacion").attr('data-nro');
+	CotizacionCore.eliminarDetalleCotizacion(NroCotizacion);
+var muestra=$("#txtMuestra").val();
+var detalle = $('#DetalleCotizacion').tableToJSON();
+	 CotizacionCore.registrarDetalleCotizacion(NroCotizacion,muestra,detalle);
+});
 
             /*------------*/
 $('#agregarServicio2').on( 'click', function () {

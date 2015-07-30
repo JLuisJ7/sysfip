@@ -101,6 +101,19 @@ var CotizacionCore = {
         })
            
     },
+    eliminarDetalleCotizacion: function(NroCotizacion){
+        $.ajax({
+            url: 'index.php?r=cotizacion/AjaxEliminarDetalleCotizacion',
+            type: 'POST',
+            data: {
+                NroCotizacion:NroCotizacion,               
+                },
+        })
+        .done(function(response) {
+            console.log(response);
+        })
+           
+    },
     editarCotizacion:function(NroCotizacion){
         var me = this;
         $.ajax({

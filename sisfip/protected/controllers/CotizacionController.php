@@ -3,7 +3,13 @@
 class CotizacionController extends Controller
 {
 
+public function actionAjaxEliminarDetalleCotizacion(){
+		$NroCotizacion=$_POST['NroCotizacion'];
+		
 
+		$detalle=Detallecotizacion::model()->deleteAll('idCotizacion=:idCotizacion',array(':idCotizacion'=>$NroCotizacion));
+		Util::renderJSON($detalle);
+	}
 
 	public function actionAjaxImprimirCotizacion(){
 		$NroCotizacion=$_POST['NroCotizacion'];

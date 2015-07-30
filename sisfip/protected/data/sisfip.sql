@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2015 a las 01:02:23
--- Versión del servidor: 5.6.24
--- Versión de PHP: 5.6.8
+-- Tiempo de generación: 30-07-2015 a las 07:02:01
+-- Versión del servidor: 5.6.21
+-- Versión de PHP: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `admcatalogo` (
-  `ide_elemento` int(10) unsigned NOT NULL,
+`ide_elemento` int(10) unsigned NOT NULL,
   `ide_grupo` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL,
   `ide_estado` char(1) NOT NULL,
@@ -93,7 +93,7 @@ INSERT INTO `admcatalogo` (`ide_elemento`, `ide_grupo`, `des_nombre`, `ide_estad
 --
 
 CREATE TABLE IF NOT EXISTS `admgrcatalogo` (
-  `ide_grupo` int(10) unsigned NOT NULL,
+`ide_grupo` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
@@ -118,7 +118,7 @@ INSERT INTO `admgrcatalogo` (`ide_grupo`, `des_nombre`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `admopcion` (
-  `ide_opcion` int(10) unsigned NOT NULL,
+`ide_opcion` int(10) unsigned NOT NULL,
   `ide_modulo` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL,
   `des_ruta` varchar(250) DEFAULT NULL,
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `admopcion` (
   `fec_modifica` datetime DEFAULT NULL,
   `des_icon` varchar(45) DEFAULT NULL,
   `ind_orden` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `admopcion`
@@ -175,7 +175,8 @@ INSERT INTO `admopcion` (`ide_opcion`, `ide_modulo`, `des_nombre`, `des_ruta`, `
 (35, 39, 'COTIZACIÓN', '', 0, '0', '1', 'lalipazaga@sismima.com', NULL, NULL, NULL, 'list-alt', 1),
 (36, 39, 'Nueva Cotización', 'cotizacion/registrar', 35, '0', '1', 'lalipazaga@sismima.com', NULL, NULL, NULL, NULL, 0),
 (37, 40, 'SERVICIOS', 'servicio/index', 0, '0', '1', 'lalipazaga@sismima.com', NULL, NULL, NULL, 'list-alt', 1),
-(38, 40, 'PRODUCTOS', 'producto/index', 0, '0', '1', 'lalipazaga@sismima.com', NULL, NULL, NULL, 'list-alt', 1);
+(38, 40, 'PRODUCTOS', 'producto/index', 0, '0', '1', 'lalipazaga@sismima.com', NULL, NULL, NULL, 'list-alt', 1),
+(39, 39, 'Cotizaciones', 'cotizacion/cotizaciones', 35, '0', '1', 'lalipazaga@sismima.com', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,7 @@ INSERT INTO `admopcion` (`ide_opcion`, `ide_modulo`, `des_nombre`, `des_ruta`, `
 --
 
 CREATE TABLE IF NOT EXISTS `admrol` (
-  `ide_rol` int(10) unsigned NOT NULL,
+`ide_rol` int(10) unsigned NOT NULL,
   `des_nombre` varchar(250) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
@@ -207,10 +208,10 @@ INSERT INTO `admrol` (`ide_rol`, `des_nombre`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `admrolopcion` (
-  `ide_rolopcion` int(10) unsigned NOT NULL,
+`ide_rolopcion` int(10) unsigned NOT NULL,
   `ide_opcion` int(10) unsigned NOT NULL,
   `ide_rol` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `admrolopcion`
@@ -228,7 +229,8 @@ INSERT INTO `admrolopcion` (`ide_rolopcion`, `ide_opcion`, `ide_rol`) VALUES
 (54, 35, 1),
 (55, 36, 1),
 (56, 37, 1),
-(57, 38, 1);
+(57, 38, 1),
+(58, 39, 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +239,7 @@ INSERT INTO `admrolopcion` (`ide_rolopcion`, `ide_opcion`, `ide_rol`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `cliente` (
-  `idCliente` int(11) NOT NULL,
+`idCliente` int(11) NOT NULL,
   `nombres` varchar(45) NOT NULL,
   `doc_ident` varchar(12) NOT NULL,
   `atencion_a` varchar(45) DEFAULT NULL,
@@ -248,7 +250,16 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `estado` char(1) DEFAULT '0',
   `distrito` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idCliente`, `nombres`, `doc_ident`, `atencion_a`, `direccion`, `telefono`, `correo`, `referencia`, `fecha_registro`, `estado`, `distrito`) VALUES
+(1, 'Jose Luis Ayala', '71886624', 'Umayux group', 'av lima 790', '944659233', 'abcd@gmail.com', 'si referencia alguna', '2015-07-30 04:15:16', '0', NULL),
+(2, 'Juan Luis PEREx', '71886625', 'Juan Luis PEREx', 'Juan Luis PEREx', 'Juan Luis ', 'Juan Lui', 'Juan Luis PEREx', '2015-07-30 04:40:09', '0', NULL),
+(3, 'Juan Luis PEREx', '71886625', 'Juan Luis PEREx', 'Juan Luis PEREx', 'Juan Luis ', 'Juan Lui', 'Juan Luis PEREx', '2015-07-30 04:40:35', '0', NULL);
 
 -- --------------------------------------------------------
 
@@ -257,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 --
 
 CREATE TABLE IF NOT EXISTS `cotizacion` (
-  `idCotizacion` int(11) NOT NULL,
+`idCotizacion` int(11) unsigned NOT NULL,
   `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `idCliente` int(11) NOT NULL,
   `cond_tecnica` varchar(200) DEFAULT NULL,
@@ -266,9 +277,18 @@ CREATE TABLE IF NOT EXISTS `cotizacion` (
   `fecha_Entrega` date DEFAULT NULL,
   `cant_Muestra_necesaria` int(11) DEFAULT NULL,
   `estado` varchar(12) DEFAULT NULL,
-  `Muestra_idMuestra` int(11) NOT NULL,
+  `muestra` varchar(30) NOT NULL DEFAULT '',
   `eliminado` char(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cotizacion`
+--
+
+INSERT INTO `cotizacion` (`idCotizacion`, `fecha_registro`, `idCliente`, `cond_tecnica`, `detalle_servicios`, `total`, `fecha_Entrega`, `cant_Muestra_necesaria`, `estado`, `muestra`, `eliminado`) VALUES
+(1, '2015-07-30 04:15:16', 1, 'Condiciones Técnicas Especiales Aplicables a los servicios:', 'Condiciones Técnicas Especiales Aplicables a los servicios:', '677.00', '2015-07-31', 7, NULL, 'Petroleo', '0'),
+(2, '2015-07-30 04:40:09', 2, 'Juan Luis PEREx', 'Juan Luis PEREx', '677.00', '2015-07-31', 1, NULL, 'Juan Luis PEREx', '0'),
+(3, '2015-07-30 04:40:35', 3, 'Juan Luis PEREx', 'Juan Luis PEREx', '677.00', '2015-07-31', 1, NULL, 'Juan Luis PEREx', '0');
 
 -- --------------------------------------------------------
 
@@ -278,13 +298,23 @@ CREATE TABLE IF NOT EXISTS `cotizacion` (
 
 CREATE TABLE IF NOT EXISTS `detallecotizacion` (
   `idServicio` int(11) NOT NULL,
-  `idCotizacion` int(11) NOT NULL,
-  `idMuestra` int(11) NOT NULL,
+  `idCotizacion` int(11) unsigned NOT NULL DEFAULT '0',
+  `Muestra` varchar(30) DEFAULT NULL,
   `recomendado` char(1) DEFAULT NULL,
-  `acreditado` char(2) DEFAULT NULL,
+  `acreditado` char(2) DEFAULT 'NO',
   `estado` char(1) DEFAULT NULL,
   `precio` decimal(8,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detallecotizacion`
+--
+
+INSERT INTO `detallecotizacion` (`idServicio`, `idCotizacion`, `Muestra`, `recomendado`, `acreditado`, `estado`, `precio`) VALUES
+(1, 1, 'Petroleo', NULL, 'NO', NULL, '264.00'),
+(3, 1, 'Petroleo', NULL, 'NO', NULL, '413.00'),
+(4, 2, 'Juan Luis PEREx', NULL, 'NO', NULL, '106.00'),
+(6, 2, 'Juan Luis PEREx', NULL, 'NO', NULL, '244.00');
 
 -- --------------------------------------------------------
 
@@ -293,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `detallecotizacion` (
 --
 
 CREATE TABLE IF NOT EXISTS `empleado` (
-  `idEmpleado` int(10) unsigned NOT NULL,
+`idEmpleado` int(10) unsigned NOT NULL,
   `apePat` varchar(50) DEFAULT NULL,
   `apeMat` varchar(50) DEFAULT NULL,
   `nombres` varchar(50) DEFAULT NULL,
@@ -334,16 +364,30 @@ CREATE TABLE IF NOT EXISTS `muestra` (
 --
 
 CREATE TABLE IF NOT EXISTS `servicio` (
-  `idServicio` int(11) NOT NULL,
+`idServicio` int(11) NOT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
   `metodo` varchar(45) DEFAULT NULL,
   `tiempo_entrega` int(11) DEFAULT NULL,
   `cantM_x_ensayo` int(11) DEFAULT NULL,
   `tarifa` decimal(8,2) DEFAULT NULL,
+  `tarifa_Acred` decimal(8,2) DEFAULT '0.00',
   `detalle` varchar(200) DEFAULT NULL,
   `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `estado` char(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `servicio`
+--
+
+INSERT INTO `servicio` (`idServicio`, `descripcion`, `metodo`, `tiempo_entrega`, `cantM_x_ensayo`, `tarifa`, `tarifa_Acred`, `detalle`, `fecha_registro`, `estado`) VALUES
+(1, 'Agua por Destilación', 'D95-05 ?1', 1, 400, '264.00', '0.00', '\n         ', '2015-07-22 13:02:08', '0'),
+(2, 'Agua y Sedimentos', 'D1796-11', 1, 400, '190.00', '0.00', '       \n         ', '2015-07-22 13:03:23', '0'),
+(3, 'Azufre Total', 'D4294-10', 1, 50, '413.00', '0.00', '\n      \n         ', '2015-07-22 13:33:46', '0'),
+(4, 'Color ASTM', 'D1500-12', 1, 50, '106.00', '0.00', '', '2015-07-22 13:43:24', '0'),
+(5, 'Color Comercial', 'Visual', 1, 50, '0.00', '0.00', 'este servicio no se cobra', '2015-07-22 16:37:47', '0'),
+(6, 'Cenizas', 'D482-07', 3, 400, '244.00', '0.00', '       \n         ', '2015-07-22 16:38:23', '0'),
+(7, 'Corrosión Lámina de Cobre ', 'D130-12', 1, 100, '244.00', '0.00', '', '2015-07-22 16:55:21', '0');
 
 -- --------------------------------------------------------
 
@@ -352,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `servicio` (
 --
 
 CREATE TABLE IF NOT EXISTS `sispersona` (
-  `ide_persona` int(10) unsigned NOT NULL,
+`ide_persona` int(10) unsigned NOT NULL,
   `des_nombres` varchar(250) DEFAULT NULL,
   `des_apepat` varchar(250) DEFAULT NULL,
   `des_apemat` varchar(250) DEFAULT NULL,
@@ -385,7 +429,7 @@ INSERT INTO `sispersona` (`ide_persona`, `des_nombres`, `des_apepat`, `des_apema
 --
 
 CREATE TABLE IF NOT EXISTS `sisusuario` (
-  `ide_usuario` int(10) unsigned NOT NULL,
+`ide_usuario` int(10) unsigned NOT NULL,
   `des_usuario` varchar(50) NOT NULL,
   `des_password` varchar(50) NOT NULL,
   `ide_rol` int(10) unsigned NOT NULL,
@@ -414,79 +458,79 @@ INSERT INTO `sisusuario` (`ide_usuario`, `des_usuario`, `des_password`, `ide_rol
 -- Indices de la tabla `admcatalogo`
 --
 ALTER TABLE `admcatalogo`
-  ADD PRIMARY KEY (`ide_elemento`);
+ ADD PRIMARY KEY (`ide_elemento`);
 
 --
 -- Indices de la tabla `admgrcatalogo`
 --
 ALTER TABLE `admgrcatalogo`
-  ADD PRIMARY KEY (`ide_grupo`);
+ ADD PRIMARY KEY (`ide_grupo`);
 
 --
 -- Indices de la tabla `admopcion`
 --
 ALTER TABLE `admopcion`
-  ADD PRIMARY KEY (`ide_opcion`);
+ ADD PRIMARY KEY (`ide_opcion`);
 
 --
 -- Indices de la tabla `admrol`
 --
 ALTER TABLE `admrol`
-  ADD PRIMARY KEY (`ide_rol`);
+ ADD PRIMARY KEY (`ide_rol`);
 
 --
 -- Indices de la tabla `admrolopcion`
 --
 ALTER TABLE `admrolopcion`
-  ADD PRIMARY KEY (`ide_rolopcion`), ADD KEY `ide_opcion` (`ide_opcion`), ADD KEY `ide_rol` (`ide_rol`);
+ ADD PRIMARY KEY (`ide_rolopcion`), ADD KEY `ide_opcion` (`ide_opcion`), ADD KEY `ide_rol` (`ide_rol`);
 
 --
 -- Indices de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`idCliente`);
+ ADD PRIMARY KEY (`idCliente`);
 
 --
 -- Indices de la tabla `cotizacion`
 --
 ALTER TABLE `cotizacion`
-  ADD PRIMARY KEY (`idCotizacion`), ADD KEY `fk_Cotizacion_Cliente` (`idCliente`), ADD KEY `fk_Cotizacion_Muestra1` (`Muestra_idMuestra`);
+ ADD PRIMARY KEY (`idCotizacion`), ADD KEY `fk_Cotizacion_Cliente` (`idCliente`);
 
 --
 -- Indices de la tabla `detallecotizacion`
 --
 ALTER TABLE `detallecotizacion`
-  ADD KEY `fk_Servicio__Detalle` (`idServicio`), ADD KEY `fk_Cotizacion_Detalle` (`idCotizacion`), ADD KEY `fk_Muestra_Detalle` (`idMuestra`);
+ ADD KEY `fk_DetC_serv` (`idServicio`), ADD KEY `idCotizacion` (`idCotizacion`);
 
 --
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  ADD PRIMARY KEY (`idEmpleado`);
+ ADD PRIMARY KEY (`idEmpleado`);
 
 --
 -- Indices de la tabla `muestra`
 --
 ALTER TABLE `muestra`
-  ADD PRIMARY KEY (`idMuestra`,`idCliente`), ADD KEY `fk_Muestra_Cliente1` (`idCliente`);
+ ADD PRIMARY KEY (`idMuestra`,`idCliente`), ADD KEY `fk_Muestra_Cliente1` (`idCliente`);
 
 --
 -- Indices de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  ADD PRIMARY KEY (`idServicio`);
+ ADD PRIMARY KEY (`idServicio`);
 
 --
 -- Indices de la tabla `sispersona`
 --
 ALTER TABLE `sispersona`
-  ADD PRIMARY KEY (`ide_persona`);
+ ADD PRIMARY KEY (`ide_persona`);
 
 --
 -- Indices de la tabla `sisusuario`
 --
 ALTER TABLE `sisusuario`
-  ADD PRIMARY KEY (`ide_usuario`), ADD KEY `pk_user_rol` (`ide_rol`), ADD KEY `pk_user_persona` (`ide_persona`);
+ ADD PRIMARY KEY (`ide_usuario`), ADD KEY `pk_user_rol` (`ide_rol`), ADD KEY `pk_user_persona` (`ide_persona`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -496,52 +540,57 @@ ALTER TABLE `sisusuario`
 -- AUTO_INCREMENT de la tabla `admcatalogo`
 --
 ALTER TABLE `admcatalogo`
-  MODIFY `ide_elemento` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+MODIFY `ide_elemento` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT de la tabla `admgrcatalogo`
 --
 ALTER TABLE `admgrcatalogo`
-  MODIFY `ide_grupo` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `ide_grupo` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `admopcion`
 --
 ALTER TABLE `admopcion`
-  MODIFY `ide_opcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+MODIFY `ide_opcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT de la tabla `admrol`
 --
 ALTER TABLE `admrol`
-  MODIFY `ide_rol` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `ide_rol` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `admrolopcion`
 --
 ALTER TABLE `admrolopcion`
-  MODIFY `ide_rolopcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+MODIFY `ide_rolopcion` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `cotizacion`
+--
+ALTER TABLE `cotizacion`
+MODIFY `idCotizacion` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `idEmpleado` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `idEmpleado` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `sispersona`
 --
 ALTER TABLE `sispersona`
-  MODIFY `ide_persona` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+MODIFY `ide_persona` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `sisusuario`
 --
 ALTER TABLE `sisusuario`
-  MODIFY `ide_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `ide_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Restricciones para tablas volcadas
 --
@@ -557,16 +606,14 @@ ADD CONSTRAINT `admrolopcion_ibfk_2` FOREIGN KEY (`ide_rol`) REFERENCES `admrol`
 -- Filtros para la tabla `cotizacion`
 --
 ALTER TABLE `cotizacion`
-ADD CONSTRAINT `fk_Cotizacion_Cliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_Cotizacion_Muestra1` FOREIGN KEY (`Muestra_idMuestra`) REFERENCES `muestra` (`idMuestra`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_Cotizacion_Cliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `detallecotizacion`
 --
 ALTER TABLE `detallecotizacion`
-ADD CONSTRAINT `fk_Cotizacion_Detalle` FOREIGN KEY (`idCotizacion`) REFERENCES `cotizacion` (`idCotizacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_Muestra_Detalle` FOREIGN KEY (`idMuestra`) REFERENCES `muestra` (`idMuestra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_Servicio__Detalle` FOREIGN KEY (`idServicio`) REFERENCES `servicio` (`idServicio`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `detallecotizacion_ibfk_1` FOREIGN KEY (`idCotizacion`) REFERENCES `cotizacion` (`idCotizacion`),
+ADD CONSTRAINT `fk_DetC_serv` FOREIGN KEY (`idServicio`) REFERENCES `servicio` (`idServicio`);
 
 --
 -- Filtros para la tabla `muestra`

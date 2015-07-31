@@ -33,7 +33,7 @@ $this->breadcrumbs=array(
 	<div class="form-group col-md-3">	
 		<label class="" for="">DNI o RUC: <span class="text-danger " id="doc_Exist" style="display:none;">El cliente no Existe</span></label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="txtDocumento_b" data-id="">
+			<input type="text" class="form-control" id="txtDocumento_b" data-id="" autofocus>
 			<span class="input-group-btn">
 			    <button class="btn btn-default " type="button" id="BuscarCliente"><i class="fa fa-search"></i></button>
 			</span>
@@ -234,6 +234,10 @@ Cotización Guardada Correctamente
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 
 <script>
+$("#btn_cancelar").click(function(event) {
+	location.reload();
+
+});
 $("#btn_GuardarCotizacion").click(function(event) {
 /*cliente */
 /*

@@ -3,22 +3,20 @@
 // CONFIGURACIONES DEL MODULO
 //=================================================================================
 //Titulo de la pagina
-$this->pageTitle=Yii::app()->name . ' - Cotización';
+$this->pageTitle=Yii::app()->name . ' - Solicitud';
 // Titulo del modulo
-$this->moduleTitle="Cotización";
+$this->moduleTitle="Solicitud";
 // Subtitulo del modulo
-$this->moduleSubTitle="Cotización de Servicios para Ensayos";
+$this->moduleSubTitle="Solicitud para servicios de ensayos";
 // Breadcrumbs
 $this->breadcrumbs=array(
-	'Cotización de Servicios para Ensayos',
+	'Solicitud para servicios de ensayos',
 );?>
 <style>
 	tbody {
     text-align:center;
 }
-
 </style>
-<!-- Main content -->
 <section class="content">
 
 <!--end contadores-->
@@ -160,185 +158,12 @@ $this->breadcrumbs=array(
 
 
 </div><!-- /.box-body -->
-
-<div class="alert alert-success alert-dismissable" id="Success" style="display:none;">
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-<h4>  <i class="icon fa fa-check"></i> Alert!</h4>
-Cotización Guardada Correctamente
-</div>                  
-</div><!-- /.box -->
-<!--end contadores-->
-
-
-</section><!-- /.content -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 <script>
-
-
-$("#btn_cancelar").click(function(event) {
-	location.reload();
-
-});
-
-$("#btn_Generar_Solicitud").click(function(event) {
-	var idCotizacion=$("#NroCotizacion").attr('data-nro');
-	$.post('index.php?r=solicitud/registrar', param1: 'value1', function(data, textStatus, xhr) {
-		/*optional stuff to do after success */
+	
+	$(document).ready(function() {
+		setTimeout(function() {
+				/**/
+		}, 1000);
 	});
-});
-
-/*$("#btn_Guardar_Imprimir_Cotizacion").click(function(event) {
-	var NroCotizacion=$("#NroCotizacion").attr('data-nro');	
-	CotizacionCore.imprimirCotizacion(NroCotizacion);
-});	*/
-
-</script>
-<script>
-    $("#consultarNro_Doc").click(function(event) {
-    	var nro_doc= $("#txtDocumento").val();
-    	ClienteCore.consultarCliente(nro_doc);
-    });
-
-$("#btn_GuardarCotizacion").click(function(event) {
-/*cliente */
-var idCliente;
-var nombres= $("#txtNomCliente").val();
-var doc_ident= $("#txtDocumento").val();
-var atencion_a= $("#txtAtencion").val();
-var direccion= $("#txtDireccion").val();
-var telefono= $("#txtTelefono").val();
-var correo= $("#txtEmail").val();
-var referencia= $("#txtRefCliente").val();
-var cond_tecnica=$("#txtCondTecnicas").val();
-var detalle_servicios=$("#txtDetalles").val();
-var total=$("#txtTotal").val();
-var fecha_Entrega=$("#txtTiempo").val();
-var cant_Muestra_necesaria=$("#txtCantidad").val();
-var muestra=$("#txtMuestra").val();
-var idCotizacion=$("#NroCotizacion").attr('data-nro');
-var detalle = $('#DetalleCotizacion').tableToJSON();
-if($("#txtDocumento").attr('data-id')=='Nuevo'	){
-
- idCliente=ClienteCore.registrarCliente(nombres,doc_ident,atencion_a,direccion,telefono,correo,referencia);
-CotizacionCore.registrarCotizacion(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
-}else{
-	 idCliente= $("#txtDocumento").attr('data-id');
-	 CotizacionCore.registrarCotizacion(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
-}
-
-setTimeout(function() {
-	var NroCotizacion=$("#NroCotizacion").attr('data-nro');	
-	CotizacionCore.imprimirCotizacion(NroCotizacion);
-}, 1000);
-
-});
-
-
-</script>
-
-<script>
-   listarServicios();
-ObtenerNroCotizacion();
-</script>
-<script>
-	/*********************/
-$('#agregarServicio').on( 'click', function () {
-
-    var idServicio=$("#listarServicio").val();
-
-    $.ajax({
-        url: 'index.php?r=servicio/AjaxObtenerServicio',
-        type: 'POST',        
-        data: {idServicio:parseInt(idServicio)},
-    })
-    .done(function(response) {
-        //console.log(response);
-        var detalle = $('#DetalleCotizacion').tableToJSON();
-        var repeat=false;
-        $.each(detalle,function(index, value){  
-
-            if(value.id===response[0].idServicio){
-                //console.log('repetido');    
-                repeat=true;       
-                //console.log(detalle);
-                return false;  
-            }
-        
-        });
-
-        if(repeat===false){
-            $('#DetalleCotizacion').DataTable().row.add([
-                   response[0].idServicio,
-                   response[0].descripcion,
-                   response[0].metodo,
-                   response[0].tiempo_entrega,
-                   response[0].cantM_x_ensayo+' ml',
-                   response[0].tarifa,
-                   '<input type="checkbox" id="Todoscheckbox">'
-            ]).draw();
-         }else if(repeat===true){
-            //alert("el servicio ya esta agregado al detalle");
-            $("#repeatServicio").text('El servicio ya esta agregado en el detalle');
-         }   
-         
-    })
-        .fail(function() {
-        //console.log("error");
-    })
-    .always(function() {
-        //console.log("complete");
-        calcularTotal();
-        setTimeout(function(){
-            $("#repeatServicio").text('');
-        },5000);
-        
-    });
-        
-
-
-       
-    } );
-
-
-$(document).ready(function() {
-    
-     $('#DetalleCotizacion').dataTable({  
-      "language": {
-            "lengthMenu": "Display _MENU_ records per page",
-            "zeroRecords": " ",
-            "info": "Showing page _PAGE_ of _PAGES_",
-            "infoEmpty": "No records available",
-            "infoFiltered": "(filtered from _MAX_ total records)"
-        },   
-        "columnDefs": [ {
-            "targets": -1,
-            "data": null,
-            "defaultContent": "<button class='btn btn-danger'><i class='fa fa-trash-o '></i></button>"
-        } ],
-        "paging":   false,
-        "ordering": false,
-        "info":     false,
-        "bFilter": false
-    } );
-/************************/
-$('#DetalleCotizacion tbody').on( 'click', 'button', function () {
-        
-        var table = $('#DetalleCotizacion').DataTable();
-        
-        table.row( $(this).parents('tr') ).remove().draw( false );         
-          
-        if(table.column(5).data().length==0){
-            $("#txtTotal").val('0.00'); 
-            $("#txtTiempo").val(0); 
-        }else{
-          calcularTotal();
-         
-        }        
-
-
-    } );
-/*************************/
-} );
-
-
 </script>

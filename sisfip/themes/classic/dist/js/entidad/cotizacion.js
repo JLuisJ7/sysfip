@@ -36,7 +36,7 @@ var CotizacionCore = {
                     "bFilterable": false,
                     //"width": "150px",
                     "mRender": function(o) {
-                        return '<a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-warning btn-sm editarCotizacion"><i class="fa fa-pencil"></i></a> <a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-danger btn-sm eliminarCotizacion"><i class="fa fa-trash-o"></i></a>';
+                        return '<a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-warning btn-sm consultarCotizacion"><i class="fa fa-pencil"></i></a> <a href="#" style="margin-left:5px;margin-right:0px" lang="' + o + '" class="btn btn-danger btn-sm eliminarCotizacion"><i class="fa fa-trash-o"></i></a>';
                     }
                 }
                    
@@ -45,8 +45,8 @@ var CotizacionCore = {
                 $('.eliminarCotizacion').click(function() {
                     me.imprimirCotizacion($(this).attr('lang'));
                 });
-                $('.editarCotizacion').click(function() {
-                    me.editarCotizacion($(this).attr('lang'));
+                $('.consultarCotizacion').click(function() {
+                    me.consultarCotizacion($(this).attr('lang'));
                     
 
                 });
@@ -86,6 +86,30 @@ var CotizacionCore = {
         })
            
     },
+    actualizarCotizacion: function(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle){
+        var me = this;
+        me.eliminarDetalleCotizacion(idCotizacion);
+        $.ajax({
+            url: 'index.php?r=cotizacion/AjaxActualizarCotizacion',
+            type: 'POST',
+            data: {
+                idCotizacion:idCotizacion,
+                idCliente:idCliente,
+                muestra,muestra,
+                cond_tecnica:cond_tecnica,
+                detalle_servicios:detalle_servicios,
+                total:total,
+                fecha_Entrega:fecha_Entrega,
+                cant_Muestra_necesaria:cant_Muestra_necesaria,               
+                },
+        })
+        .done(function(response) {
+            console.log(response);
+             me.registrarDetalleCotizacion(idCotizacion,muestra,detalle);
+        })
+
+           
+    },
     registrarDetalleCotizacion: function(idCotizacion,muestra,detalle){
         $.ajax({
             url: 'index.php?r=cotizacion/AjaxRegistrarDetalleCotizacion',
@@ -114,7 +138,7 @@ var CotizacionCore = {
         })
            
     },
-    editarCotizacion:function(NroCotizacion){
+    consultarCotizacion:function(NroCotizacion){
         var me = this;
         $.ajax({
         url: 'index.php?r=cotizacion/AjaxeditarCotizacion',
@@ -132,8 +156,10 @@ var CotizacionCore = {
         })
         .always(function(data) {
             /*------*/
+            $("#fecha_registro").text(data.Cotizacion[0].fecha_registro);
              $("#txtNomCliente").val(data.Cotizacion[0].nombres);
- $("#txtDocumento").val(data.Cotizacion[0].doc_ident);
+ $("#txtDocumento").val(data.Cotizacion[0].doc_ident); 
+ $("#txtDocumento").attr('data-id',data.Cotizacion[0].idCliente);;
  $("#txtAtencion").val(data.Cotizacion[0].atencion_a);
  $("#txtDireccion").val(data.Cotizacion[0].direccion);
  $("#txtTelefono").val(data.Cotizacion[0].telefono);

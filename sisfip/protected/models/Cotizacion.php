@@ -35,7 +35,7 @@ where cli.doc_ident='".$doc_ident."'";
 
 	public function obtenerCotizacion($NroCotizacion){
 
-		$sql = "select idCotizacion,DATE_FORMAT(cot.fecha_registro,'%d-%m-%Y') as fecha_registro,cli.nombres,cli.doc_ident,cli.atencion_a,cli.direccion,cli.telefono,cli.correo,cli.referencia,cot.muestra,cot.cond_tecnica,cot.detalle_servicios,cot.total,cot.fecha_entrega,cant_Muestra_necesaria from cotizacion as cot
+		$sql = "select idCotizacion,cot.idCliente,DATE_FORMAT(cot.fecha_registro,'%d-%m-%Y') as fecha_registro,cli.nombres,cli.doc_ident,cli.atencion_a,cli.direccion,cli.telefono,cli.correo,cli.referencia,cot.muestra,cot.cond_tecnica,cot.detalle_servicios,cot.total,cot.fecha_entrega,cant_Muestra_necesaria from cotizacion as cot
 inner join cliente as cli ON cli.idCliente=cot.idCliente
 where idCotizacion=".$NroCotizacion;
 	

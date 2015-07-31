@@ -60,6 +60,43 @@ $cant_Muestra_necesaria=$_POST['cant_Muestra_necesaria'];
 		
 		Util::renderJSON(array( 'success' => $respuesta ));
 	}
+
+public function actionAjaxActualizarCotizacion(){
+	//cotizacion
+$idCliente=$_POST['idCliente'];
+$idCotizacion=$_POST['idCotizacion'];
+$muestra=$_POST['muestra'];
+$cond_tecnica=$_POST['cond_tecnica'];
+$detalle_servicios=$_POST['detalle_servicios'];
+$total=$_POST['total'];
+$fecha_Entrega=$_POST['fecha_Entrega'];
+$cant_Muestra_necesaria=$_POST['cant_Muestra_necesaria'];
+
+$cotizacion = Cotizacion::model()->findByPk($idCotizacion);
+$cotizacion->idCliente=$idCliente;
+$cotizacion->cond_tecnica=$cond_tecnica;
+$cotizacion->detalle_servicios=$detalle_servicios;
+$cotizacion->total=$total;
+$cotizacion->fecha_Entrega=$fecha_Entrega;
+$cotizacion->cant_Muestra_necesaria=$cant_Muestra_necesaria;
+$cotizacion->muestra=$muestra;
+
+ $resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');     		
+if(!$cotizacion->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar el servicio, intentelo nuevamente');
+
+}
+			
+
+		
+		//$respuesta = Cotizacion::model() -> registrarCotizacion($idCliente,$cond_tecnica,$detalle_servicios,$total,$fecha_Entrega,$cant_Muestra_necesaria,$muestra);
+
+		
+		Util::renderJSON(array( 'success' => $resultado ));
+	}
+
+
 public function actionAjaxRegistrarDetalleCotizacion(){
 
 $idCotizacion=$_POST['idCotizacion'];

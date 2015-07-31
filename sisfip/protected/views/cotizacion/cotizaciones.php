@@ -24,8 +24,66 @@ $this->breadcrumbs=array(
 <!--end contadores-->
 <div class="box box-primary">
 <div class="box-header">
+	<h3 class="box-title">Cotizaciones por Cliente</h3>
+	
+</div>
+<div class="box-body">
+
+	<!-- Date range -->
+	<div class="form-group col-md-3">	
+		<label class="" for="">DNI o RUC: <span class="text-danger " id="doc_Exist" style="display:none;">El cliente no Existe</span></label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="txtDocumento_b" data-id="">
+			<span class="input-group-btn">
+			    <button class="btn btn-default " type="button" id="BuscarCliente"><i class="fa fa-search"></i></button>
+			</span>
+		</div>	
+	</div>	
+	<div class="form-group col-md-9">
+	<label class="" for="">Cliente / Solicitante : </label>
+	<input type="text" class="form-control cli_block" id="txtNomCliente_b" >
+	</div>
+	<!-- Cotizaciones por Cliente -->
+	<table id="CotizacionesCliente" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>                        
+                        <th style="vertical-align: middle;" >ID</th>
+                        <th style="vertical-align: middle;" >Muestra</th>
+                        <th style="vertical-align: middle;" >Fecha</th>                        
+                        <th style="vertical-align: middle;" >Fecha Entrega</th>
+                        <th style="vertical-align: middle;" >Cantidad</th>
+                        <th style="vertical-align: middle;" >Total</th>                       
+                        <th style="vertical-align: middle;" >Estado</th>
+                        <th style="vertical-align: middle;" ></th>
+                      </tr>
+                    </thead>                 
+                  </table>
+
+
+	
+
+
+
+</div><!-- /.box-body -->
+
+<div class="alert alert-success alert-dismissable" id="Success" style="display:none;">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+<h4>  <i class="icon fa fa-check"></i> Alert!</h4>
+Cotización Guardada Correctamente
+</div>                  
+</div><!-- /.box -->
+<!--end contadores-->
+
+
+</section><!-- /.content -->
+<!-- Main content -->
+<section class="content">
+
+<!--end contadores-->
+<div class="box box-primary">
+<div class="box-header">
 	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="Edit_NroCotizacion" data-nro="">     </b></h3>
-	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
+	<h3 class="box-title" style="float:right;" id="fecha_registro">2015-07-16 </h3>
 </div>
 <div class="box-body">
 
@@ -43,21 +101,7 @@ $this->breadcrumbs=array(
 	<label class="" for="">Cliente / Solicitante : </label>
 	<input type="text" class="form-control cli_block" id="txtNomCliente" >
 	</div>
-	<!-- Cotizaciones por Cliente -->
-	<table id="CotizacionesCliente" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%">
-                    <thead>
-                      <tr>                        
-                        <th style="vertical-align: middle;" >ID</th>
-                        <th style="vertical-align: middle;" >Muestra</th>
-                        <th style="vertical-align: middle;" >Fecha</th>                        
-                        <th style="vertical-align: middle;" >Fecha Entrega</th>
-                        <th style="vertical-align: middle;" >Cantidad</th>
-                        <th style="vertical-align: middle;" >Total</th>                       
-                        <th style="vertical-align: middle;" >Estado</th>
-                        <th style="vertical-align: middle;" ></th>
-                      </tr>
-                    </thead>                 
-                  </table>
+
 	<div class="form-group col-md-12">
 	<label class="" for="">Atencion a : </label>
 	<input type="text" class="form-control cli_block" id="txtAtencion" >
@@ -157,11 +201,14 @@ $this->breadcrumbs=array(
          <textarea id="txtDetalles" class="form-control col-md-12"  rows="2">       
          </textarea>
     </div>
-	<div class="col-md-6">
-		<button type="button" class="btn btn-primary col-md-12" id="btn_GuardarCotizacion">Guardar e Imprimir</button>
+	<div class="col-md-4">
+		<button type="button" class="btn btn-primary col-md-12" id="btn_GuardarCotizacion">Guardar <i class="fa fa-floppy-o"></i></button>
 	</div>
-	<div class="col-md-6">
-		<button type="button" class="btn btn-danger col-md-12" id="btn_Guardar_detalle">Guardar y borrar detalle</button>
+	<div class="col-md-4">
+		<button type="button" class="btn btn-primary col-md-12" id="btn_imprimirCotizacion">Imprimir</button>
+	</div>
+	<div class="col-md-4">
+		<button type="button" class="btn btn-danger col-md-12" id="btn_cancelar">Cancelar</button>
 	</div>
 
 	<div class="col-md-12" style="margin-top:1em;">
@@ -187,13 +234,42 @@ Cotización Guardada Correctamente
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 
 <script>
+$("#btn_GuardarCotizacion").click(function(event) {
+/*cliente */
+/*
+var nombres= $("#txtNomCliente").val();
+var doc_ident= $("#txtDocumento").val();
+var atencion_a= $("#txtAtencion").val();
+var direccion= $("#txtDireccion").val();
+var telefono= $("#txtTelefono").val();
+var referencia= $("#txtRefCliente").val();
+var correo= $("#txtEmail").val();
+*/
+var NroCotizacion=$("#Edit_NroCotizacion").attr('data-nro');
+var idCliente= $("#txtDocumento").attr('data-id');
 
-$("#btn_Guardar_detalle").click(function(event) {
-	var NroCotizacion=$("#Edit_NroCotizacion").attr('data-nro');
-	CotizacionCore.eliminarDetalleCotizacion(NroCotizacion);
+var cond_tecnica=$("#txtCondTecnicas").val();
+var detalle_servicios=$("#txtDetalles").val();
+var total=$("#txtTotal").val();
+var fecha_Entrega=$("#txtTiempo").val();
+var cant_Muestra_necesaria=$("#txtCantidad").val();
 var muestra=$("#txtMuestra").val();
+var idCotizacion=$("#NroCotizacion").attr('data-nro');
 var detalle = $('#DetalleCotizacion').tableToJSON();
-	 CotizacionCore.registrarDetalleCotizacion(NroCotizacion,muestra,detalle);
+
+CotizacionCore.actualizarCotizacion(NroCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle);
+
+
+setTimeout(function() {	
+	CotizacionCore.imprimirCotizacion(NroCotizacion);
+}, 1000);
+
+});
+
+
+$("#btn_imprimirCotizacion").click(function(event) {
+	var NroCotizacion=$("#Edit_NroCotizacion").attr('data-nro');
+	CotizacionCore.imprimirCotizacion(NroCotizacion);
 });
 
             /*------------*/
@@ -259,7 +335,7 @@ $('#agregarServicio2').on( 'click', function () {
 listarServicios();
 	$(document).ready(function() {
 		$("#BuscarCliente").click(function(event) {
-			var nro_doc= $("#txtDocumento").val();
+			var nro_doc= $("#txtDocumento_b").val();
 			CotizacionCore.CotizacionesxCliente(nro_doc);
 		});
 

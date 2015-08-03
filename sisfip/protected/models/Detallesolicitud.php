@@ -1,31 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "muestra".
+ * This is the model class for table "detallesolicitud".
  *
- * The followings are the available columns in table 'muestra':
- * @property integer $idMuestra
- * @property integer $idCliente
- * @property string $nombre
- * @property string $marca
- * @property string $identificacion
- * @property integer $Cant_Muestra
+ * The followings are the available columns in table 'detallesolicitud':
+ * @property integer $idServicio
+ * @property string $nroSolicitud
+ * @property string $acreditado
  * @property string $estado
- * @property string $presentacion
- * @property string $observaciones
+ * @property string $precio
  *
  * The followings are the available model relations:
- * @property Cliente $idCliente0
- * @property Solicitud[] $solicituds
+ * @property Servicio $idServicio0
+ * @property Solicitud $nroSolicitud0
  */
-class Muestra extends CActiveRecord
+class Detallesolicitud extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'muestra';
+		return 'detallesolicitud';
 	}
 
 	/**
@@ -36,15 +32,15 @@ class Muestra extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idMuestra, idCliente, nombre', 'required'),
-			array('idMuestra, idCliente, Cant_Muestra', 'numerical', 'integerOnly'=>true),
-			array('nombre, marca, identificacion', 'length', 'max'=>45),
+			array('idServicio, nroSolicitud', 'required'),
+			array('idServicio', 'numerical', 'integerOnly'=>true),
+			array('nroSolicitud', 'length', 'max'=>10),
+			array('acreditado', 'length', 'max'=>2),
 			array('estado', 'length', 'max'=>1),
-			array('presentacion', 'length', 'max'=>100),
-			array('observaciones', 'length', 'max'=>200),
+			array('precio', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idMuestra, idCliente, nombre, marca, identificacion, Cant_Muestra, estado, presentacion, observaciones', 'safe', 'on'=>'search'),
+			array('idServicio, nroSolicitud, acreditado, estado, precio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,8 +52,8 @@ class Muestra extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idCliente0' => array(self::BELONGS_TO, 'Cliente', 'idCliente'),
-			'solicituds' => array(self::HAS_MANY, 'Solicitud', 'idMuestra'),
+			'idServicio0' => array(self::BELONGS_TO, 'Servicio', 'idServicio'),
+			'nroSolicitud0' => array(self::BELONGS_TO, 'Solicitud', 'nroSolicitud'),
 		);
 	}
 
@@ -67,15 +63,11 @@ class Muestra extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idMuestra' => 'Id Muestra',
-			'idCliente' => 'Id Cliente',
-			'nombre' => 'Nombre',
-			'marca' => 'Marca',
-			'identificacion' => 'Identificacion',
-			'Cant_Muestra' => 'Cant Muestra',
+			'idServicio' => 'Id Servicio',
+			'nroSolicitud' => 'Nro Solicitud',
+			'acreditado' => 'Acreditado',
 			'estado' => 'Estado',
-			'presentacion' => 'Presentacion',
-			'observaciones' => 'Observaciones',
+			'precio' => 'Precio',
 		);
 	}
 
@@ -97,15 +89,11 @@ class Muestra extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idMuestra',$this->idMuestra);
-		$criteria->compare('idCliente',$this->idCliente);
-		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('marca',$this->marca,true);
-		$criteria->compare('identificacion',$this->identificacion,true);
-		$criteria->compare('Cant_Muestra',$this->Cant_Muestra);
+		$criteria->compare('idServicio',$this->idServicio);
+		$criteria->compare('nroSolicitud',$this->nroSolicitud,true);
+		$criteria->compare('acreditado',$this->acreditado,true);
 		$criteria->compare('estado',$this->estado,true);
-		$criteria->compare('presentacion',$this->presentacion,true);
-		$criteria->compare('observaciones',$this->observaciones,true);
+		$criteria->compare('precio',$this->precio,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -116,7 +104,7 @@ class Muestra extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Muestra the static model class
+	 * @return Detallesolicitud the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

@@ -2,6 +2,21 @@
 
 class SolicitudController extends Controller
 {
+
+	/*public function actionAjaxgenerarSolicitud(){
+		$NroCotizacion=$_POST['NroCotizacion'];
+	
+		if(empty($NroCotizacion)){
+			$this->redirect("login.php");
+		}else{
+			
+			 $this->render('registrar', array('data' => $NroCotizacion));
+			//$this->render("registrarFactura");
+		}
+
+		
+	}*/
+
 	public function actionIndex()
 	{
 		$this->render('index');
@@ -9,7 +24,22 @@ class SolicitudController extends Controller
 
 	public function actionRegistrar()
 	{
-		$this->render('registrar');
+		
+	//	$NroCotizacion=$_POST['NroCotizacion'];
+	$NroCotizacion = Yii::app()->request->getParam('NroCotizacion');
+		if(empty($NroCotizacion)){
+			$this->render("registrar");
+		}else{
+			//$cotizacion = Cotizacion::model()->obtenerCotizacion($NroCotizacion);
+			//$detalle = Detallecotizacion::model()->obtenerDetalleCotizacion($NroCotizacion);
+
+			$this->render('registrar', array('data' => $NroCotizacion));
+			
+			
+		}
+		
+
+
 	}
 
 	// Uncomment the following methods and override them if needed

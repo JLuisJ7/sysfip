@@ -3,6 +3,12 @@
 class CotizacionController extends Controller
 {
 
+/*public function actionAjaxgenerarSolicitud(){
+	
+
+		
+	}*/
+
 public function actionAjaxEliminarDetalleCotizacion(){
 		$NroCotizacion=$_POST['NroCotizacion'];
 		

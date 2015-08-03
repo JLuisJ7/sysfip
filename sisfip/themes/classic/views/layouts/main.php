@@ -194,7 +194,7 @@ max-width: 180px!important;
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->        
       </div><!-- /.content-wrapper -->
-      <footer class="main-footer">
+      <footer class="main-footer" style="margin:0;">
         <div class="pull-right hidden-xs">
           <b>Version</b> 1.0
         </div>

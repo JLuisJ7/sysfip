@@ -22,7 +22,12 @@ $this->breadcrumbs=array(
 <!--end contadores-->
 <div class="box box-primary">
 <div class="box-header">
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroCotizacion" data-nro="">     </b></h3>
+<?php if (empty($data)): ?>
+	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" nroCotizacion="">    </b></h3>	
+<?php else: ?>
+	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" nroCotizacion="<?php echo $data; ?>"><?php echo $data; ?>     </b></h3>
+
+<?php endif; ?>
 	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
 </div>
 <div class="box-body">
@@ -162,8 +167,13 @@ $this->breadcrumbs=array(
 <script>
 	
 	$(document).ready(function() {
-		setTimeout(function() {
-				/**/
-		}, 1000);
+		
+		var NroCotizacion=$("#NroSolicitud").attr('nroCotizacion');
+		if (NroCotizacion!='') {
+			CotizacionCore.consultarCotizacion(NroCotizacion);
+		};
+				
 	});
+
+	
 </script>

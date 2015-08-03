@@ -173,6 +173,7 @@ $("#txtCantidad").val(data.Cotizacion[0].cant_Muestra_necesaria);
 $("#txtMuestra").val(data.Cotizacion[0].muestra);
 $("#Edit_NroCotizacion").attr('data-nro',data.Cotizacion[0].idCotizacion);
 $("#Edit_NroCotizacion").text(data.Cotizacion[0].idCotizacion);
+$("#idCotSolicitud").val(data.Cotizacion[0].idCotizacion);
 
 
             /*-------*/

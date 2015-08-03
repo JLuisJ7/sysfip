@@ -61,3 +61,48 @@ ALTER TABLE DetalleCotizacion ADD CONSTRAINT fk_DetCot_Prod FOREIGN KEY(idProduc
 ALTER TABLE DetalleCotizacion ADD CONSTRAINT fk_DetCot_Serv FOREIGN KEY(idServicio) references Servicio(idServicio);
 ALTER TABLE Cotizacion ADD CONSTRAINT fk_cot_cli FOREIGN KEY(idCliente) references Cliente(idCliente);
 ALTER TABLE Servicio ADD CONSTRAINT fk_Serv_Prod FOREIGN KEY(idProducto) references Producto(idProducto);
+
+
+CREATE  TABLE Solicitud(
+ nroSolicitud INT unsigned NOT NULL ,
+ nroCotizacion INT unsigned NOT NULL ,
+ idCliente INT NOT NULL ,
+ idMuestra INT NOT NULL ,
+fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ Ensayos CHAR(1) NULL ,
+ Inspeccion CHAR(1) NULL ,
+ muestreo CHAR(1) NULL ,
+ otros VARCHAR(200) NULL ,
+ total DECIMAL(8,2) NULL ,
+ fecha_entrega DATE NULL ,
+ Acreditacion CHAR(2) NULL ,
+ Contramuestras CHAR(2) NULL ,
+ observaciones VARCHAR(300) NULL);
+-- PRIMARY KEYs
+ALTER TABLE Solicitud ADD CONSTRAINT pk_nroSol_nroCot PRIMARY KEY(nroSolicitud,nroCotizacion);
+ALTER TABLE Solicitud ADD CONSTRAINT fk_Sol_Cot FOREIGN KEY(nroCotizacion) references Cotizacion(idCotizacion);
+ALTER TABLE Solicitud ADD CONSTRAINT fk_Sol_cli FOREIGN KEY(idCliente) references Cliente(idCliente);
+ALTER TABLE Solicitud ADD CONSTRAINT fk_Sol_muest FOREIGN KEY(idMuestra) references Muestra(idMuestra);
+
+CREATE TABLE DetalleSolicitud(
+  idServicio int(11) NOT NULL,
+  nroSolicitud int(11) unsigned NOT NULL DEFAULT '0',
+  acreditado char(2) DEFAULT 'NO',
+  estado char(1) DEFAULT NULL,
+  precio decimal(8,2) DEFAULT NULL
+);
+
+ALTER TABLE DetalleSolicitud ADD CONSTRAINT fk_DetSol_Sol FOREIGN KEY(nroSolicitud) references Solicitud(nroSolicitud);
+ALTER TABLE DetalleSolicitud ADD CONSTRAINT fk_DetSol_Serv FOREIGN KEY(idServicio) references Servicio(idServicio);
+
+CREATE TABLE Muestra(
+  idMuestra int(11) PRIMARY KEY,
+  idCliente int(11) NOT NULL,
+  nombre varchar(45) NOT NULL,
+  marca varchar(45) ,
+  identificacion varchar(45) ,
+  Cant_Muestra int, 
+  estado char(1) DEFAULT '0',  
+  presentacion varchar(100) DEFAULT NULL,
+  observaciones varchar(200) DEFAULT NULL, 
+);

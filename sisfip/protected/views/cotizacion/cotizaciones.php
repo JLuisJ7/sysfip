@@ -212,7 +212,10 @@ Cotización Guardada Correctamente
 	</div>
 
 	<div class="col-md-12" style="margin-top:1em;">
-		<button type="button" class="btn btn-primary col-md-12" id="btn_Generar_Solicitud">Generar Solicitud </button>
+		<form action="index.php?r=solicitud/registrar" method="POST">
+			<input type="hidden" value="" name="NroCotizacion" id="idCotSolicitud">
+		<button type="submit" class="btn btn-primary col-md-12" id="btn_Generar_Solicitud">Generar Solicitud </button>			
+		</form>
 	</div>
 	
 
@@ -234,6 +237,11 @@ Cotización Guardada Correctamente
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
 
 <script>
+/*	$("#btn_Generar_Solicitud").click(function(event) {
+	console.log('message');
+var NroCotizacion=$("#Edit_NroCotizacion").attr('data-nro');
+$.post('index.php?r=cotizacion/AjaxgenerarSolicitud',{NroCotizacion:NroCotizacion});
+});*/
 $("#btn_cancelar").click(function(event) {
 	location.reload();
 

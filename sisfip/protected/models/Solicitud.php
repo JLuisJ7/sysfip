@@ -27,6 +27,17 @@
  */
 class Solicitud extends CActiveRecord
 {
+
+
+	public function ObtenerNroSolicitud(){
+
+$sql = "select count(*)+1 as nroSolicitud,DATE_FORMAT(NOW(),'%d-%m-%Y') as fecha from Solicitud";
+	
+
+
+		return Yii::app()->db->createCommand($sql)->queryAll();
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */

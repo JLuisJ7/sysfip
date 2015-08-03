@@ -3,19 +3,14 @@
 class SolicitudController extends Controller
 {
 
-	/*public function actionAjaxgenerarSolicitud(){
-		$NroCotizacion=$_POST['NroCotizacion'];
-	
-		if(empty($NroCotizacion)){
-			$this->redirect("login.php");
-		}else{
-			
-			 $this->render('registrar', array('data' => $NroCotizacion));
-			//$this->render("registrarFactura");
-		}
 
+
+	public function actionAjaxObtenerNroSolicitud(){		
+		$solicitud = Solicitud::model()->ObtenerNroSolicitud();
+		header('Content-Type: application/json; charset="UTF-8"');
+    	echo CJSON::encode(array('output'=>$solicitud[0]));
 		
-	}*/
+	}
 
 	public function actionIndex()
 	{
@@ -32,7 +27,7 @@ class SolicitudController extends Controller
 		}else{
 			//$cotizacion = Cotizacion::model()->obtenerCotizacion($NroCotizacion);
 			//$detalle = Detallecotizacion::model()->obtenerDetalleCotizacion($NroCotizacion);
-
+			
 			$this->render('registrar', array('data' => $NroCotizacion));
 			
 			

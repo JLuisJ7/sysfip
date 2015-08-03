@@ -162,7 +162,30 @@ function ObtenerNroCotizacion(){
         //console.log(data.nroComp);
 
         $("#NroCotizacion").text(data.nroCotizacion);
-        $("#NroCotizacion").attr('data-nro', data.nroCotizacion);      
+        $("#NroCotizacion").attr('data-nro', data.nroCotizacion);
+        $("#fecha_actual").text(data.fecha);        
+    })
+    .fail(function() {
+        //console.log("error");
+    })
+    .always(function() {
+        //console.log("complete");
+    });
+ };
+
+ function ObtenerNroSolicitud(){
+ 
+   $.ajax({
+        url: 'index.php?r=solicitud/AjaxObtenerNroSolicitud',
+        type: 'POST',          
+    })
+    .done(function(response) {   
+     data=response.output;     
+        //console.log(data.nroComp);
+
+        $("#NroSolicitud").text(data.nroSolicitud);
+        $("#NroSolicitud").attr('NroSolicitud', data.nroSolicitud);
+        $("#fecha_actual").text(data.fecha);      
     })
     .fail(function() {
         //console.log("error");

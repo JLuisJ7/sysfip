@@ -23,9 +23,9 @@ $this->breadcrumbs=array(
 <div class="box box-primary">
 <div class="box-header">
 <?php if (empty($data)): ?>
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" nroCotizacion="">    </b></h3>	
+	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" NroSolicitud="" nroCotizacion="">    </b></h3>	
 <?php else: ?>
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" nroCotizacion="<?php echo $data; ?>"><?php echo $data; ?>     </b></h3>
+	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" NroSolicitud="" nroCotizacion="<?php echo $data; ?>">   </b></h3>
 
 <?php endif; ?>
 	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
@@ -167,11 +167,12 @@ $this->breadcrumbs=array(
 <script>
 	
 	$(document).ready(function() {
-		
+		ObtenerNroSolicitud();
 		var NroCotizacion=$("#NroSolicitud").attr('nroCotizacion');
 		if (NroCotizacion!='') {
 			CotizacionCore.consultarCotizacion(NroCotizacion);
 		};
+
 				
 	});
 

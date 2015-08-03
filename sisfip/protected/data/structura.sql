@@ -106,3 +106,5 @@ CREATE TABLE Muestra(
   presentacion varchar(100) DEFAULT NULL,
   observaciones varchar(200) DEFAULT NULL, 
 );
+
+ALTER TABLE Muestra ADD CONSTRAINT fk_Muest_Cli FOREIGN KEY(idCliente) references Cliente(idCliente);

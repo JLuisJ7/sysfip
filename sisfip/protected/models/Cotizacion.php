@@ -45,7 +45,7 @@ where idCotizacion=".$NroCotizacion;
 
 	public function ObtenerNroCotizacion(){
 
-$sql = "select count(*)+1 as nroCotizacion from cotizacion ";
+$sql = "select count(*)+1 as nroCotizacion,DATE_FORMAT(NOW(),'%d-%m-%Y') as fecha from cotizacion";
 	
 
 

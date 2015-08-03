@@ -2,7 +2,28 @@
 
 class SolicitudController extends Controller
 {
+public function actionAjaxRegistrarSolicitud(){
+	//cotizacion
+$nroSolicitud=$_POST['nroSolicitud'];
+$nroCotizacion=$_POST['nroCotizacion'];
+$idCliente=$_POST['idCliente'];
+$idMuestra=$_POST['idMuestra'];
+$Ensayos=$_POST['Ensayos'];
+$Inspeccion=$_POST['Inspeccion'];
+$muestreo=$_POST['muestreo'];
+$otros=$_POST['otros'];
+$total=$_POST['total'];
+$fecha_entrega=$_POST['fecha_entrega'];
+$Acreditacion=$_POST['Acreditacion'];
+$Contramuestras=$_POST['Contramuestras'];
+$observaciones=$_POST['observaciones'];
 
+
+		$respuesta = Solicitud::model() -> registrarSolicitud($nroSolicitud,$nroCotizacion,$idCliente,$idMuestra,$Ensayos,$Inspeccion,$muestreo,$otros,$total,$fecha_entrega,$Acreditacion,$Contramuestras,$observaciones);
+
+		
+		Util::renderJSON(array( 'success' => $respuesta ));
+	}
 
 
 	public function actionAjaxObtenerNroSolicitud(){		

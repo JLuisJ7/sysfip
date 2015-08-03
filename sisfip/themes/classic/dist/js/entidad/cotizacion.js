@@ -342,6 +342,33 @@ $("#txtRefCliente").val(data.referencia);
          
       
     },
+    registrarMuestra: function(idCliente,nombre,marca,identificacion,cant_muestra,presentacion,observaciones){
+        var idMuestra;
+        $.ajax({
+            url: 'index.php?r=cliente/AjaxRegistrarMuestra',
+            type: 'POST',
+            async: false,
+            data: {
+                idCliente:idCliente,
+                nombre:nombre,
+                marca:marca,
+                identificacion:identificacion,
+                cant_muestra:cant_muestra,
+                presentacion:presentacion,
+                observaciones:observaciones
+            },
+        })
+        .done(function(response) {
+           idMuestra=response.idGenerado;;
+          
+        })
+        .always(function(response) {
+          
+        });
+ return idMuestra;
+         
+      
+    },
     sumarCliente: function(num1,num2){
         var suma;
         suma=num1*num2;

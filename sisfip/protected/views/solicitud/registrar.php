@@ -23,9 +23,9 @@ $this->breadcrumbs=array(
 <div class="box box-primary">
 <div class="box-header">
 <?php if (empty($data)): ?>
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" NroSolicitud="" nroCotizacion="">    </b></h3>	
+	<h3 class="box-title">Solicitud para servicios de Ensayos Nro: <b id="NroSolicitud" NroSolicitud="" nroCotizacion="">    </b></h3>	
 <?php else: ?>
-	<h3 class="box-title">Cotizacion de Servicios para Ensayos Nro: <b id="NroSolicitud" NroSolicitud="" nroCotizacion="<?php echo $data; ?>">   </b></h3>
+	<h3 class="box-title">Solicitud para servicios de Ensayos Nro: <b id="NroSolicitud" NroSolicitud="" nroCotizacion="<?php echo $data; ?>">   </b></h3>
 
 <?php endif; ?>
 	<h3 class="box-title" style="float:right;" id="fecha_actual">2015-07-16 </h3>
@@ -51,9 +51,17 @@ $this->breadcrumbs=array(
 	<label class="" for="">Atencion a : </label>
 	<input type="text" class="form-control cli_block" id="txtAtencion" >
 	</div>
-	<div class="form-group col-md-12">
+	<div class="form-group col-md-4">
 	<label class="" for="">Direccion : </label>
 	<input type="text" class="form-control cli_block" id="txtDireccion" >
+	</div>
+	<div class="form-group col-md-4">
+	<label class="" for="">Distrito : </label>
+	<input type="text" class="form-control cli_block" id="txtDistrito" >
+	</div>
+	<div class="form-group col-md-4">
+	<label class="" for="">Provincia - Departamento : </label>
+	<input type="text" class="form-control cli_block" id="txtProvincia" >
 	</div>
 	<div class="form-group col-md-6">
 	<label class="" for="">Telefono : </label>
@@ -69,19 +77,47 @@ $this->breadcrumbs=array(
 	</div>
 
 	<div class="form-group col-md-12">
-	<label class="" for="s_listarProd">Seleccione Muestra : </label>
+		<label class="" for="">Servicios Solicitados: </label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" id="chkServEnsayos" name="chkServEnsayos" value="X"> Ensayos
+	</label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" id="chkServInspeccion" name="chkServInspeccion" value="X"> Inspección
+	</label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" id="chkServMuestreo" name="chkServMuestreo" value="X"> Muestreo
+	</label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" id="chkOtrosServicios" name="chkOtrosServicios" value="X"> otros (especificar)
+	  <input type="text" class="" id="txtOtrosServicios" style="">
+	</label>
 
-	<select id="s_listarProducto" class="selectpicker form-control" data-live-search="true" title="Muestras " style="display:none;">
-	<option value="">Seleccione </option>
-	</select>
 	</div>
-	<div class="form-group col-md-12">
+	
+	<div class="form-group col-md-6">
 	<label class="" for="">Muestra : </label>
 	<input type="text" class="form-control" id="txtMuestra" >
 	</div>
+	<div class="form-group col-md-6">
+	<label class="" for="">Marca : </label>
+	<input type="text" class="form-control" id="txtMarca" >
+	</div>
+	<div class="form-group col-md-6">
+	<label class="" for="">Identificación : </label>
+	<input type="text" class="form-control" id="txtIdentificacion" >
+	</div>
+	<div class="form-group col-md-6">
+	<label class="" for="">Presentacion : </label>
+	<input type="text" class="form-control" id="txtPresentacion" >
+	</div>
+	<div class="form-group col-md-12">
+	<label class="" for="">Observaciones : </label>
+	<textarea id="txtObservaciones" class="form-control col-md-12"  rows="2" >       
+    </textarea>
+	</div>
+	
 
-
-	<div class="form-group col-md-8">
+	<!-- <div class="form-group col-md-8">
 	<label class="" for="s_listarServicio">Servicio : <span id="repeatServicio" class="text-danger"></span></label>
 	<select id="listarServicio" class="selectpicker form-control" data-live-search="true" title="Seleccione Servicio" style="display:none;">
 	<option value="">Seleccione Servicio</option>
@@ -92,7 +128,7 @@ $this->breadcrumbs=array(
     <div class="form-group">
             <label for="" style="color:transparent;">Agregar</label><br>
             <button id="agregarServicio" type="button" class="btn btn-default"><i class="fa fa-cart-plus" ></i> Agregar</button>         
-    </div>
+    </div> -->
 
 	<table id="DetalleCotizacion" class="table table-bordered table-hover dataTable" cellspacing="0" width="100%" style="border-bottom:2px solid;">
 	<thead>
@@ -115,11 +151,12 @@ $this->breadcrumbs=array(
 <div class="row" >
 	
 	<div class="form-group col-md-4">	
-		<label class="" for="">Fecha de Entrega de los Resultados : </label>
+		<label class="" for="">Fecha y hora de Entrega de los Resultados : </label>
 		<div class="input-group">
-			<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-			<input type="date" class="form-control" id="txtTiempo" >			
-		</div>	
+			<div class="input-group-addon"><input type="date" class="form-control" id="txtFecha" ></div>			
+			<div class="input-group-addon"><input type="time" class="form-control" id="txtHora" ></div>			
+		</div>
+			
 	</div>
 	<div class="form-group col-md-4">	
 		<label class="" for="">Cantidad de Muestra Necesaria : </label>
@@ -137,18 +174,35 @@ $this->breadcrumbs=array(
 	<input type="text" class="form-control" id="txtTotal" placeholder="0.00" value="0.00" disabled>
 	</div>
 	</div>
-	<div class="form-group col-md-12">
-        <label class="" for="">Condiciones Técnicas Especiales Aplicables a los servicios: </label>       
-         <textarea id="txtCondTecnicas" class="form-control col-md-12"  rows="2">       
-         </textarea>
-      </div>
+<div class="form-group col-md-12">
+	<label class="" for="">¿Informe de Ensayo en papel con símbolo de acreditación ?   </label>
+	<label class="radio-inline">
+	  <input type="radio" name="rdb_acreditación" id="inlineRadio1" value="SI"> SI
+	</label>
+	<label class="radio-inline">
+	  <input type="radio" name="rdb_acreditación" id="inlineRadio2" value="NO"> NO
+	</label>
+	
+
+	</div>
+<div class="form-group col-md-12">
+	<label class="" for="">¿Entrega de contramuestras ?   </label>
+	<label class="radio-inline">
+	  <input type="radio" name="rdb_contramuestras" id="inlineRadio1" value="SI"> SI
+	</label>
+	<label class="radio-inline">
+	  <input type="radio" name="rdb_contramuestras" id="inlineRadio2" value="NO"> NO
+	</label>
+	
+
+	</div>
     <div class="form-group col-md-12">
-        <label class="" for="">Detalle sobre los Servicios Ofrecido: </label>       
-         <textarea id="txtDetalles" class="form-control col-md-12"  rows="2">       
+        <label class="" for="">OBSERVACIONES PREVIAS AL SERVICIO SOLICITADO: </label>       
+         <textarea id="txtObservacionesServicios" class="form-control col-md-12"  rows="2">       
          </textarea>
     </div>
 	<div class="col-md-6">
-		<button type="button" class="btn btn-primary col-md-12" id="btn_GuardarCotizacion">Guardar e Imprimir</button>
+		<button type="button" class="btn btn-primary col-md-12" id="btn_GuardarSolicitud">Guardar e Imprimir</button>
 	</div>
 	<div class="col-md-6">
 		<button type="button" class="btn btn-danger col-md-12" id="btn_cancelar">Cancelar</button>
@@ -164,6 +218,7 @@ $this->breadcrumbs=array(
 
 </div><!-- /.box-body -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/cotizacion.js" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/dist/js/entidad/solicitud.js" type="text/javascript"></script>
 <script>
 	
 	$(document).ready(function() {
@@ -175,6 +230,56 @@ $this->breadcrumbs=array(
 
 				
 	});
+
+
+$("#btn_GuardarSolicitud").click(function(event) {
+/* ------------ */
+
+
+var txtDocumento=$("#txtDocumento").val();
+var txtNomCliente=$("#txtNomCliente").val();
+var txtAtencion=$("#txtAtencion").val();
+var txtDireccion=$("#txtDireccion").val();
+var txtDistrito=$("#txtDistrito").val();
+var txtProvincia=$("#txtProvincia").val();
+var txtTelefono=$("#txtTelefono").val();
+var txtEmail=$("#txtEmail").val();
+var txtRefCliente=$("#txtRefCliente").val();
+
+/* ------------ */
+var nombre=$("#txtMuestra").val();
+var marca=$("#txtMarca").val();
+var identificacion=$("#txtIdentificacion").val();
+var presentacion=$("#txtPresentacion").val();
+var ObservacionesMuestra=$("#txtObservaciones").val();
+var cant_muestra=$("#txtCantidad").val();
+var idCliente=$("#txtDocumento").attr('data-id');
+  idMuestra=ClienteCore.registrarMuestra(idCliente,nombre,marca,identificacion,cant_muestra,presentacion,ObservacionesMuestra)
+/* ------------ */
+
+/* ------------ */
+var Acreditacion=$('input:radio[name=rdb_acreditación]:checked').val();
+var Contramuestras=$('input:radio[name=rdb_contramuestras]:checked').val();
+var observacionesServ=$("#txtObservacionesServicios").val();
+
+/* ------------ */
+var NroSolicitud=$("#NroSolicitud").attr('NroSolicitud');
+var NroCotizacion=$("#NroSolicitud").attr('nroCotizacion');
+
+
+/* ------------ */
+var Ensayos=$('input:checkbox[name=chkServEnsayos]:checked').val();
+var Inspeccion=$('input:checkbox[name=chkServInspeccion]:checked').val();
+var muestreo=$('input:checkbox[name=chkServMuestreo]:checked').val();
+var chkOtrosServicios=$('input:checkbox[name=chkOtrosServicios]:checked').val();
+var otros=$("#txtOtrosServicios").val();
+var fecha_entrega=$("#txtFecha").val();
+var txtHora=$("#txtHora").val();
+var total=$("#txtTotal").val();	
+/* --------------*/
+
+SolicitudCore.registrarSolicitud(NroSolicitud,NroCotizacion,idCliente,idMuestra,Ensayos,Inspeccion,muestreo,otros,total,fecha_entrega,Acreditacion,Contramuestras,observacionesServ);
+});
 
 	
 </script>

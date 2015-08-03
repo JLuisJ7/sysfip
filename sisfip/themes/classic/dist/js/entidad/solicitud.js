@@ -63,25 +63,30 @@ var SolicitudCore = {
         });
         
     },
-    registrarCotizacion: function(idCotizacion,idCliente,muestra,cond_tecnica,detalle_servicios,total,fecha_Entrega,cant_Muestra_necesaria,detalle){
+    registrarSolicitud: function(nroSolicitud,nroCotizacion,idCliente,idMuestra,Ensayos,Inspeccion,muestreo,otros,total,fecha_entrega,Acreditacion,Contramuestras,observaciones){
         var me = this;
         $.ajax({
-            url: 'index.php?r=cotizacion/AjaxRegistrarCotizacion',
+            url: 'index.php?r=solicitud/AjaxRegistrarSolicitud',
             type: 'POST',
             data: {
-                idCotizacion:idCotizacion,
-                idCliente:idCliente,
-                muestra,muestra,
-                cond_tecnica:cond_tecnica,
-                detalle_servicios:detalle_servicios,
-                total:total,
-                fecha_Entrega:fecha_Entrega,
-                cant_Muestra_necesaria:cant_Muestra_necesaria,               
+               nroSolicitud:nroSolicitud,
+               nroCotizacion:nroCotizacion,
+               idCliente:idCliente,
+               idMuestra:idMuestra,
+               Ensayos:Ensayos,
+               Inspeccion:Inspeccion,
+               muestreo:muestreo,
+               otros:otros,
+               total:total,
+               fecha_entrega:fecha_entrega,
+               Acreditacion:Acreditacion,
+               Contramuestras:Contramuestras,
+               observaciones:observaciones               
                 },
         })
         .done(function(response) {
             console.log(response);
-             me.registrarDetalleCotizacion(idCotizacion,muestra,detalle);
+             //me.registrarDetalleCotizacion(idCotizacion,muestra,detalle);
 
         })
            

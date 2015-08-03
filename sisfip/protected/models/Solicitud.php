@@ -27,7 +27,35 @@
  */
 class Solicitud extends CActiveRecord
 {
+	public function registrarSolicitud($nroSolicitud,$nroCotizacion,$idCliente,$idMuestra,$Ensayos,$Inspeccion,$muestreo,$otros,$total,$fecha_entrega,$Acreditacion,$Contramuestras,$observaciones){
 
+		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
+
+		
+		$solicitud=new Solicitud;
+$solicitud->nroSolicitud=$nroSolicitud;
+$solicitud->nroCotizacion=$nroCotizacion;
+$solicitud->idCliente=$idCliente;
+$solicitud->idMuestra=$idMuestra;
+$solicitud->Ensayos=$Ensayos;
+$solicitud->Inspeccion=$Inspeccion;
+$solicitud->muestreo=$muestreo;
+$solicitud->otros=$otros;
+$solicitud->total=$total;
+$solicitud->fecha_entrega=$fecha_entrega;
+$solicitud->Acreditacion=$Acreditacion;
+$solicitud->Contramuestras=$Contramuestras;
+$solicitud->observaciones=$observaciones;
+      		
+if(!$solicitud->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar el servicio, intentelo nuevamente');
+
+}
+			
+
+		return $resultado;
+	}
 
 	public function ObtenerNroSolicitud(){
 
@@ -54,7 +82,7 @@ $sql = "select count(*)+1 as nroSolicitud,DATE_FORMAT(NOW(),'%d-%m-%Y') as fecha
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nroSolicitud, nroCotizacion, idCliente, idMuestra, fecha_registro, fecha_entrega', 'required'),
+			array('nroSolicitud, nroCotizacion, idCliente, idMuestra', 'required'),
 			array('idCliente, idMuestra', 'numerical', 'integerOnly'=>true),
 			array('nroSolicitud, nroCotizacion', 'length', 'max'=>10),
 			array('Ensayos, Inspeccion, muestreo', 'length', 'max'=>1),

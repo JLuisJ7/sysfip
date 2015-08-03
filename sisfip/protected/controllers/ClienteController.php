@@ -33,6 +33,27 @@ $respuesta= Cliente::model()->RegistrarCliente($nombres,$doc_ident,$atencion_a,$
     	  	);
 	}
 
+public function actionAjaxRegistrarMuestra(){
+$idCliente=$_POST['idCliente'];
+$nombre=$_POST['nombre'];
+$marca=$_POST['marca'];
+$identificacion=$_POST['identificacion'];
+$cant_muestra=$_POST['cant_muestra'];
+$presentacion=$_POST['presentacion'];
+$observaciones=$_POST['observaciones'];
+
+$respuesta= Muestra::model()->RegistrarMuestra($idCliente,$nombre,$marca,$identificacion,$cant_muestra,$presentacion,$observaciones);
+
+
+		header('Content-Type: application/json; charset="UTF-8"');
+    	  Util::renderJSON(
+    	  	array( 
+    	  		'success' => $respuesta,
+    	  		'idGenerado'=>Yii::app()->db->getLastInsertID('Muestra')
+    	  		)
+    	  	);
+	}
+
 	public function actionIndex()
 	{
 		$this->render('index');

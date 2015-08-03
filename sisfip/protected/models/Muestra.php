@@ -20,6 +20,30 @@
  */
 class Muestra extends CActiveRecord
 {
+	public function RegistrarMuestra($idCliente,$nombre,$marca,$identificacion,$cant_muestra,$presentacion,$observaciones){
+
+		$resultado = array('valor'=>1,'message'=>'Servicio Registrado correctamente.');
+
+		
+$muestra=new Muestra;
+$muestra->idCliente=$idCliente;
+$muestra->nombre=$nombre;
+$muestra->marca=$marca;
+$muestra->identificacion=$identificacion;
+$muestra->Cant_Muestra=$cant_muestra;
+$muestra->presentacion=$presentacion;
+$muestra->observaciones=$observaciones;
+
+      		
+if(!$muestra->save()){
+	
+	$resultado = array('valor'=>0, 'message'=>'No hemos podido Registrar el servicio, intentelo nuevamente');
+
+}
+			
+
+		return $resultado;
+	}
 	/**
 	 * @return string the associated database table name
 	 */
@@ -36,8 +60,8 @@ class Muestra extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idMuestra, idCliente, nombre', 'required'),
-			array('idMuestra, idCliente, Cant_Muestra', 'numerical', 'integerOnly'=>true),
+			array('idCliente, nombre', 'required'),
+			array('idCliente, Cant_Muestra', 'numerical', 'integerOnly'=>true),
 			array('nombre, marca, identificacion', 'length', 'max'=>45),
 			array('estado', 'length', 'max'=>1),
 			array('presentacion', 'length', 'max'=>100),
